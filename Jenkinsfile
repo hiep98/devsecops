@@ -27,5 +27,5 @@ pipeline {
                 sh 'docker push nthiep1998/numeric-app:""$GIT_COMMIT""'
               }
             }     
-    } 
+        } 
 }
