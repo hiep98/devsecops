@@ -34,7 +34,6 @@ pipeline {
         steps{
           sh "mvn clean verify sonar:sonar -Dsonar.projectKey=numeric-app -Dsonar.host.url=http://192.168.126.132:9000 -Dsonar.login=sqp_76f368be3de38b7cbc9eedcd1f14798bc1a19397"
         }
-
       }
       stage('Docker Build and Push') {
             steps {
