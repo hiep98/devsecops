@@ -18,7 +18,19 @@ pipeline {
         sh "mvn org.pitest:pitest-maven:mutationCoverage"
       }
     }
-
+    stage('Publish Test Results and Reports') {
+      steps {
+        script {
+          def mutationReports = findFiles(glob: 'target/pit-reports/**/mutations.xml')
+          if (mutationReports.size() == 0) {
+            echo "No mutation reports found!"
+          } else {
+            pitmutation mutationStatsFile: mutationReports[0].path
+            // ...other steps to publish the report
+          }
+        }
+      }
+    }
     stage('SonarQube - SAST') {
       steps {
         withSonarQubeEnv('sonarqube') {
@@ -58,7 +70,7 @@ pipeline {
     always{
         junit 'target/surefire-reports/*.xml'
         jacoco execPattern: 'target/jacoco.exec'
-        pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+        // pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
         dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
     }
   }
