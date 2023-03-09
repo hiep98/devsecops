@@ -26,7 +26,15 @@ pipeline {
             echo "No mutation reports found!"
           } else {
             pitmutation mutationStatsFile: mutationReports[0].path
-            // ...other steps to publish the report
+            archiveArtifacts artifacts: 'target/pit-reports/**', onlyIfSuccessful: true
+            publishHTML(target: [
+              allowMissing: false,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: 'target/pit-reports',
+              reportFiles: 'index.html',
+              reportName: 'Mutation Report'
+            ])
           }
         }
       }
