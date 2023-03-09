@@ -20,22 +20,17 @@ pipeline {
     }
     stage('Publish Test Results and Reports') {
       steps {
-        script {
-          def mutationReports = findFiles(glob: 'target/pit-reports/**/mutations.xml')
-          if (mutationReports.size() == 0) {
-            echo "No mutation reports found!"
-          } else {
-            pitmutation mutationStatsFile: mutationReports[0].path
-            archiveArtifacts artifacts: 'target/pit-reports/**', onlyIfSuccessful: true
-            publishHTML(target: [
-              allowMissing: false,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: 'target/pit-reports',
-              reportFiles: 'index.html',
-              reportName: 'Mutation Report'
-            ])
-          }
+        dir('target/pit-reports') {
+          pitmutation mutationStatsFile: '**/mutations.xml'
+          junit 'target/surefire-reports/**/*.xml'
+          publishHTML([
+            allowMissing: true,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: 'target/pit-reports',
+            reportFiles: 'index.html',
+            reportName: 'Mutation Test Report'
+          ])
         }
       }
     }
