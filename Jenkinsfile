@@ -16,27 +16,23 @@ pipeline {
     stage('Mutation Tests - PIT') {
       steps {
         sh "mvn org.pitest:pitest-maven:mutationCoverage"
-        dir('target/pit-reports') {
-          pitmutation mutationStatsFile: '**/mutations.xml'
-        }
-      //   script {
-      //       def mutationReports = findFiles(glob: 'target/pit-reports/**/mutations.xml')
-      //       if (mutationReports.size() == 0) {
-      //         echo "No mutation reports found!"
-      //       } else {
-      //         pitmutation mutationStatsFile: mutationReports[0].path
-      //         archiveArtifacts artifacts: 'target/pit-reports/**', onlyIfSuccessful: true
-      //         publishHTML(target: [
-      //           allowMissing: false,
-      //           alwaysLinkToLastBuild: false,
-      //           keepAll: true,
-      //           reportDir: 'target/pit-reports',
-      //           reportFiles: 'index.html',
-      //           reportName: 'Mutation Report'
-      //         ])
-      //       }
-      //     }
-      // }
+        script {
+            def mutationReports = findFiles(glob: 'target/pit-reports/**/mutations.xml')
+            if (mutationReports.size() == 0) {
+              echo "No mutation reports found!"
+            } else {
+              pitmutation mutationStatsFile: mutationReports[0].path
+              archiveArtifacts artifacts: 'target/pit-reports/**', onlyIfSuccessful: true
+              publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'target/pit-reports',
+                reportFiles: 'index.html',
+                reportName: 'Mutation Report'
+              ])
+            }
+          }
     }
 
     stage('SonarQube - SAST') {
