@@ -44,7 +44,7 @@ pipeline {
             sh "mvn dependency-check:check"
           },
           "Trivy Scan": {
-            sh "bash trivy-scan.sh"
+            sh "bash trivy-scan1.sh"
           }
         )
       }
