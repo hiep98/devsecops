@@ -20,11 +20,9 @@ else
 fi
 
 
-kdif=$(kubectl diff -f k8s_deployment_service.yaml)
+kdic=$(kubectl diff -f k8s_deployment_service.yaml)
 if [[ $(kubectl diff -f k8s_deployment_service.yaml) ]]; then
-    echo "$kdif"
-    echo "deployment ${deploymentName} doesnt exist"
+    echo "$kdic doesnt exist"
 else
-    echo "$kdif"
-    echo "deployment ${deploymentName} exist"
+    echo "$kdic exist"
 fi
