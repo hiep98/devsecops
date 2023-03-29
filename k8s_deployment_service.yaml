@@ -15,14 +15,14 @@ spec:
       labels:
         app: devsecops
     spec:
-      ServiceAccountName: default
+      serviceAccountName: default
       containers:
       - image: replace
         name: devsecops-container
         securityContext:
           runAsNonRoot: true
           runAsUser: 100
-          ReadOnlyRootFilesystem: true
+          readOnlyRootFilesystem: true
 ---
 apiVersion: v1
 kind: Service
