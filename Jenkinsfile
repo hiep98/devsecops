@@ -6,8 +6,8 @@ pipeline {
     containerName = "devsecops-container"
     serviceName = "devsecops-svc"
     imageName = "nthiep1998/numeric-app:${GIT_COMMIT}"
-    //applicationURL = "http://192.168.207.129:32258/"
-    //applicationURI = "/increment/99"
+    applicationURL = "http://192.168.207.129:32258"
+    applicationURI = "/increment/99"
   }
 
   stages {
@@ -101,6 +101,24 @@ pipeline {
         )
       }
     }
+    stage('Integration Tests - DEV') {
+      steps {
+        script {
+          try {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "bash integration-test.sh"
+            }
+          } catch (e) {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "kubectl -n default rollout undo deploy ${deploymentName}"
+            }
+            throw e
+          }
+        }
+      }
+    }
+
+
   }
 
   post {
