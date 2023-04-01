@@ -79,10 +79,10 @@ pipeline {
           "Kubesec Scan": {
             sh "bash kubesec-scan.sh"
           }
-          "Trivy k8s Scan": {
+          "Trivy8 Scan": {
             sh "bash trivy-k8s-scan.sh"
           }
-          )
+        )
         }
     }
     stage('K8S Deployment - DEV') {
@@ -102,7 +102,7 @@ pipeline {
       }
     }
   }
-  
+
   post {
     always {
       junit 'target/surefire-reports/*.xml'
