@@ -118,6 +118,13 @@ pipeline {
       }
     }
 
+    stage('OWASP ZAP - DAST') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfig']) {
+          sh 'bash zap.sh'
+        }
+      }
+    }
 
   }
 
@@ -126,6 +133,7 @@ pipeline {
       junit 'target/surefire-reports/*.xml'
       jacoco execPattern: 'target/jacoco.exec'
       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'owasp zap report html', reportTitles: 'owasp zap report html', useWrapperFileDirectly: true])
     }
   }
 }
