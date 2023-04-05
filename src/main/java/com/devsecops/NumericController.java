@@ -52,35 +52,3 @@ public class NumericController {
 	}
 
 }
-@ControllerAdvice
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException(Exception ex, WebRequest request) {
-        // log the error message
-        log.error("Unexpected error occurred: {}", ex.getMessage());
-
-        // create a custom error response
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "An unexpected error occurred");
-
-        return handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
-    @ExceptionHandler(YourCustomException.class)
-    public ResponseEntity<Object> handleCustomException(YourCustomException ex, WebRequest request) {
-        // log the error message with the specific details
-        log.error("Your custom exception occurred: {}", ex.getMessage());
-
-        // create a custom error response with the specific details
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-
-        return handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
-}
-
-public class ErrorResponse {
-    private int status;
-    private String message;
-
-    // constructor, getters and setters
-}
