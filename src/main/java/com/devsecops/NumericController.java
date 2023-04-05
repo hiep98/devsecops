@@ -9,17 +9,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @RestController
+@RequestMapping("/api")
 public class NumericController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String baseURL = "http://node-service:5000/plusone";
 	
 	RestTemplate restTemplate = new RestTemplate();
+}
 	
-	@RestController
-	public class compare {
+public class compare {
 
 		@GetMapping("/")
 		public String welcome() {
@@ -46,5 +49,3 @@ public class NumericController {
 			return Integer.parseInt(response);
 		}
 	}
-
-}

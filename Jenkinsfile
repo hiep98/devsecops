@@ -6,7 +6,7 @@ pipeline {
     containerName = "devsecops-container"
     serviceName = "devsecops-svc"
     imageName = "nthiep1998/numeric-app:${GIT_COMMIT}"
-    applicationURL = "http://192.168.207.129:32258"
+    applicationURL = "http://192.168.207.129"
     applicationURI = "/increment/99"
   }
 
