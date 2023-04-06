@@ -17,7 +17,7 @@ pipeline {
         archive 'target/*.jar' //so that they can be downloaded later
         archive 'target/pit-reports/**'
         echo "PWD"
-        echo $PWD
+        echo $(pwd) 
       }
     }
     stage('Unit Tests') {
@@ -67,7 +67,7 @@ pipeline {
       steps {
         withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
           echo "PWD"
-          echo $PWD
+          echo $(pwd) 
           sh 'printenv'
           sh 'sudo docker build -t nthiep1998/numeric-app:""$GIT_COMMIT"" .'
           sh 'docker push nthiep1998/numeric-app:""$GIT_COMMIT""'
@@ -95,7 +95,7 @@ pipeline {
           "Deployment": {
             withKubeConfig([credentialsId: 'kubeconfig']) {
               echo "PWD"
-              echo $PWD
+              echo $(pwd) 
               sh "bash k8s-deployment.sh"
             }
           },
