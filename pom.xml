@@ -53,6 +53,19 @@
 			<version>2.3.3.RELEASE</version>
 		</dependency>
 
+		<!-- snakeyaml-1.25.jar: CVE-2022-1471(9.8) -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.28</version>
+		</dependency>
+		<!-- fix the CVE-2022-22965 vulnerability in spring-core-5.2.1 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>5.3.18</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
