@@ -1,6 +1,6 @@
 #!/bin/bash
 #k8s-deployment.sh
-DIFF_OUTPUT=$(kubectl diff -f k8s_deployment_service.yaml)
+#DIFF_OUTPUT=$(kubectl diff -f k8s_deployment_service.yaml)
 
 # if [ -n "$DIFF_OUTPUT" ]; then
 #   # DIFF_OUTPUT is not empty, run your code here
@@ -10,7 +10,6 @@ DIFF_OUTPUT=$(kubectl diff -f k8s_deployment_service.yaml)
 
 #! $(kubectl diff -f k8s_deployment_service.yaml  >/dev/null 2>&1)
 
-echo "PWD"
 echo $(pwd) 
 sed -i "s#replace#${imageName}#g" k8s_deployment_service.yaml
 kubectl -n default get deployment ${deploymentName} > /dev/null
