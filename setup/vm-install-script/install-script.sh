@@ -10,10 +10,19 @@ apt-get autoremove -y  #removes the packages that are no longer needed
 apt-get update
 systemctl daemon-reload
 
+sudo -i
+swapoff -a
+exit
+
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+strace -eopenat kubectl version
+
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF > /etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
+sudo cp trusted.gpg trusted.gpg.d
 
 KUBE_VERSION=1.20.0
 apt-get update
@@ -22,7 +31,7 @@ pip3 install jc
 
 ### UUID of VM 
 ### comment below line if this Script is not executed on Cloud based VMs
-jc dmidecode | jq .[1].values.uuid -r
+#jc dmidecode | jq .[1].values.uuid -r
 
 cat > /etc/docker/daemon.json <<EOF
 {
@@ -50,12 +59,15 @@ kubeadm init --kubernetes-version=${KUBE_VERSION} --skip-token-print
 mkdir -p ~/.kube
 sudo cp -i /etc/kubernetes/admin.conf ~/.kube/config
 
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+#kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
 
 sleep 60
 
 echo "untaint controlplane node"
 kubectl taint node $(kubectl get nodes -o=jsonpath='{.items[].metadata.name}') node.kubernetes.io/not-ready:NoSchedule-
+kubectl taint node $(kubectl get nodes -o=jsonpath='{.items[].metadata.name}') node-role.kubernetes.io/master:NoSchedule-
 kubectl get node -o wide
 
 
@@ -69,14 +81,22 @@ mvn -v
 
 
 echo ".........----------------#################._.-.-JENKINS-.-._.#################----------------........."
-wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-sudo apt update
-sudo apt install -y jenkins
+	wget -qO - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
+
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
+    /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install fontconfig openjdk-11-jre
+sudo apt-get install -y jenkins
 systemctl daemon-reload
 systemctl enable jenkins
 sudo systemctl start jenkins
-#sudo systemctl status jenkins
+sudo systemctl status jenkins
 sudo usermod -a -G docker jenkins
 echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
