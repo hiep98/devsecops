@@ -32,6 +32,6 @@ echo "Exit Code : $exit_code"
  fi;
 
 
-docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t http://192.168.207.129:31242/v3/api-docs -f openapi -r zap_report.html
+#docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t http://192.168.207.129:31242/v3/api-docs -f openapi -r zap_report.html
 
  

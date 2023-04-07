@@ -1,9 +1,16 @@
-
 # zap-api-scan rule configuration file
 # Change WARN to IGNORE to ignore rule or FAIL to fail if rule matches
 # Active scan rules set to IGNORE will not be run which will speed up the scan
 # Only the rule identifiers are used - the names are just for info
 # You can add your own messages to each rule by appending them after a tab on each line.
-10021	IGNORE	http://192.168.207.129:31242/
-100001  IGNORE  http://192.168.207.129:31242/  
-100000  IGNORE  http://192.168.207.129:31242/
+10003	WARN	(Vulnerable JS Library (Powered by Retire.js) - Passive/release)
+10009	WARN	(In Page Banner Information Leak - Passive/beta)
+10010	WARN	(Cookie No HttpOnly Flag - Passive/release)
+10011	WARN	(Cookie Without Secure Flag - Passive/release)
+10015	WARN	(Re-examine Cache-control Directives - Passive/release)
+10017	WARN	(Cross-Domain JavaScript Source File Inclusion - Passive/release)
+10019	WARN	(Content-Type Header Missing - Passive/release)
+10020	WARN	(Anti-clickjacking Header - Passive/release)
+10021	WARN	(X-Content-Type-Options Header Missing - Passive/release
+100000	IGNORE	http://192.168.207.129:31242
+100001	IGNORE	http://192.168.207.129:31242
