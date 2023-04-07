@@ -14,6 +14,7 @@ exit_code=$?
 
 echo "Exit Code : $exit_code"
 
+
 # HTML Report
 echo  'create folder'
 sudo mkdir -p owasp-zap-report
