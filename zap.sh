@@ -29,3 +29,8 @@ echo "Exit Code : $exit_code"
    else
     echo "OWASP ZAP did not report any Risk"
  fi;
+
+
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t http://192.168.207.129:31242/v3/api-docs -f openapi -r zap_report.html
+
+ 
