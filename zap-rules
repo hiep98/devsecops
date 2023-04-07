@@ -5,3 +5,5 @@
 # Only the rule identifiers are used - the names are just for info
 # You can add your own messages to each rule by appending them after a tab on each line.
 10021	IGNORE	http://192.168.207.129:31242/
+100001  IGNORE  http://192.168.207.129:31242/  
+100000  IGNORE  http://192.168.207.129:31242/
