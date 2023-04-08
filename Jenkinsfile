@@ -133,7 +133,7 @@ pipeline {
           input 'Do you want to Approve the Deployment to Production Environment/Namespace?'
         }
       }
-}
+    }
 
   }
 
