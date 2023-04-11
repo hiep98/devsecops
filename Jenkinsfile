@@ -185,7 +185,3 @@ pipeline {
     }
   }
 }
-docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which kubectl):/usr/local/mount-from-host/bin/kubectl -v ~/.kube:/.kube -e KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run etcd --check 1.1.12
-[INFO] 1 Master Node Security Configuration
-[INFO] 1.1 Master Node Configuration Files
-[PASS] 1.1.12 Ensure that the etcd data directory ownership is set to etcd:etcd (Automated)
