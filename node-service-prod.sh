@@ -1,9 +1,20 @@
 #!/bin/bash
-
 # Check if the namespace prod exists
-if ! kubectl get namespace prod > /dev/null 2>&1; then
+if kubectl get namespace prod > /dev/null 2>&1; then
+  # Check if the label istio-injection=enabled exists in namespace prod
+  if ! kubectl get namespace prod -o jsonpath='{.metadata.labels.istio-injection}' | grep -q enabled; then
+    # Add the label istio-injection=enabled to namespace prod
+    kubectl label namespace prod istio-injection=enabled
+    kubectl rollout restart deployment node-app -n prod
+  else
+    echo "istio label exist"
+  fi
+else
   # Create the namespace prod if it does not exist
   kubectl create namespace prod
+  # Add the label istio-injection=enabled to namespace prod
+  kubectl label namespace prod istio-injection=enabled
+  kubectl rollout restart deployment node-app -n prod
 fi
 
 # Get the name of the Docker image node-service
@@ -21,12 +32,6 @@ else
   # Print an empty string if the image does not exist
   echo "$image_name does not exist"
 fi
-
-
-
-
-
-
 
 # ------------------------------
 # #!/bin/bash
