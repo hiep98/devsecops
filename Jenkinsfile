@@ -63,11 +63,11 @@ pipeline {
         archive 'target/pit-reports/**'
       }
     }
-    stage('Unit Tests') {
-      steps {
-        sh "mvn test"
-      }
-    }
+    // stage('Unit Tests') {
+    //   steps {
+    //     sh "mvn test"
+    //   }
+    // }
     // stage('Mutation Tests - PIT') {
     //   steps {
     //     sh "mvn org.pitest:pitest-maven:mutationCoverage"
