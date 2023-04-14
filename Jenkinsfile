@@ -256,7 +256,6 @@ pipeline {
     //   // Use sendNotifications.groovy from shared library and provide current build result as parameter    
     //   //sendNotification currentBuild.result
     // }
-  }
 
   success {
       script {
@@ -266,7 +265,7 @@ pipeline {
         sendNotification currentBuild.result
       }
     }
-  failure {
+  failure 
       script {
         //Fetch information about  failed stage
         def failedStages = getFailedStages(currentBuild)
@@ -274,6 +273,5 @@ pipeline {
         env.emoji = ":x: :red_circle: :sos:"
         sendNotification currentBuild.result
       }
-    }
-
+  }
 }
