@@ -1,5 +1,7 @@
 def call(String buildStatus = 'STARTED') {
  buildStatus = buildStatus ?: 'SUCCESS'
+ env.BUILD_URL = "http://192.168.207.129:8080"
+
 
  def color
 
@@ -102,7 +104,7 @@ def call(String buildStatus = 'STARTED') {
               "emoji": true
             ],
             "value": "click_me_123",
-            "url": "${applicationURL}:32564",
+            "url": "${applicationURL}:30886",
             "action_id": "button-action"
           ]
         ],
