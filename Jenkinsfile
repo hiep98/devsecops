@@ -55,20 +55,7 @@ pipeline {
     applicationURI = "/increment/99"
   }
 
-  // stages {
-  //   stage('Testing Slack - 1') {
-  //     steps {
-  //       sh 'exit 0'
-  //     }
-  //   }
-
-  //   stage('Testing Slack - Error Stage') {
-  //     steps {
-  //       sh 'exit 0'
-  //     }
-  //   }
-
-  
+  stages {
     stage('Build Artifact') {
       steps {
         sh "mvn clean package -DskipTests=true"
@@ -244,7 +231,18 @@ pipeline {
         }
       }
     }
+  
+  //   stage('Testing Slack - 1') {
+  //     steps {
+  //       sh 'exit 0'
+  //     }
+  //   }
 
+  //   stage('Testing Slack - Error Stage') {
+  //     steps {
+  //       sh 'exit 0'
+  //     }
+  //   }
   }
 
   post {
