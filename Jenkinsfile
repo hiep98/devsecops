@@ -265,7 +265,7 @@ pipeline {
         sendNotification currentBuild.result
       }
     }
-  failure 
+  failure {
       script {
         //Fetch information about  failed stage
         def failedStages = getFailedStages(currentBuild)
