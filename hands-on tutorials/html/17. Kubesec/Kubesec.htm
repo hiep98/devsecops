@@ -1,0 +1,678 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href=Kubesec.htm>
+<link rel=File-List href="Kubesec_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.7652in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.3048in;width:1.4909in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt'>Kubesec</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.7652in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>OPA and Kubesec are both open-source tools that can be used to secure
+ Kubernetes clusters. However, they have different strengths and weaknesses,
+ and they are typically used together to provide a more comprehensive security
+ solution.</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>OPA (Open Policy Agent) is a general-purpose policy engine that can be
+ used to enforce a wide range of policies, including security policies. It is
+ based on the Rego language, which is a powerful and expressive language for
+ writing policies. OPA can be used to enforce policies on Kubernetes resources,
+ as well as on other types of resources, such as files and databases.</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>Kubesec is a security tool for Kubernetes that focuses on identifying
+ and remediating security vulnerabilities. It does this by scanning Kubernetes
+ clusters for known vulnerabilities and then providing recommendations for how
+ to fix them. Kubesec can also be used to enforce security policies, but it is
+ not as flexible as OPA in this regard.</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>OPA and Kubesec can be used together to provide a more comprehensive
+ security solution for Kubernetes clusters. OPA can be used to enforce
+ policies, while Kubesec can be used to identify and remediate vulnerabilities.
+ This combination of tools can help to protect Kubernetes clusters from a wide
+ range of security threats.</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>Here are some of the key differences between OPA and Kubesec:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>OPA
+      is a general-purpose policy engine, while Kubesec is a security tool for
+      Kubernetes.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>OPA
+      is based on the Rego language, while Kubesec uses its own proprietary
+      language.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>OPA
+      can be used to enforce policies on a wide range of resources, while
+      Kubesec is focused on Kubernetes resources.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>OPA
+      is more flexible than Kubesec in terms of how it can be used to enforce
+      policies.</span></li>
+ </ul>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>Here are some of the reasons why you might need to use both OPA and
+ Kubesec:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>To
+      get the benefits of both tools. OPA is a powerful policy engine that can
+      be used to enforce a wide range of policies, while Kubesec is a security
+      tool that can identify and remediate vulnerabilities.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>To
+      cover different use cases. OPA is a general-purpose policy engine, while
+      Kubesec is focused on Kubernetes resources. If you need to enforce
+      policies on other types of resources, you will need to use OPA.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>To
+      get the best of both worlds. OPA is more flexible than Kubesec in terms
+      of how it can be used to enforce policies. However, Kubesec is easier to
+      use and has a wider range of features. By using both tools, you can get
+      the benefits of both worlds.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#1F1F1F'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Question:<span
+ style='mso-spacerun:yes'>  </span>If I use both of these tools to scan
+ security for k8s, is there any overlap?</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Answer: </p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Yes, there is a
+ potential for overlap if you use both OPA and kubesec to scan for security
+ issues in Kubernetes. This is because OPA already comes with some built-in
+ policies for Kubernetes security, including policies related to secrets
+ management, which may overlap with the functionality provided by kubesec.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>However, the extent
+ and significance of the overlap would depend on which policies you enable in
+ OPA and how you configure kubesec. For example, if you disable the built-in
+ Kubernetes security policies in OPA and only use it for other types of
+ policies, you may not encounter much overlap with kubesec. Similarly, if you
+ only use kubesec for scanning secrets and not for other security checks, any
+ overlap with OPA would be restricted to secret-related issues.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Overall, it's best
+ to carefully consider which tools and policies you need for your Kubernetes
+ security posture and configure them appropriately, to avoid duplication or
+ unnecessary complexity.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create file
+ k8sec-scan.sh </p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.468in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#!/bin/bash</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#kubesec-scan.sh</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># using kubesec v2 api</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>scan_result=</span><span style='color:#7DA064'>$(curl
+   -sSX POST --data-binary @&quot;k8s_deployment_service.yaml&quot; </span><a
+   href="https://v2.kubesec.io/scan">https://v2.kubesec.io/scan</a><span
+   style='color:#7DA064'>)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>scan_message=</span><span style='color:#7DA064'>$(curl
+   -sSX POST --data-binary @&quot;k8s_deployment_service.yaml&quot; </span><a
+   href="https://v2.kubesec.io/scan">https://v2.kubesec.io/scan</a> <span
+   style='color:#C678DD'>|</span><span style='color:#7DA064'> jq .[0].message
+   -r ) </span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>scan_score=</span><span style='color:#7DA064'>$(curl
+   -sSX POST --data-binary @&quot;k8s_deployment_service.yaml&quot; </span><a
+   href="https://v2.kubesec.io/scan">https://v2.kubesec.io/scan</a> <span
+   style='color:#C678DD'>|</span><span style='color:#7DA064'> jq .[0].score ) </span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># using kubesec docker image for scanning</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># scan_result=$(docker run -i
+   kubesec/kubesec:512c5e0 scan /dev/stdin &lt; k8s_deployment_service.yaml)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># scan_message=$(docker run -i
+   kubesec/kubesec:512c5e0 scan /dev/stdin &lt; k8s_deployment_service.yaml |
+   jq .[].message -r)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># scan_score=$(docker run -i
+   kubesec/kubesec:512c5e0 scan /dev/stdin &lt; k8s_deployment_service.yaml |
+   jq .[].score)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'><span
+   style='mso-spacerun:yes'>    </span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>    </span></span><span
+   style='font-style:italic;color:#5C6370'># Kubesec scan result processing</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>    </span></span><span
+   style='font-style:italic;color:#5C6370'># echo &quot;Scan Score :
+   $scan_score&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#C678DD'>if</span><span style='color:#9298A3'> [[ </span><span
+   style='color:#7DA064'>&quot;</span><span style='color:#E06C75'>${scan_score}</span><span
+   style='color:#7DA064'>&quot; </span><span style='color:#C678DD'>-ge</span><span
+   style='color:#9298A3'> 4 ]]</span><span style='color:#C678DD'>; then</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;Result:&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;</span><span
+   style='color:#E06C75'>$scan_result</span><span style='color:#7DA064'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;Score is
+   </span><span style='color:#E06C75'>$scan_score</span><span style='color:
+   #7DA064'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;Kubesec
+   Scan </span><span style='color:#E06C75'>$scan_message</span><span
+   style='color:#7DA064'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#C678DD'>else</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;Result:&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;</span><span
+   style='color:#E06C75'>$scan_result</span><span style='color:#7DA064'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;Score is
+   </span><span style='color:#E06C75'>$scan_score</span><span style='color:
+   #7DA064'>, which is less than or equal to 5.&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>echo </span><span style='color:#7DA064'>&quot;Scanning
+   Kubernetes Resource has Failed&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#53AFBB'>exit</span><span style='color:#9298A3'> 1</span><span
+   style='color:#C678DD'>;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#C678DD'>fi;</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This shell script,
+ named <span style='font-weight:bold'>`kubesec-scan.sh`</span>, uses the <span
+ style='font-weight:bold'>`kubesec`</span> tool to perform a security scan on a
+ Kubernetes deployment and service configuration file (<span style='font-weight:
+ bold'>`k8s_deployment_service.yaml`</span>).</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>To perform the
+ scan, the script makes an HTTP POST request to the Kubesec API endpoint (<span
+ style='font-weight:bold'>`https://v2.kubesec.io/scan`</span>) with the given
+ configuration file as the input data. The scan result is stored in the <span
+ style='font-weight:bold'>`scan_result`</span> variable, and other details such
+ as the scan message and score are extracted using <span style='font-weight:
+ bold'>`jq`</span> command and are stored in <span style='font-weight:bold'>`scan_message`</span>
+ and <span style='font-weight:bold'>`scan_score`</span> variables respectively</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The script then
+ evaluates the scan score (<span style='font-weight:bold'>`scan_score`</span>)
+ and if it's greater than or equal to 4, it outputs the scan result along with
+ the score and message. Otherwise, it prints an error indicating that the scan
+ has failed and exits with a non-zero code.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The script also
+ provides an alternate method for performing the scan using the <span
+ style='font-weight:bold'>`kubesec`</span> Docker image. This is commented out
+ and can be used by swapping the comments with the <span style='font-weight:
+ bold'>`curl`</span> method above.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>What is jq ?</p>
+ <p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 13.0pt;color:#1F1F1F'><span style='background:white'>jq is short for
+ &quot;JSON Query&quot;. It is a command-line tool for processing and
+ manipulating JSON data. jq is written in the C programming language and is
+ available for most operating systems. It is free and open-source software.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 13.0pt;color:#1F1F1F'><span style='background:white'>jq can be used to extract
+ specific data from a JSON file, filter out unwanted data, and convert JSON
+ data into a different format. jq is often used in conjunction with other
+ command-line tools to process JSON data. For example, jq can be used to
+ extract data from a JSON file and then use that data to update a database.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`jq .[0].message -r
+ ` is extracting the 'message' key from the first object in the JSON array (the
+ security scan result), and with the -r flag, it is returning the raw output
+ without quotes. `jq .[0].score` is extracting the 'score' key from the same
+ object.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Why need use [0] in
+ jq ?</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>In the given
+ script, <span style='font-weight:bold'>`jq .[0].message -r`</span> and <span
+ style='font-weight:bold'>`jq .[0].score`</span> are using the <span
+ style='font-weight:bold'>`[0]`</span> index to extract information from the
+ first object in the JSON array returned by the API.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The reason for
+ using <span style='font-weight:bold'>`[0]`</span> is that the API response is
+ an array of JSON objects, where each object represents a scan result for a
+ Kubernetes resource. We are interested in the first object as it represents
+ the scan result for the deployment and service YAML file that we have submitted
+ for scanning.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>If we do not use <span
+ style='font-weight:bold'>`[0]`</span> and instead use <span style='font-weight:
+ bold'>`jq .message`</span>, then <span style='font-weight:bold'>`jq`</span>
+ will attempt to find the 'message' key from all the objects in the JSON array.
+ This will not work in this case, as the 'message' key exists only inside the
+ first object of the array. Therefore, we need to first select the first object
+ using <span style='font-weight:bold'>`[0]`</span> and then extract information
+ from it using the desired key.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference jq:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://exercism.org/tracks/jq">https://exercism.org/tracks/jq</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://www.baeldung.com/linux/jq-command-json">https://www.baeldung.com/linux/jq-command-json</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Edit jenkinsfile</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>stage(</span><span style='color:#789B5F'>'Vulnerability
+   Scan - Kubernetes'</span><span style='color:#5C626D'>) {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>      </span>steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>        </span>parallel(</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#789B5F'>&quot;OPA Scan&quot;</span><span style='color:#5C626D'>:
+   {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>sh </span><span
+   style='color:#789B5F'>'docker run --rm -v $(pwd):/project
+   openpolicyagent/conftest test --policy opa-k8s-security.rego
+   k8s_deployment_service.yaml'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>          </span>},</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#789B5F'>&quot;Kubesec Scan&quot;</span><span style='color:
+   #5C626D'>: {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>sh </span><span
+   style='color:#789B5F'>&quot;bash kubesec-scan.sh&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>          </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>          </span>)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>        </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And build</p>
+ <p style='margin:0in'><img src="Kubesec_files/image001.png" width=695
+ height=343
+ alt="&lt; 106 &gt; &#10;Vulnerability Scan - Kubemetes / Kubesec Scan - 2s &#10;v bash kubesec-scan.sh &#10;— Shell Script &#10;x &#10;+ bash &#10;kubesec-scan. sh &#10;Result : &#10;@ 2m 31s &#10;@ 4 days ago &#10;Changes by nthiep1998 &#10;Started by GitHub push by hiep98 &#10;Sta rt &#10;Build Artifact &#10;Unit Tests &#10;Mutation Tests - &#10;PIT &#10;SonarQube - &#10;Docker Build and &#10;Push &#10;Pip&amp;le &#10;Vulnerability Scan &#10;- Kubernetes &#10;Kubesec Scan &#10;OPA scan &#10;Changes &#10;K8S Deployment &#10;-DEV &#10;Tests &#10;End &#10;&quot;object&quot; : &quot;Deployment/devsecops . default &quot; , &#10;&quot;valid&quot;: true, &#10;• &quot;API&quot;, &#10;&quot;rssage&quot;: &quot;Passed with a score of I &#10;&quot;score&quot;: I, &#10;&quot;scoring : { &#10;&quot;passed&quot;: [ &#10;: &quot;containers[] . securityContext .runAsbhnRoot true &#10;&quot;reason&quot;: &quot;Force the running image to run as a non-root user to ensure least privilege&quot;, &#10;&quot;points&quot;: I &#10;&quot; advise &quot; : &#10;&quot;id&quot;: &quot;ApparmrAny&quot; , &#10;&quot; .metadata .annotations . &#10;&quot;reason&quot; : &quot;Well defined AppArmor policies may provide greater protection from unknown threats. &#10;&quot;points&quot;: 3 &#10;Vulnerability Scan &#10;Dependency Scan &#10;OPA conftest &#10;Trivy scan &#10;ARNIN6: PRcn_JCTICN READY&quot;, "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>After build, The
+ log will show your score, the criteria you achieved and advice to improve
+ security for your k8s.</p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And base on result,
+ we can add<span style='mso-spacerun:yes'>  </span><span style='color:#E06C75'>serviceAccountName
+ </span>and<span style='color:#E06C75'> readOnlyRootFilesystem </span>into file
+ k8s_deployment_service.yaml to ensure it passes the kubesec test.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>spec</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+   style='color:#E06C75'>serviceAccountName</span><span style='color:#5C626D'>:
+   </span><span style='color:#789B5F'>default</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+   style='color:#E06C75'>containers</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>- </span><span
+   style='color:#E06C75'>image</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>replace</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>devsecops-container</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#E06C75'>securityContext</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>runAsNonRoot</span><span style='color:#5C626D'>: </span><span
+   style='color:#9F6B3B'>true</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>runAsUser</span><span style='color:#5C626D'>: </span><span
+   style='color:#9F6B3B'>100</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>readOnlyRootFilesystem</span><span style='color:#5C626D'>:
+   </span><span style='color:#9F6B3B'>true</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Because our script
+ can't detect and auto-deploy when we update k8s_deployment_service.yaml file.
+ So we will update the k8s-deployment.sh script</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#!/bin/bash</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#k8s-deployment.sh</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>DIFF_OUTPUT=</span><span style='color:#789B5F'>$(kubectl
+   diff -f k8s_deployment_service.yaml)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># if [ -n &quot;$DIFF_OUTPUT&quot; ]; then</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#<span style='mso-spacerun:yes'>   </span>#
+   DIFF_OUTPUT is not empty, run your code here</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># else</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#<span style='mso-spacerun:yes'>   </span>#
+   DIFF_OUTPUT is empty, do nothing</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># fi</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#! $(kubectl diff -f
+   k8s_deployment_service.yaml<span style='mso-spacerun:yes'> 
+   </span>&gt;/dev/null 2&gt;&amp;1)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>sed -i </span><span style='color:#789B5F'>&quot;s#replace#</span><span
+   style='color:#E06C75'>${imageName}</span><span style='color:#789B5F'>#g&quot;</span><span
+   style='color:#5C626D'> k8s_deployment_service.yaml</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>kubectl -n default get deployment </span><span
+   style='color:#E06C75'>${deploymentName} </span><span style='color:#C678DD'>&gt;</span><span
+   style='color:#5C626D'> /dev/null</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+   style='color:#E06C75'>$? </span><span style='color:#C678DD'>-ne</span><span
+   style='color:#5C626D'> 0 </span><span style='color:#C678DD'>|| ! </span><span
+   style='color:#789B5F'>$(kubectl diff -f k8s_deployment_service.yaml)</span><span
+   style='color:#C678DD'>=</span><span style='color:#789B5F'>&quot;&quot;</span><span
+   style='color:#5C626D'> ]]</span><span style='color:#C678DD'>; then</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;deployment
+   </span><span style='color:#E06C75'>${deploymentName}</span><span
+   style='color:#789B5F'> doesn't exist&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>    </span>kubectl -n default apply -f
+   k8s_deployment_service.yaml</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>else</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;deployment
+   </span><span style='color:#E06C75'>${deploymentName}</span><span
+   style='color:#789B5F'> exists&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;image
+   name - </span><span style='color:#E06C75'>${imageName}</span><span
+   style='color:#789B5F'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl -n
+   default </span><span style='color:#44A0AC'>set</span><span style='color:
+   #5C626D'> image deploy </span><span style='color:#E06C75'>${deploymentName}
+   ${containerName}</span><span style='color:#5C626D'>=</span><span
+   style='color:#E06C75'>${imageName}</span><span style='color:#5C626D'>
+   --record=true</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>Fi</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Alternatively, we
+ can all add the below code at the end of the file to check the description of
+ all the pod</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># Get all pod names in current namespace</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>pods=</span><span style='color:#789B5F'>$(kubectl get
+   pods -o jsonpath='{.items[*].metadata.name}')</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># Loop through each pod and describe its events</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>for </span><span style='color:#E06C75'>pod </span><span
+   style='color:#C678DD'>in </span><span style='color:#E06C75'>$pods</span><span
+   style='color:#C678DD'>; do</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Getting
+   events for pod: </span><span style='color:#E06C75'>$pod</span><span
+   style='color:#789B5F'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>kubectl get
+   events --field-selector involvedObject.name=</span><span style='color:#E06C75'>$pod</span><span
+   style='color:#5C626D'> --all-namespaces </span><span style='color:#C678DD'>|</span><span
+   style='color:#5C626D'> awk -v var=</span><span style='color:#789B5F'>&quot;</span><span
+   style='color:#E06C75'>$pod</span><span style='color:#789B5F'>&quot; '$0 ~
+   var'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>done</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>After update script
+ and build again, If you see this error in your pod, you need update your k8s
+ depoyment file.</p>
+ <p style='margin:0in'><img src="Kubesec_files/image002.png" width=808
+ height=101
+ alt="or . s &#10;rExce &#10;r in framework . context . icationContextExce t ion : &#10;Unable to start web server; &#10;ested except 15 org.spr ingframework.boot.web.server .WebServ &#10;tuon: Unable to create tem Dir. &#10;ava. to. tm dir is &#10;set o /t &#10;at org.spr ingframework .boot .web. servlet. context. tcat tonContext. onRefresh( ServletWebServerAppl tcat java: 161) &#10;pr ing-b00t-2.3. &#10;5. RELEASE. jar :2.3.5.RELEASE] &#10;at org. springfranework.context.support.AbstractAppucationContext. N[spring-context-5.2. IO.RELEAS &#10;at org.springfranpwork.boot -web. servlet. context. ServietWebServerApp1icat ionContext. refresh( ServIetWebServerAppI icat ionContext. java: 143) spr &#10;Ing-boot -2.3.5 "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, update
+ volumes in your deployment file like below.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>spec</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+   style='color:#E06C75'>volumes</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>- </span><span
+   style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>vol</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#E06C75'>emptyDir</span><span style='color:#5C626D'>: {}</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+   style='color:#E06C75'>serviceAccountName</span><span style='color:#5C626D'>:
+   </span><span style='color:#789B5F'>default</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+   style='color:#E06C75'>containers</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>- </span><span
+   style='color:#E06C75'>image</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>replace</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>devsecops-container</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#E06C75'>volumeMounts</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span>- </span><span
+   style='color:#E06C75'>mountPath</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>/tmp</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>vol</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+   style='color:#E06C75'>securityContext</span><span style='color:#5C626D'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>runAsNonRoot</span><span style='color:#5C626D'>: </span><span
+   style='color:#9F6B3B'>true</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>runAsUser</span><span style='color:#5C626D'>: </span><span
+   style='color:#9F6B3B'>100</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+   style='color:#E06C75'>readOnlyRootFilesystem</span><span style='color:#5C626D'>:
+   </span><span style='color:#9F6B3B'>true</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>specifies an
+ emptyDir volume named &quot;vol&quot;. An emptyDir volume is a temporary
+ volume that is created when a Pod is created and deleted when the Pod is
+ deleted. The emptyDir volume is initially empty, and all containers in the Pod
+ can read and write to the same files in the emptyDir volume.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The emptyDir volume
+ is created on the node that the Pod is assigned to. The emptyDir volume is not
+ persistent, and the data in the emptyDir volume is lost when the Pod is
+ deleted.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The emptyDir volume
+ is a good choice for temporary data storage, such as scratch space for a
+ disk-based merge sort or checkpointing a long computation for recovery from
+ crashes.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The emptyDir volume
+ can be mounted in a container using the following syntax: </p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>volumes:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- name: vol</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>emptyDir: {}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>containers:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- name: my-container</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>image: busybox</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>volumeMounts:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>- name: vol</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>mountPath: /vol</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In this example,
+ the &quot;my-container&quot; container will have access to the emptyDir volume
+ at the path &quot;/vol&quot;.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In Kubernetes,
+ curly braces `{}` with nothing inside them represent an empty object or an
+ empty dictionary. In the context of an `emptyDir` volume in a Kubernetes
+ deployment file, an empty dictionary `{}` indicates that there are no
+ specialized configuration options for this particular `emptyDir`.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span>In other words, using an empty dictionary for
+ an `emptyDir` volume means that Kubernetes should create a new, empty
+ directory for the volume to be mounted on the container, using default
+ settings. This directory is then isolated to the pod's lifecycle.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: <a
+ href="https://kubernetes.io/docs/concepts/storage/volumes/">https://kubernetes.io/docs/concepts/storage/volumes/</a>
+ </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

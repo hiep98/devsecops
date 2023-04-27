@@ -1,0 +1,702 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="OPA%20-%20k8s.htm">
+<link rel=File-List href="OPA%20-%20k8s_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.8069in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.3465in;width:1.627in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt'>OPA - k8s</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.8069in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kubernetes security
+ concepts:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`runAsUser`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This is a Kubernetes
+      security setting that specifies the user ID that a container should run
+      as. By default, containers in Kubernetes will run as the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`root`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> user, which can pose
+      potential security risks. Setting </span><span style='font-weight:bold;
+      font-family:Calibri;font-size:11.0pt'>`runAsUser`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> to a non-root UID ensures
+      that if the container is compromised, the attacker will not have root
+      privileges.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`runAsNonRoot`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: By default, containers in
+      Kubernetes will run as the </span><span style='font-weight:bold;
+      font-family:Calibri;font-size:11.0pt'>`root`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> user inside the container.
+      This can lead to security vulnerabilities as </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`root`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> is the highest privileged
+      user. The </span><span style='font-weight:bold;font-family:Calibri;
+      font-size:11.0pt'>`runAsNonRoot`</span><span style='font-family:Calibri;
+      font-size:11.0pt'> setting ensures that a container is run with a
+      non-root user, which reduces the attack surface and limits the damage an
+      attacker can do if they gain access to a compromised container.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`readOnlyRootFilesystem`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This is a security setting
+      in Kubernetes that restricts write access to the root filesystem of a
+      container. When this setting is enabled, any attempt to modify the
+      container's root filesystem will result in an error. This helps prevent
+      malicious code from being injected into the container and also reduces
+      the risk of data loss or corruption.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Overall, these
+ concepts help improve the security of Kubernetes environments by reducing the
+ attack surface and limiting access and privileges to containers running within
+ the Kubernetes cluster.</p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create next stage
+ in Jenkins pipeline:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5EA9E7'>stage</span><span style='color:#9298A3'>(</span><span
+   style='color:#7DA064'>'Vulnerability Scan - Kubernetes'</span><span
+   style='color:#9298A3'>) {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+   &nbsp; &nbsp; steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+   style='color:#7DA064'>'docker run --rm -v $(pwd):/project
+   openpolicyagent/conftest test --policy opa-k8s-security.rego
+   k8s_deployment_service.yaml'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+   &nbsp; &nbsp; }</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+   &nbsp; }</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Create OPA k8s rego
+ file:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>package main</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>input.kind = &quot;Service&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>not input.spec.type = &quot;NodePort&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>msg = &quot;Service type should be
+   NodePort&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>input.kind = &quot;Deployment&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>not
+   input.spec.template.spec.containers[0].securityContext.runAsNonRoot = true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>msg = &quot;Containers must not run as
+   root - use runAsNonRoot wihin container security context&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>k8s deployment file</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>apiVersion</span><span style='color:#9298A3'>: </span><span
+   style='color:#7DA064'>apps/v1</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>kind</span><span style='color:#9298A3'>: </span><span
+   style='color:#7DA064'>Deployment</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>metadata</span><span style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>labels</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>app</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>devsecops</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>name</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>devsecops</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>spec</span><span style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>replicas</span><span
+   style='color:#9298A3'>: </span><span style='color:#C49060'>2</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>selector</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>matchLabels</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; </span><span style='color:#E06C75'>app</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>devsecops</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>strategy</span><span
+   style='color:#9298A3'>: {}</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>template</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>metadata</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; </span><span style='color:#E06C75'>labels</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#E06C75'>app</span><span style='color:#9298A3'>: </span><span
+   style='color:#7DA064'>devsecops</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>spec</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; </span><span style='color:#E06C75'>containers</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; - </span><span style='color:#E06C75'>image</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>replace</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#E06C75'>name</span><span style='color:#9298A3'>: </span><span
+   style='color:#7DA064'>devsecops-container</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#E06C75'>securityContext</span><span style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#E06C75'>runAsNonRoot</span><span style='color:#9298A3'>: </span><span
+   style='color:#C49060'>true</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#E06C75'>runAsUser</span><span style='color:#9298A3'>: </span><span
+   style='color:#C49060'>100</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>---</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>apiVersion</span><span style='color:#9298A3'>: </span><span
+   style='color:#7DA064'>v1</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>kind</span><span style='color:#9298A3'>: </span><span
+   style='color:#7DA064'>Service</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>metadata</span><span style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>labels</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>app</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>devsecops</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>name</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>devsecops-svc</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#E06C75'>spec</span><span style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>ports</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; - </span><span style='color:#E06C75'>port</span><span
+   style='color:#9298A3'>: </span><span style='color:#C49060'>8080</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>protocol</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>TCP</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>targetPort</span><span
+   style='color:#9298A3'>: </span><span style='color:#C49060'>8080</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>selector</span><span
+   style='color:#9298A3'>:</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; &nbsp; </span><span style='color:#E06C75'>app</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>devsecops</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#9298A3'>&nbsp; </span><span style='color:#E06C75'>type</span><span
+   style='color:#9298A3'>: </span><span style='color:#7DA064'>NodePort</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Reference:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">https://kubernetes.io/docs/tasks/configure-pod-container/security-context/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://snyk.io/blog/10-kubernetes-security-context-settings-you-should-understand/">https://snyk.io/blog/10-kubernetes-security-context-settings-you-should-understand/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create script k8s
+ deployment</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#!/bin/bash</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#k8s-deployment.sh</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>sed -i </span><span style='color:#789B5F'>&quot;s#replace#</span><span
+   style='color:#E06C75'>${imageName}</span><span style='color:#789B5F'>#g&quot;</span><span
+   style='color:#5C626D'> k8s_deployment_service.yaml</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>kubectl -n default get deployment </span><span
+   style='color:#E06C75'>${deploymentName} </span><span style='color:#C678DD'>&gt;</span><span
+   style='color:#5C626D'> /dev/null</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+   style='color:#E06C75'>$? </span><span style='color:#C678DD'>-ne</span><span
+   style='color:#5C626D'> 0 ]]</span><span style='color:#C678DD'>; then</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;deployment
+   </span><span style='color:#E06C75'>${deploymentName}</span><span
+   style='color:#789B5F'> doesnt exist&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>    </span>kubectl -n default apply -f
+   k8s_deployment_service.yaml</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>else</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;deployment
+   </span><span style='color:#E06C75'>${deploymentName}</span><span
+   style='color:#789B5F'> exist&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;image
+   name - </span><span style='color:#E06C75'>${imageName}</span><span
+   style='color:#789B5F'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl -n
+   default </span><span style='color:#44A0AC'>set</span><span style='color:
+   #5C626D'> image deploy </span><span style='color:#E06C75'>${deploymentName}
+   ${containerName}</span><span style='color:#5C626D'>=</span><span
+   style='color:#E06C75'>${imageName}</span><span style='color:#5C626D'>
+   --record=true</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The code is a Bash
+ script that updates a Kubernetes deployment with a new container image. Here
+ are the explanations of each line:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`#!/bin/bash`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This line indicates the
+      interpreter to be used, which is Bash.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`sed -i
+      &quot;s#replace#${imageName}#g&quot; k8s_deployment_service.yaml`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This line replaces the
+      placeholder string &quot;replace&quot; with the value of the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`imageName`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> variable in the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`k8s_deployment_service.yaml`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> file using the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`sed`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> utility.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`kubectl -n
+      default get deployment ${deploymentName} &gt; /dev/null`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This line queries the
+      Kubernetes default namespace for the </span><span style='font-weight:
+      bold;font-family:Calibri;font-size:11.0pt'>`${deploymentName}`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> deployment. The </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`&gt;
+      /dev/null`</span><span style='font-family:Calibri;font-size:11.0pt'>
+      redirects the output to null, so it doesn't print anything to the
+      console.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`if [[ $?
+      -ne 0 ]]; then`</span><span style='font-family:Calibri;font-size:11.0pt'>:
+      This line checks the return value of the previous command (i.e., the
+      deployment exists or not). If the value is not zero (i.e., the deployment
+      does not exist), then it goes to the </span><span style='font-weight:
+      bold;font-family:Calibri;font-size:11.0pt'>`if`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> block.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`echo
+      &quot;deployment ${deploymentName} doesnt exist&quot;`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This line prints the
+      message to the console, indicating that the deployment does not exist.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`kubectl -n
+      default apply -f k8s_deployment_service.yaml`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This line applies the
+      deployment and service configuration from the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`k8s_deployment_service.yaml`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> file to create the
+      deployment.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`else`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: If the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`if`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> block condition is not
+      satisfied, the script proceeds to the </span><span style='font-weight:
+      bold;font-family:Calibri;font-size:11.0pt'>`else`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> block.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`echo
+      &quot;deployment ${deploymentName} exist&quot;`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>: This line prints the
+      message to the console, indicating that the deployment already exists.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`echo
+      &quot;image name - ${imageName}&quot;`</span><span style='font-family:
+      Calibri;font-size:11.0pt'>: This line prints the name of the new
+      container image.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`kubectl -n
+      default set image deploy ${deploymentName} ${containerName}=${imageName}
+      --record=true`</span><span style='font-family:Calibri;font-size:11.0pt'>:
+      This line updates the existing deployment by changing the container image
+      of the </span><span style='font-weight:bold;font-family:Calibri;
+      font-size:11.0pt'>`${containerName}`</span><span style='font-family:Calibri;
+      font-size:11.0pt'> container to </span><span style='font-weight:bold;
+      font-family:Calibri;font-size:11.0pt'>`${imageName}`</span><span
+      style='font-family:Calibri;font-size:11.0pt'>. The </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.0pt'>`--record=true`</span><span
+      style='font-family:Calibri;font-size:11.0pt'> records the change in the
+      revision history of the deployment.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The <span
+ style='font-weight:bold'>`kubectl -n default`</span> option specifies the
+ namespace in which to execute the given Kubernetes command.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>A Kubernetes
+ namespace is an abstraction used to partition a cluster into logical parts. It
+ enables multiple virtual clusters to be created on top of a physical cluster.
+ The <span style='font-weight:bold'>`default`</span> namespace is the starting
+ namespace when you first create a Kubernetes cluster. Every object that
+ created without a namespace specified goes into the <span style='font-weight:
+ bold'>`default`</span> namespace.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>When you execute <span
+ style='font-weight:bold'>`kubectl`</span> commands, by default the context of
+ the current namespace is taken into account. But if you want to operate on a
+ different namespace other than the current one, you need to specify the
+ namespace using the <span style='font-weight:bold'>`-n`</span> flag followed
+ by the namespace name.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>In the script, the <span
+ style='font-weight:bold'>`kubectl -n default`</span> option is used to specify
+ the namespace <span style='font-weight:bold'>`default`</span> to execute the <span
+ style='font-weight:bold'>`get`</span>, <span style='font-weight:bold'>`apply`</span>,
+ and <span style='font-weight:bold'>`set`</span> commands specific to the
+ namespace where the Kubernetes deployment is located.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The <span
+ style='font-weight:bold'>`&gt; /dev/null`</span> portion of the code is a
+ Linux and Unix shell feature to discard the output generated by a command.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>In the script
+ above, <span style='font-weight:bold'>`kubectl -n default get deployment
+ ${deploymentName}`</span> is used to check if the deployment with the name <span
+ style='font-weight:bold'>`${deploymentName}`</span> exists in the <span
+ style='font-weight:bold'>`default`</span> namespace. If the deployment exists,
+ we do not necessarily need to print the output since it is not critical in the
+ context of the script. Therefore, the <span style='font-weight:bold'>`&gt;
+ /dev/null`</span> redirects any output produced by the <span style='font-weight:
+ bold'>`get`</span> command to <span style='font-weight:bold'>`null`</span> or
+ nowhere, meaning that any output generated by the <span style='font-weight:
+ bold'>`get`</span> command is entirely discarded.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This way, the
+ redirection <span style='font-weight:bold'>`&gt; /dev/null`</span> reduces
+ unwanted messages printed to the console, resulting in a cleaner console
+ output.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create script k8s
+ rollback</p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#!/bin/bash</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#k8s-deployment-rollout-status.sh</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>sleep
+   60s</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+   style='color:#789B5F'>$(kubectl -n default rollout status deploy </span><span
+   style='color:#E06C75'>${deploymentName}</span><span style='color:#789B5F'>
+   --timeout 5s) </span><span style='color:#C678DD'>!= *</span><span
+   style='color:#789B5F'>&quot;successfully rolled out&quot;</span><span
+   style='color:#C678DD'>*</span><span style='color:#5C626D'> ]]</span><span
+   style='color:#C678DD'>; </span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>then</span><span style='color:#5C626D'><span
+   style='mso-spacerun:yes'>     </span></span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Deployment
+   </span><span style='color:#E06C75'>${deploymentName}</span><span
+   style='color:#789B5F'> Rollout has Failed&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl -n
+   default rollout undo deploy </span><span style='color:#E06C75'>${deploymentName}</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>exit</span><span style='color:#5C626D'> 1</span><span
+   style='color:#C678DD'>;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>else</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Deployment
+   </span><span style='color:#E06C75'>${deploymentName}</span><span
+   style='color:#789B5F'> Rollout is Success&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This Bash script is
+ designed to check the status of a Kubernetes deployment rollout and rollback
+ the deployment if the rollout has failed. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Here is how the
+ script works step by step:</p>
+ <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+  0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:normal'>
+  <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+      color:white'><span style='font-family:Calibri;font-size:11.5pt;
+      font-weight:normal;font-style:normal;font-family:Calibri;font-size:11.5pt;
+      color:black'>The script starts by pausing for 60 seconds using the </span><span
+      style='font-family:Calibri;font-size:11.5pt;font-weight:bold;font-style:
+      normal;font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`sleep`</span><span
+      style='font-family:Calibri;font-size:11.5pt;font-weight:normal;
+      font-style:normal;font-family:Calibri;font-size:11.5pt;color:black'>
+      command. This is done to ensure that the deployment rollback status check
+      is not executed until the expected time for the rollout to start has
+      passed.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>The script then
+      executes the </span><span style='font-weight:bold;font-family:Calibri;
+      font-size:11.5pt;color:black'>`kubectl`</span><span style='font-family:
+      Calibri;font-size:11.5pt;color:black'> command with the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`rollout
+      status`</span><span style='font-family:Calibri;font-size:11.5pt;
+      color:black'> sub-command and the </span><span style='font-weight:bold;
+      font-family:Calibri;font-size:11.5pt;color:black'>`deploy`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> resource type
+      to check the status of the deployment rollout. It uses the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`deploymentName`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> variable to
+      specify the name of the deployment that needs to be checked. The </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`--timeout`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> option
+      specifies the maximum time that </span><span style='font-weight:bold;
+      font-family:Calibri;font-size:11.5pt;color:black'>`kubectl`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> should wait for
+      the rollout to complete.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>The </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`kubectl`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> command output
+      is captured as a string and compared against the pattern </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`&quot;successfully
+      rolled out&quot;`</span><span style='font-family:Calibri;font-size:11.5pt;
+      color:black'>. If the pattern is not found in the output, the script
+      proceeds to the </span><span style='font-weight:bold;font-family:Calibri;
+      font-size:11.5pt;color:black'>`then`</span><span style='font-family:Calibri;
+      font-size:11.5pt;color:black'> block.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>If the pattern
+      is not found, the script prints a message to the console indicating that
+      the deployment rollout has failed using the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`echo`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> command. It
+      then executes the </span><span style='font-weight:bold;font-family:Calibri;
+      font-size:11.5pt;color:black'>`kubectl`</span><span style='font-family:
+      Calibri;font-size:11.5pt;color:black'> command with the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`rollout
+      undo`</span><span style='font-family:Calibri;font-size:11.5pt;color:black'>
+      subcommand to undo the deployment rollout using the </span><span
+      style='font-weight:bold;font-family:Calibri;font-size:11.5pt;color:black'>`deploymentName`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> variable. This
+      will cause the deployment to rollback to the previous deployment version.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Finally, the
+      script terminates with a failure status of </span><span style='font-weight:
+      bold;font-family:Calibri;font-size:11.5pt;color:black'>`1`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>If the pattern
+      is found in the output, the script prints a message indicating a
+      successful deployment rollout using the </span><span style='font-weight:
+      bold;font-family:Calibri;font-size:11.5pt;color:black'>`echo`</span><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'> command.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Finally, the
+      script terminates. No error status is returned.</span></li>
+ </ol>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Overall, this
+ script is useful for automatically checking the status of a Kubernetes
+ deployment rollout, detecting when the rollout has failed, and rolling back to
+ a previous deployment version to ensure that the Kubernetes application runs
+ smoothly without interruption.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add enviroment into
+ pipeline</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>pipeline {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>agent any</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>environment {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>deploymentName = &quot;devsecops&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>containerName =
+   &quot;devsecops-container&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>serviceName = &quot;devsecops-svc&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>imageName =
+   &quot;siddharth67/numeric-app:${GIT_COMMIT}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>applicationURL = &quot; <a
+   href="http://devsecops-demo.eastus.cloudapp.azure.com/">http://devsecops-demo.eastus.cloudapp.azure.com/</a>&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>applicationURI =
+   &quot;/increment/99&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Edit pipeline:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>stage('K8S
+   Deployment - DEV') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>parallel(</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;Deployment&quot;: {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>withKubeConfig([credentialsId:
+   'kubeconfig']) {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>sh &quot;bash
+   k8s-deployment.sh&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>},</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;Rollout Status&quot;: {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>withKubeConfig([credentialsId:
+   'kubeconfig']) {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>sh &quot;bash
+   k8s-deployment-rollout-status.sh&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Build pipeline.</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

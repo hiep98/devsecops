@@ -1,0 +1,449 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Mutation%20tests.htm">
+<link rel=File-List href="Mutation%20tests_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:10.4298in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:1.8826in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt'>Mutation tests</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:10.4298in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Add PITest Mutation
+Plugin in pom.xml</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+  style='font-style:italic;color:#7F848E'>&lt;!-- &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; PITest Mutation Plugin &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; --&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>plugin</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;org.pitest&lt;/</span><span
+  style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;pitest-maven&lt;/</span><span
+  style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;1.5.0&lt;/</span><span
+  style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>dependencies</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>dependency</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;org.pitest&lt;/</span><span
+  style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>artifactId</span><span
+  style='color:#5C626D'>&gt;pitest-junit5-plugin&lt;/</span><span
+  style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;0.12&lt;/</span><span
+  style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span
+  style='color:#E06C75'>dependency</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span
+  style='color:#E06C75'>dependencies</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>configuration</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>mutationThreshold</span><span style='color:#5C626D'>&gt;70&lt;/</span><span
+  style='color:#E06C75'>mutationThreshold</span><span style='color:#5C626D'>&gt;
+  ## test fail if output less than 70%</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+  style='color:#E06C75'>outputFormats</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>outputFormat</span><span
+  style='color:#5C626D'>&gt;XML&lt;/</span><span style='color:#E06C75'>outputFormat</span><span
+  style='color:#5C626D'>&gt; ## export report at XML</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>outputFormat</span><span
+  style='color:#5C626D'>&gt;HTML&lt;/</span><span style='color:#E06C75'>outputFormat</span><span
+  style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span
+  style='color:#E06C75'>outputFormats</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span
+  style='color:#E06C75'>configuration</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span
+  style='color:#E06C75'>plugin</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &lt;/</span><span style='color:#E06C75'>build</span><span
+  style='color:#5C626D'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>add code below
+before build stage:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#1863A1'>stage</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>'Mutation Tests - PIT'</span><span style='color:#5C626D'>)
+  {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; steps {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+  style='color:#789B5F'>&quot;mvn
+  org.pitest:pitest-maven:mutationCoverage&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; post {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; always {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  pitmutation </span><span style='color:#9F6B3B'>mutationStatsFile</span><span
+  style='color:#5C626D'>: </span><span style='color:#789B5F'>'**/target/pit-reports/**/mutations.xml'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is a Jenkins
+pipeline code snippet that defines a stage called &quot;Mutation Tests -
+PIT&quot; which runs a mutation testing tool called Pitest.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`steps`</span> block describes the task to be
+performed in this stage. In this case, it runs the <span style='font-weight:
+bold'>`mvn`</span> command which executes the Pitest maven plugin to generate
+mutation coverage report.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`org.pitest:pitest-maven:mutationCoverage`:
+This is the specific goal being executed using the Pitest Maven plugin. The
+`mutationCoverage` goal is used to run the mutation tests and generate the
+mutation coverage report.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`post`</span> block defines a post-build action to be
+executed after the completion of the <span style='font-weight:bold'>`steps`</span>
+block. The <span style='font-weight:bold'>`always`</span> block is a post-build
+action that runs whether the previous steps succeeded or not.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`pitmutation`</span> command within the <span
+style='font-weight:bold'>`always`</span> block is a Jenkins plugin that parses
+the <span style='font-weight:bold'>`mutations.xml`</span> file generated by
+Pitest to calculate the mutation coverage statistics. The <span
+style='font-weight:bold'>`mutationStatsFile`</span> argument tells the plugin
+where to find the XML file.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Overall, this stage
+runs a mutation testing tool and generates a report using the Pitest maven
+plugin, followed by calculating and displaying the mutation coverage statistics
+using the Jenkins <span style='font-weight:bold'>`pitmutation`</span> plugin.</p>
+
+<p><cite style='margin:0in;font-family:Calibri;font-size:10.0pt;color:#595959'>&nbsp;</cite></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>push new source
+code, jenkins have logs:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4875in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='color:#686868'>[</span><span style='color:#D54C53'>ERROR</span><span
+  style='color:#686868'>] Failed to execute goal </span><span style='color:
+  #96CB58'>org.pitest:pitest-maven:1.5.0:mutationCoverage</span><span
+  style='color:#686868'>(default-cli) on project </span><span style='color:
+  #24B0D5'>numeric</span><span style='color:#686868'>: </span><span
+  style='color:#D54C53'>Mutation score of 40 is below threshold of 70</span><span
+  style='color:#686868'>-&gt; [Help 1]</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Mutation%20tests_files/image001.png" width=981
+height=432
+alt="Stage Logs (Mutation Tests - PIT) &#10;@ Shell Script mvn (self time Imin IOS) &#10;Statistics &#10;Generated 5 mutations Killed 2 (413%) &#10;Ran 6 tests (1.2 tests per mutation) &#10;Elim- &#10;EC1;31mBUILD FAILUREE[m &#10;Elim- &#10;• 34mINFOECm] Total time: 01:08 min &#10;Finished at: &#10;Elim- &#10;Cz[l; 31mERROR2Cm] &#10;Cz[l; 31mERROR2Cm] &#10;Failed to execute goal on project EC36mnumericECm: &#10;To see the full stack trace of the errors, re-run Maven with the switch. &#10;Re-run Maven using the Z[Im-XZCm switch to enable full debug logging. &#10;For more information about the errors and possible solutions, please read the following articles: &#10;211m[HeIp http://cwiki.apache.org/confIuence/dispIay/mAVEWMojoFaiIureException &#10;ELI; 31mMutation score of 40 is below threshold of 70•EI &#10;@ Record Pit mutation testing report &quot;[target/pit-reports/&quot;/mutations.xml (self time 90ms) &#10;02:05 24 thg 2 2023 &#10;07:30 23 2 2023 &#10;commit &#10;23 thg 2 &#10;Is &#10;9s &#10;Imin IOS &#10;07:19 &#10;2023 &#10;58ms &#10;failed &#10;56ms &#10;failed "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Mutation%20tests_files/image002.png" width=985
+height=298
+alt="Dashboard &#10;Status &#10;devsecops-app-num &#10;Changes &#10;Console Output &#10;View as plain text &#10;Edit Build Information &#10;Delete build '#16' &#10;Polling Log &#10;Git Build Data &#10;Test Result &#10;Coverage Report &#10;PIT Mutation Report &#10;Modules &#10;Mutation Statistics &#10;Mutations Undetected Coverage &#10;40.0% (+40.0%) &#10;Components &#10;Name &#10;Module: null &#10;Mutations &#10;Undetected &#10;3 &#10;Coverage &#10;40.0% &#10;+40.0% "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Mutation%20tests_files/image003.png" width=992
+height=551
+alt="30 1 1. welcome : replaced return value with for &#10;return &#10;com/devsecops/NumericControllerScompere::welcome — SURVIVED &#10;31 &#10;32 &#10;33 &#10;&quot;Kubernetes DevSecOps&quot; ; &#10;34 &#10;public String int value) { &#10;35 &#10;String message = &#10;36 2 1. compareToFifty : changed conditional boundary SURVIVED &#10;&quot;Could not determine comparison&quot; ; &#10;if (value &gt; 50) { &#10;2. compareToFifty : negated conditional KILLED &#10;37 &#10;38 &#10;39 &#10;mes sage &#10;else { &#10;mes sage &#10;— &quot;Greater than 50&quot; ; &#10;&quot;Smaller than or equal to 50&quot;; "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Change 3 test case
+become like below:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>@</span><span style='color:#A1844F'>Test</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>&nbsp; &nbsp; </span><span style='color:#C678DD'>public
+  void</span><span style='color:#1863A1'> smallerThanOrEqualToFiftyMessage</span><span
+  style='color:#5C626D'>() </span><span style='color:#C678DD'>throws </span><span
+  style='color:#A1844F'>Exception </span><span style='color:#5C626D'>{</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+  style='color:#A1844F'>this</span><span style='color:#5C626D'>.</span><span
+  style='color:#A1844F'>mockMvc</span><span style='color:#5C626D'>.</span><span
+  style='color:#1863A1'>perform</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>get</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>&quot;/compare/50&quot;</span><span style='color:#5C626D'>)).</span><span
+  style='color:#1863A1'>andDo</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>print</span><span style='color:#5C626D'>()).</span><span
+  style='color:#1863A1'>andExpect</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>status</span><span style='color:#5C626D'>().</span><span
+  style='color:#1863A1'>isOk</span><span style='color:#5C626D'>())</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  .</span><span style='color:#1863A1'>andExpect</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>content</span><span style='color:#5C626D'>().</span><span
+  style='color:#1863A1'>string</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>&quot;Smaller than or equal to 50&quot;</span><span
+  style='color:#5C626D'>));</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>&nbsp; &nbsp; </span><span style='color:#5C626D'>@</span><span
+  style='color:#A1844F'>Test</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>&nbsp; &nbsp; </span><span style='color:#C678DD'>public
+  void</span><span style='color:#1863A1'> greaterThanFiftyMessage</span><span
+  style='color:#5C626D'>() </span><span style='color:#C678DD'>throws </span><span
+  style='color:#A1844F'>Exception </span><span style='color:#5C626D'>{</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+  style='color:#A1844F'>this</span><span style='color:#5C626D'>.</span><span
+  style='color:#A1844F'>mockMvc</span><span style='color:#5C626D'>.</span><span
+  style='color:#1863A1'>perform</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>get</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>&quot;/compare/51&quot;</span><span style='color:#5C626D'>)).</span><span
+  style='color:#1863A1'>andDo</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>print</span><span style='color:#5C626D'>()).</span><span
+  style='color:#1863A1'>andExpect</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>status</span><span style='color:#5C626D'>().</span><span
+  style='color:#1863A1'>isOk</span><span style='color:#5C626D'>())</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  .</span><span style='color:#1863A1'>andExpect</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>content</span><span style='color:#5C626D'>().</span><span
+  style='color:#1863A1'>string</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>&quot;Greater than 50&quot;</span><span
+  style='color:#5C626D'>));</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>&nbsp;
+  &nbsp; </p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>&nbsp; &nbsp; </span><span style='color:#5C626D'>@</span><span
+  style='color:#A1844F'>Test</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>&nbsp; &nbsp; </span><span style='color:#C678DD'>public
+  void</span><span style='color:#1863A1'> welcomeMessage</span><span
+  style='color:#5C626D'>() </span><span style='color:#C678DD'>throws </span><span
+  style='color:#A1844F'>Exception </span><span style='color:#5C626D'>{</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+  style='color:#A1844F'>this</span><span style='color:#5C626D'>.</span><span
+  style='color:#A1844F'>mockMvc</span><span style='color:#5C626D'>.</span><span
+  style='color:#1863A1'>perform</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>get</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>&quot;/&quot;</span><span style='color:#5C626D'>)).</span><span
+  style='color:#1863A1'>andDo</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>print</span><span style='color:#5C626D'>()).</span><span
+  style='color:#1863A1'>andExpect</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>status</span><span style='color:#5C626D'>().</span><span
+  style='color:#1863A1'>isOk</span><span style='color:#5C626D'>())</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  .</span><span style='color:#1863A1'>andExpect</span><span style='color:#5C626D'>(</span><span
+  style='color:#1863A1'>content</span><span style='color:#5C626D'>().</span><span
+  style='color:#1863A1'>string</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>&quot;Kubernetes DevSecOps&quot;</span><span
+  style='color:#5C626D'>));</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+  &nbsp; }</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is a JUnit test
+case written in Java that uses the Spring MVC Test framework.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`@Test`</span> annotation indicates that this method
+is a test case.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The name of the
+method <span style='font-weight:bold'>`welcomeMessage()`</span> is meant to
+describe the behavior being tested.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`throws Exception`</span> in the signature of the
+method indicate that this test may throw a generic <span style='font-weight:
+bold'>`Exception`</span>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`this.mockMvc.perform(get(&quot;/&quot;))`</span> is a
+method call in which we send an HTTP GET request to the application's root URL <span
+style='font-weight:bold'>`/`</span>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`andDo(print())`</span> method is used to print the
+result of the request in the console.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`andExpect(status().isOk())`</span> method verifies
+that the response status code is 200 (OK).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+style='font-weight:bold'>`andExpect(content().string(&quot;Kubernetes
+DevSecOps&quot;))`</span> method verifies that the response body contains the
+exact string &quot;Kubernetes DevSecOps&quot;.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Overall, this test
+case is checking that the application's Welcome page displays the correct
+message &quot;Kubernetes DevSecOps&quot;.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>ll
+  /var/lib/jenkins/workspace/devsecops-app-num/target/pit-reports/</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>total 12</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>drwxr-xr-x<span
+  style='mso-spacerun:yes'>  </span>3 jenkins jenkins 4096 Mar<span
+  style='mso-spacerun:yes'>  </span>2 21:49 ./</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>drwxr-xr-x 11
+  jenkins jenkins 4096 Mar<span style='mso-spacerun:yes'>  </span>2 21:49 ../</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>drwxr-xr-x<span
+  style='mso-spacerun:yes'>  </span>3 jenkins jenkins 4096 Mar<span
+  style='mso-spacerun:yes'>  </span>2 21:49 202303022149/</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

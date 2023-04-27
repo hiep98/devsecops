@@ -1,0 +1,16 @@
+## Create sec_files
+mkdir sec_files && cd sec_files
+echo "username=sidd-harth" > file1
+echo "secure-password123" > password.txt
+echo "apikey=AizaSyCqhjgrPtr_La56sdUkjfav_laCqhjgrPtr_2s" > file2
+echo "base64encodedsecret=cGFzc3dvcmQtaXMtcXdlcnR5MTIzCg==" > file3
+
+
+
+
+
+## Talisman Installation
+curl https://thoughtworks.github.io/talisman/install.sh > ~/install-talisman.sh
+chmod +x ~/install-talisman.sh
+cd your-git-project
+~/install-talisman.sh

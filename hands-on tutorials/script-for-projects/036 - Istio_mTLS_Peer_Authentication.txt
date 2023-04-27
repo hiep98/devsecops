@@ -1,0 +1,14 @@
+while true; do curl -s x.x.x.x:xxxx/xxxx/xx/x; sleep1; done
+
+########### Peer Authentication YAML - DIABLE ########### 
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+spec:
+  mtls:
+    mode: DISABLE
+########### Peer Authentication YAML - DIABLE ########### 
+
+
+kubectl apply -f peer-auth.yaml -n istio-system

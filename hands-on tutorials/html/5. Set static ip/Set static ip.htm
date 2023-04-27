@@ -1,0 +1,92 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Set%20static%20ip.htm">
+<link rel=File-List href="Set%20static%20ip_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:1.5951in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt;color:#0C0C0C'>Set
+static ip</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo vi
+  /etc/netplan/01-netcfg.yaml <br>
+    <br>
+    network:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>version: 2</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>renderer: networkd</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>ethernets:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>ens33:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>            </span>addresses:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                </span>- 192.168.207.129/24</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>            </span>nameservers:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                </span>addresses: [8.8.8.8, 8.8.4.4]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>            </span>routes:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                </span>- to: default</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                  </span>via: 192.168.207.2</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo netplan apply </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo ip addr del
+192.168.207.131/24 dev ens33</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

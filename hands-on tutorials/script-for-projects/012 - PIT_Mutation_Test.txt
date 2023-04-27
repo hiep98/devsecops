@@ -1,0 +1,93 @@
+## Add PITest Mutation Plugin in pom.xml
+<!--                   PITest Mutation Plugin                   -->
+<plugin>
+   <groupId>org.pitest</groupId>
+   <artifactId>pitest-maven</artifactId>
+   <version>1.5.0</version>
+   <dependencies>
+      <dependency>
+         <groupId>org.pitest</groupId>
+         <artifactId>pitest-junit5-plugin</artifactId>
+         <version>0.12</version>
+      </dependency>
+   </dependencies>
+   <configuration>
+      <mutationThreshold>70</mutationThreshold>
+      <outputFormats>
+         <outputFormat>XML</outputFormat>
+         <outputFormat>HTML</outputFormat>
+      </outputFormats>
+   </configuration>
+</plugin>
+
+
+
+## Add Mutation-Tests - PIT stage in Jenkinsfile
+pipeline {
+  agent any
+
+  stages {
+
+    stage('Build Artifact - Maven') {
+      steps {
+        sh "mvn clean package -DskipTests=true"
+        archive 'target/*.jar'
+      }
+    }
+
+    stage('Unit Tests - JUnit and JaCoCo') {
+      steps {
+        sh "mvn test"
+      }
+      post {
+        always {
+          junit 'target/surefire-reports/*.xml'
+          jacoco execPattern: 'target/jacoco.exec'
+        }
+      }
+    }
+
+    stage('Mutation Tests - PIT') {
+      steps {
+        sh "mvn org.pitest:pitest-maven:mutationCoverage"
+      }
+      post {
+        always {
+          pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+        }
+      }
+    }
+
+    stage('Docker Build and Push') {
+      steps {
+        withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+          sh 'printenv'
+          sh 'docker build -t siddharth67/numeric-app:""$GIT_COMMIT"" .'
+          sh 'docker push siddharth67/numeric-app:""$GIT_COMMIT""'
+        }
+      }
+    }
+
+    stage('Kubernetes Deployment - DEV') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfig']) {
+          sh "sed -i 's#replace#siddharth67/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+          sh "kubectl apply -f k8s_deployment_service.yaml"
+        }
+      }
+    }
+
+  }
+
+}
+
+
+
+
+## Updating the Testcase in /src/test/java/com/devsecops/NumericApplicationTests.java
+
+@Test
+    public void welcomeMessage() throws Exception {
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string("Kubernetes DevSecOps"));
+    }

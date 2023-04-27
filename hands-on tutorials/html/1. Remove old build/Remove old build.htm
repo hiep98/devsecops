@@ -1,0 +1,200 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Remove%20old%20build.htm">
+<link rel=File-List href="Remove%20old%20build_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.127in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt;color:#0C0C0C'>Remove
+old build</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Delete old build in
+linux</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo find /<span
+  style='mso-spacerun:yes'>  </span>-type d -name &quot;builds&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>/var/lib/jenkins/jobs/devsecops-app-num/builds</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>rm -r {1..100}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reload config in
+jenkins dashboard</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Jenkins script
+remove all build, just keep build 19,23</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def jobName =
+  &quot;devsecops-app-num&quot;<span style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def job =
+  Jenkins.instance.getItem(jobName)<span style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>job.getBuilds().each
+  { </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>if (it.number != 19 &amp;&amp; it.number
+  != 23) {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>it.delete() </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}<span
+  style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>job.nextBuildNumber
+  = 1<span style='mso-spacerun:yes'>   </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>job.save()</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can optimize the
+if statement by using a list of build numbers that you want to keep and
+checking if the current build number is in that list. Here's how you can do it:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def jobName =
+  &quot;copy_folder&quot;<span style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def job =
+  Jenkins.instance.getItem(jobName)<span style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>// List of build
+  numbers to keep</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def buildsToKeep =
+  [19, 23, 25, 30, 33, 50]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>job.getBuilds().each
+  { </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>if (!buildsToKeep.contains(it.number)) {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>it.delete() </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}<span
+  style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>job.nextBuildNumber
+  = 1<span style='mso-spacerun:yes'>   </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>job.save() </p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This script will
+delete all builds except for the ones with build numbers in the `buildsToKeep`
+list.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Source: Conversation
+with Bing, 4/8/2023(1) How to use if else statement with Groovy? - Stack
+Overflow. <a
+href="https://stackoverflow.com/questions/27392655/how-to-use-if-else-statement-with-groovy%20Accessed%204/8/2023">https://stackoverflow.com/questions/27392655/how-to-use-if-else-statement-with-groovy
+Accessed 4/8/2023</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(2) Groovy - If/Else
+Statement - TutorialsPoint. <a
+href="https://www.tutorialspoint.com/groovy/groovy_if_else_statement.htm">https://www.tutorialspoint.com/groovy/groovy_if_else_statement.htm</a>
+Accessed 4/8/2023.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(3) Groovy - Nested
+If Statement - TutorialsPoint. <a
+href="https://www.tutorialspoint.com/groovy/groovy_nested_if_statement.htm">https://www.tutorialspoint.com/groovy/groovy_nested_if_statement.htm</a>
+Accessed 4/8/2023.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(4) Groovy Decision
+Making - Javatpoint. <a
+href="https://www.javatpoint.com/groovy-decision-making%20Accessed%204/8/2023">https://www.javatpoint.com/groovy-decision-making
+Accessed 4/8/2023</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(5) How do I write a
+compound if statement in Groovy? [closed]. <a
+href="https://stackoverflow.com/questions/46932505/how-do-i-write-a-compound-if-statement-in-groovy%20Accessed%204/8/2023">https://stackoverflow.com/questions/46932505/how-do-i-write-a-compound-if-statement-in-groovy
+Accessed 4/8/2023</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(6) Conditional
+Statements - Groovy Tutorial - OneCompiler. <a
+href="https://onecompiler.com/tutorials/groovy/control-statements/conditional-statements%20Accessed%204/8/2023">https://onecompiler.com/tutorials/groovy/control-statements/conditional-statements
+Accessed 4/8/2023</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

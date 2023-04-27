@@ -1,0 +1,5 @@
+## Webhook
+
+http://<vm-external-ip--or--public-dns>:<jenkins-port>/github-webhook/
+
+http://k8s-demo.eastus.cloudapp.azure.com:8080/github-webhook/

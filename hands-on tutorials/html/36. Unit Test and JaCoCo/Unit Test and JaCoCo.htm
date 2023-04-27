@@ -1,0 +1,227 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Unit%20Test%20and%20JaCoCo.htm">
+<link rel=File-List href="Unit%20Test%20and%20JaCoCo_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.9104in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.9326in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:#0C0C0C'>Unit
+Test and JaCoCo</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.9104in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add code below into
+the end of file pom.xml</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt;margin-left:.3333in' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&lt;</span><span style='color:#E06C75'>plugin</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>groupId</span><span style='color:#9298A3'>&gt;org.jacoco&lt;/</span><span
+  style='color:#E06C75'>groupId</span><span style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>artifactId</span><span
+  style='color:#9298A3'>&gt;jacoco-maven-plugin&lt;/</span><span
+  style='color:#E06C75'>artifactId</span><span style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>version</span><span style='color:#9298A3'>&gt;0.8.5&lt;/</span><span
+  style='color:#E06C75'>version</span><span style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;</span><span style='color:#E06C75'>executions</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>execution</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>goals</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>goal</span><span
+  style='color:#9298A3'>&gt;prepare-agent&lt;/</span><span style='color:#E06C75'>goal</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span style='color:#E06C75'>goals</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &lt;/</span><span style='color:#E06C75'>execution</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>execution</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>id</span><span
+  style='color:#9298A3'>&gt;report&lt;/</span><span style='color:#E06C75'>id</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>phase</span><span
+  style='color:#9298A3'>&gt;test&lt;/</span><span style='color:#E06C75'>phase</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>goals</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span style='color:#E06C75'>goal</span><span
+  style='color:#9298A3'>&gt;report&lt;/</span><span style='color:#E06C75'>goal</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span style='color:#E06C75'>goals</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &lt;/</span><span style='color:#E06C75'>execution</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &lt;/</span><span style='color:#E06C75'>executions</span><span
+  style='color:#9298A3'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'><span style='mso-spacerun:yes'> </span>&lt;/</span><span
+  style='color:#E06C75'>plugin</span><span style='color:#9298A3'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><br>
+This code is part of a Maven plugin called Jacoco, which is a code coverage
+tool used to measure Java code. This particular snippet configures the
+executions of the plugin. It runs the &quot;prepare-agent&quot; goal first, and
+the &quot;report&quot; goal after the test phase is complete. The
+&quot;prepare-agent&quot; ensures that Jacoco is running properly, while the
+&quot;report&quot; creates a report at the end of the test phase which contains
+coverage details. This helps to determine how well the code is tested.</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5EA9E7'>stage</span><span style='color:#9298A3'>(</span><span
+  style='color:#7DA064'>'Unit Tests'</span><span style='color:#9298A3'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; steps {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+  style='color:#7DA064'>&quot;mvn test&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; post {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; always {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  junit </span><span style='color:#7DA064'>'target/surefire-reports/*.xml'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  jacoco </span><span style='color:#C49060'>execPattern</span><span
+  style='color:#9298A3'>: </span><span style='color:#7DA064'>'target/jacoco.exec'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; }</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This code is part of
+a Jenkins pipeline that runs unit tests on a Java project. The
+&quot;stage&quot; block is used to define a set of actions that should be
+performed in order, in this case, running the unit tests and generating a
+report. The &quot;sh&quot; command runs the &quot;mvn test&quot; command which
+triggers the actual unit tests. The &quot;post&quot; block is used to publish
+the results of those tests. The &quot;junit&quot; command will publish the
+results of the unit tests to Jenkins in the form of XML files. The
+&quot;jacoco&quot; command is used to generate a code coverage report, based on
+the &quot;execPattern&quot; specified. This code coverage reports will allow
+developers to measure how well their code is executing.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The <span
+style='font-weight:bold'>`always`</span> block in the Jenkins stage code you
+provided is an element of the Pipeline Syntax. It is used to define the
+activities that should be executed regardless of the outcome of the stage (i.e.
+success or failure). In your example code, this block includes the steps to
+copy the Junit test reports and generate the Jacoco code coverage file.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The `jacoco
+execPattern: 'target/jacoco.exec'` code is used to generate a code coverage
+report for a Java project. Jacoco uses an execution pattern to monitor the Java
+code under test and create an executable report. 'Target/jacoco.exec'
+represents the path to the Jacoco execution input file. This file contains
+information collected by Jacoco to measure the code coverage achieved by the
+tests. The report tells developers which segments of the code were executed and
+which were not. It also provides details on lines covered, missed, as as
+percentage of coverage achieved. It is an important tool to help developers
+measure and improve the quality of their code.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

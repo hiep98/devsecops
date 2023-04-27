@@ -1,0 +1,206 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href=SCA.htm>
+<link rel=File-List href="SCA_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:9.4576in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.0215in;width:.9888in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt'>SCA</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:9.4576in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt'>OWASP
+dependency-check</h1>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='mso-spacerun:yes'> </span>is an open-source software composition
+analysis (SCA) tool that helps identify known vulnerabilities in a project's
+dependencies. It scans the project dependencies, including both direct and
+transitive dependencies, and checks them against a database of known
+vulnerabilities in commonly used third-party libraries and frameworks. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>It does this by
+determining if there is a Common Platform Enumeration (CPE) identifier for a
+given dependency. If found, it will generate a report linking to the associated
+CVE entries.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>OWASP
+dependency-check provides an easy way for developers and security teams to
+identify and address potential security risks in their projects' dependencies,
+helping to prevent the exploitation of known vulnerabilities by attackers.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>When scanning for
+vulnerabilities, OWASP dependency-check uses a number of techniques to
+determine if a vulnerability is present, such as checking library version
+numbers and analyzing the code within the libraries. The tool also provides an
+indication of the severity level of each vulnerability found based on the
+Common Vulnerability Scoring System (CVSS) score, ranging from low to critical.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>In addition to
+identifying vulnerabilities, OWASP dependency check can also provide
+recommendations on how to remediate these vulnerabilities, including
+instructions on how to upgrade to a patched version of the affected library, or
+how to mitigate the vulnerability through configuration changes or code
+changes.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The tool supports
+multiple programming languages such as Java, .NET, Ruby, Python, and Node.js,
+among others. It generates a report that lists all the vulnerabilities found in
+the project's dependencies, including details about the vulnerability, severity
+level, and potential impact on the project.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&lt;</span><span style='color:#E06C75'>plugin</span><span
+style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;org.owasp&lt;/</span><span
+style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;dependency-check-maven&lt;/</span><span
+style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;8.1.2&lt;/</span><span
+style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+style='color:#E06C75'>configuration</span><span style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+style='color:#E06C75'>format</span><span style='color:#5C626D'>&gt;ALL&lt;/</span><span
+style='color:#E06C75'>format</span><span style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><span
+style='color:#E06C75'>failBuildOnCVSS</span><span style='color:#5C626D'>&gt;6&lt;/</span><span
+style='color:#E06C75'>failBuildOnCVSS</span><span style='color:#5C626D'>&gt;
+&nbsp;</span><span style='font-style:italic;color:#7F848E'>&lt;!-- fail the
+build for CVSS greater than or equal to 6 --&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &lt;/</span><span
+style='color:#E06C75'>configuration</span><span style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&lt;/</span><span style='color:#E06C75'>plugin</span><span
+style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="SCA_files/image001.png" width=711 height=182
+alt="Dashboard Manage Jenkins &#10;Updates &#10;Available plugins &#10;Installed plugins &#10;@ Advanced settings &#10;Plugin Manager &#10;Plugins &#10;Q owasp de &#10;Install &#10;Name &#10;OWASP Dependency-Check 5.3.0 &#10;Security DevOps Build Tools Build Reports &#10;This plug-in can independently execute a Dependency-Check analysis and visualize results. Dependency-Check is a utility that identifies project dependencies and &#10;checks if there are any known, publicly disclosed, vulnerabilities. "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#1863A1'>stage</span><span style='color:#5C626D'>(</span><span
+style='color:#789B5F'>'Vulnerability Scan'</span><span style='color:#5C626D'>){</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; &nbsp; steps {</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+style='color:#789B5F'>&quot;mvn dependency-check:check&quot;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; &nbsp; }</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; &nbsp; post {</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; &nbsp; &nbsp; always {</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+dependencyCheckPublisher </span><span style='color:#9F6B3B'>pattern</span><span
+style='color:#5C626D'>: </span><span style='color:#789B5F'>'target/dependency-check-report.xml'</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; &nbsp; &nbsp; }</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; &nbsp; }</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+&nbsp; }</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="SCA_files/image002.png" width=903 height=368
+alt="Dashboard &#10;Status &#10;devsecops-app-num &#10;Changes &#10;Console Output &#10;Edit Build Information &#10;Delete build '#29' &#10;Git Build Data &#10;Test Result &#10;Coverage Report &#10;PIT Mutation Report &#10;Dependency-Check &#10;Open Blue Ocean &#10;Restart from Stage &#10;Replay &#10;Pipeline Steps &#10;Workspaces &#10;Previous Build &#10;Dependency-Check &#10;Dependency-Check Results &#10;SEVERITY DISTRIBUTION &#10;File Name &#10;hibernate-validator-6.O.18.Final.jar &#10;jackson -date bind-2.10.0.jar &#10;jackson -date bind-2.10.0.jar &#10;jackson -date bind-2.10.0.jar &#10;jackson -date bind-2.10.0.jar &#10;log4j-api-2.12.1 jar &#10;logback-core- 1.2.3.jer &#10;snakeyaml &#10;snakeyaml &#10;snakeyaml &#10;-1.2Sjar &#10;-1.2Sjar &#10;-1.2Sjar &#10;Vulnerability &#10;CVE-2020-10693 &#10;CVE-2020-2S649 &#10;CVE-2020-36S18 &#10;CVE-2022-42003 &#10;CVE-2022-42004 &#10;CVE-2020-9488 &#10;CVE-2021-42SSO &#10;CVE-2022-1471 &#10;CVE-2017-18640 &#10;CVE-2022-2S8S7 &#10;1 of 10 &#10;Severity &#10;Medium &#10;High &#10;High &#10;High &#10;High &#10;Medium &#10;High &#10;High &#10;High &#10;Search &#10;Weakness &#10;CWE-20 &#10;CWE-611 &#10;CWE-787 &#10;CWE-S02 &#10;CWE-S02 &#10;CWE-29S &#10;CWE-S02 &#10;CWE-S02 &#10;CWE-776 &#10;CWE-400 "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:#5C626D'>&lt;</span><span style='color:#E06C75'>version</span><span
+style='color:#5C626D'>&gt;2.3.12.RELEASE&lt;/</span><span style='color:#E06C75'>version</span><span
+style='color:#5C626D'>&gt;</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

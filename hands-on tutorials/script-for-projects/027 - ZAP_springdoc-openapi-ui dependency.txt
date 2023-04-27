@@ -1,0 +1,30 @@
+##### Adding springdoc-openapi-ui dependency in pom.xml #####
+
+<dependency>
+   <groupId>org.springdoc</groupId>
+   <artifactId>springdoc-openapi-ui</artifactId>
+   <version>1.2.30</version>
+</dependency>
+
+##### Adding springdoc-openapi-ui dependency in pom.xml #####
+
+
+
+###### Running SpringBoot App Local Machine ########
+
+Switch to the root dir
+
+mvn clean package
+cd  target
+java -jar xxxxx.jar
+
+###### Running SpringBoot App Local Machine ########
+
+
+######
+http://localhost:8080/v3/api-docs
+http://localhost:8080/swagger-ui.html
+######
+
+
+

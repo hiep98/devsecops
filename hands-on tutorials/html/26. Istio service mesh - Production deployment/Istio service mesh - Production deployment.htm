@@ -1,0 +1,1481 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File
+href="Istio%20service%20mesh%20-%20Production%20deployment.htm">
+<link rel=File-List
+href="Istio%20service%20mesh%20-%20Production%20deployment_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:9.7923in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:5.4472in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>Istio
+service mesh - Production deployment</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.1493in;margin-left:0in;width:9.7923in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#0C0C0C'>Istio
+architecture</h1>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image001.png"
+width=700 height=382
+alt="Grafana &#10;Jaeger &#10;Prometheus &#10;Kiali &#10;Elastic Search &#10;Fluentd &#10;Kibana &#10;Container &#10;proxy &#10;POD &#10;Telemetry/Policies to and fro all Envoy Proxy &#10;- - Routing/Resiliencyto and fro all Envoy Proxy &#10;— Application Logs sent to EFK in Kubernetes &#10;1 Mobile Apps can only access Node Service &#10;HTTP call with &#10;JWT Token in Header &#10;HTTP call with &#10;UserAgent - .*tvlobile.• &#10;apigee &#10;• API Services-API Key I JWT I Quota &#10;API Portal — API Products I Credentials &#10;API Analytics — Proxy I Developer I Error &#10;Istio Demo &#10;OKubernetes &#10;NodeServic &#10;M •croservice &#10;Numeric &#10;Microservvce &#10;Envoy &#10;Traffic Management &#10;istiod &#10;Confi uration data to roxies &#10;Envoy &#10;TLS certificates to roxies &#10;Monitoring &#10;_P9!iELChecks, Agalyt!e_: &#10;Data &#10;: _ _Teleme!ry &#10;Data "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Overview:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Istio is an
+open-source service mesh platform that provides a unified control plane for
+managing microservices. Istio enables developers to add advanced traffic
+management, security, and observability to their microservices without
+requiring changes to the application code.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://devopsvn.tech/service-mesh-on-kubernetes/gioi-thieu-istio-istio-la-gi">Giới
+thiệu Istio - Istio là gì (devopsvn.tech)</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Application
+architecture:</p>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image002.png"
+width=665 height=311
+alt="Kubernetes &#10;Port - 8080 &#10;NodePort &#10;30667 &#10;[increment &#10;SpringBoot &#10;MicroService &#10;Development Environment/Namespace &#10;Kubernetes &#10;http://node-service:5000/pIusone/99 &#10;100 &#10;http://ext-ip:30667/increment/99 &#10;100 &#10;Running on GCP VM — Kubernetes Cluster &#10;Port - 5000 &#10;ClusterlP &#10;5000 &#10;/plusone "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>Istio
+Installation</h1>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.9423in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>curl -Ls <a
+  href="https://istio.io/downloadIstio">https://istio.io/downloadIstio</a> |
+  ISTIO_VERSION=1.17.2 sh -</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cd istio-1.17.2</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>export
+  PATH=$PWD/bin:$PATH</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>istioctl install
+  --set profile=demo -y &amp;&amp; kubectl apply -f samples/addons</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Check all
+node,pod,svc in istio namespace:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.984in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system get all</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can access
+services inside istio using a web browser by modifying the svc in istio from
+clusterIP to nodeport with command below. </p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.0256in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system edit svc kiali</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>However, this
+approach is not recommended in a practical environment.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Another way is using
+port-forwarding. You can create script like below.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>port-forwarding.sh</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.0673in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system port-forward deploy/kiali 20001:20001 --address 192.168.207.129
+  &amp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system port-forward deploy/grafana 3000:3000 --address 192.168.207.129
+  &amp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system port-forward deploy/prometheus 9090:9090 --address
+  192.168.207.129 &amp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system port-forward deploy/jaeger<span style='mso-spacerun:yes'>  
+  </span>16686:16686<span style='mso-spacerun:yes'>  </span>--address
+  192.168.207.129 &amp;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, we create bash
+shell file to setup production enviroment</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.109in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#!/bin/bash</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'># Set the namespace name</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>namespace=</span><span style='color:#789B5F'>&quot;prod&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'># Check if the namespace exists</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> kubectl get
+  namespace </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot; </span><span
+  style='color:#C678DD'>&gt;</span><span style='color:#5C626D'> /dev/null </span><span
+  style='color:#C678DD'>2&gt;&amp;1; then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='font-style:italic;color:#5C6370'># Check if the namespace has the
+  istio-injection label</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>if !</span><span style='color:#5C626D'> kubectl get
+  namespace </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#5C626D'> -o jsonpath=</span><span style='color:#789B5F'>'{.metadata.labels.istio-injection}'
+  </span><span style='color:#C678DD'>|</span><span style='color:#5C626D'> grep
+  -q enabled</span><span style='color:#C678DD'>; then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='font-style:italic;color:#5C6370'># Add the istio-injection label to
+  the namespace</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl label
+  namespace </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#5C626D'> istio-injection=enabled</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='font-style:italic;color:#5C6370'># Restart all deployments in the
+  namespace to apply the label</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl
+  rollout restart deployment -n </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>else</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;namespace
+  </span><span style='color:#E06C75'>${namespace}</span><span style='color:
+  #789B5F'> already has istio-injection label&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>fi</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>else</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='font-style:italic;color:#5C6370'># Create the namespace and add the
+  istio-injection label</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>kubectl create
+  namespace </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>kubectl label
+  namespace </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#5C626D'> istio-injection=enabled</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'># Get the name and tag of the Docker image</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>image_info=</span><span style='color:#789B5F'>$(docker
+  images --format '{{.Repository}}:{{.Tag}}' </span><span style='color:#C678DD'>|</span><span
+  style='color:#789B5F'> grep -i node-service)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> [ </span><span
+  style='color:#C678DD'>-n </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${image_info}</span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#5C626D'> ]</span><span style='color:#C678DD'>; then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>image_name=</span><span
+  style='color:#789B5F'>$(echo &quot;</span><span style='color:#E06C75'>${image_info}</span><span
+  style='color:#789B5F'>&quot; </span><span style='color:#C678DD'>|</span><span
+  style='color:#789B5F'> cut -d ':' -f 1)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>image_tag=</span><span
+  style='color:#789B5F'>$(echo &quot;</span><span style='color:#E06C75'>${image_info}</span><span
+  style='color:#789B5F'>&quot; </span><span style='color:#C678DD'>|</span><span
+  style='color:#789B5F'> cut -d ':' -f 2)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='font-style:italic;color:#5C6370'># Check if the deployment already
+  exists</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>if !</span><span style='color:#5C626D'> kubectl get
+  deployment node-app -n </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot; </span><span
+  style='color:#C678DD'>&gt;</span><span style='color:#5C626D'> /dev/null </span><span
+  style='color:#C678DD'>2&gt;&amp;1; then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='font-style:italic;color:#5C6370'># Create the deployment with 2
+  replicas and the specified image</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl
+  create deployment node-app --image </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${image_name}</span><span style='color:#789B5F'>:</span><span
+  style='color:#E06C75'>${image_tag}</span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#5C626D'> --replicas 2 -n </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>else</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;deployment
+  node-app already exists&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>fi</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='font-style:italic;color:#5C6370'># Check if the service already exists</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>if !</span><span style='color:#5C626D'> kubectl get
+  service node-service -n </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#E06C75'>${namespace}</span><span style='color:#789B5F'>&quot; </span><span
+  style='color:#C678DD'>&gt;</span><span style='color:#5C626D'> /dev/null </span><span
+  style='color:#C678DD'>2&gt;&amp;1; then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='font-style:italic;color:#5C6370'># Create a service for the deployment
+  on port 5000</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl
+  expose deployment node-app --name node-service --port 5000 -n </span><span
+  style='color:#789B5F'>&quot;</span><span style='color:#E06C75'>${namespace}</span><span
+  style='color:#789B5F'>&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>else</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;service
+  node-service already exists&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#C678DD'>fi</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>else</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Docker
+  image for node-service does not exist&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The source code
+below is a shell script that performs the following tasks: </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- It checks if the
+namespace prod exists in the Kubernetes cluster using the kubectl command. A
+namespace is a way to group and isolate resources within a cluster.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- If the namespace
+prod exists, it checks if the label istio-injection=enabled exists in the
+namespace. A label is a key-value pair that can be attached to any resource for
+identification and selection. Istio is a service mesh that provides traffic
+management, security and observability for microservices. The label
+istio-injection=enabled enables automatic sidecar injection for the pods in the
+namespace. A sidecar is a container that runs alongside the main application
+container and provides additional functionality such as proxying, logging and
+monitoring.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- If the label
+istio-injection=enabled does not exist in the namespace prod, it adds the label
+using the kubectl command.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- If the namespace
+prod does not exist, it creates the namespace using the kubectl command and
+adds the label istio-injection=enabled to it.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- It gets the name
+of the Docker image node-service using the docker command. A Docker image is a
+packaged version of an application and its dependencies that can run on any
+platform that supports Docker. Node-service is an example of a Node.js
+application that serves HTTP requests on port 5000.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- It checks if the
+Docker image node-service exists by checking if the image name is not empty.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- If the image
+exists, it gets the image tag using the docker command. A tag is a way to
+identify a specific version of an image.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- It creates a
+deployment and a service for the image using the kubectl command. A deployment
+is a resource that manages a set of pods that run the same image and can be
+scaled up or down. A service is a resource that exposes a set of pods to other
+pods or external clients using a stable IP address and port number.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- It specifies the
+namespace prod, the image name and tag, and the number of replicas (2) for the
+deployment. It also specifies the name (node-service), the port (5000) and the
+type (ClusterIP) for the service. ClusterIP means that the service is only accessible
+within the cluster.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- If the image does
+not exist, it prints an message.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can manual check
+and apply istio-injection following below command:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.1506in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl get
+  all -n prod</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl label
+  ns prod istio-injection=enabled</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl get
+  ns --show-labels</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#111111'>kubectl
+  rollout restart deployment node-app -n prod</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next. We create
+file<span style='mso-spacerun:yes'>  </span>k8s_PROD-deployment_service.yaml to
+deploy application to production enviroment.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.1923in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>apiVersion</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>apps/v1</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>kind</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>Deployment</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>metadata</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>labels</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>app</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>spec</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>replicas</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>3</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>selector</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>matchLabels</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>app</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>strategy</span><span style='color:#5C626D'>: {}</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>template</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>metadata</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>labels</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>app</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>spec</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>serviceAccountName</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>default</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>volumes</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>- </span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>vol</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>emptyDir</span><span style='color:#5C626D'>: {}</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>containers</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>- </span><span
+  style='color:#E06C75'>image</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>replace</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops-container</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>volumeMounts</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span>- </span><span
+  style='color:#E06C75'>mountPath</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>/tmp</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>vol</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>securityContext</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>capabilities</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span></span><span
+  style='color:#E06C75'>drop</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>             </span>- </span><span
+  style='color:#789B5F'>NET_RAW</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>runAsUser</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>100</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>runAsNonRoot</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>true</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>readOnlyRootFilesystem</span><span style='color:#5C626D'>:
+  </span><span style='color:#9F6B3B'>true</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>allowPrivilegeEscalation</span><span style='color:#5C626D'>:
+  </span><span style='color:#9F6B3B'>false</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>resources</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>         </span></span><span
+  style='color:#E06C75'>requests</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>memory</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>&quot;256Mi&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>cpu</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>&quot;200m&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>         </span></span><span
+  style='color:#E06C75'>limits</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>memory</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>&quot;512Mi&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>cpu</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>&quot;500m&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>---</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>apiVersion</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>v1</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>kind</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>Service</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>metadata</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>labels</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>app</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops-svc</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>spec</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>ports</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>- </span><span
+  style='color:#E06C75'>port</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>8080</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>protocol</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>TCP</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>targetPort</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>8080</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>selector</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>app</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecops</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>type</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>ClusterIP</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The resources
+section in the YAML file specifies the resource requirements and limits for the
+container. In this case, the container has a request of 256Mi memory and 200m
+CPU. This means that Kubernetes will try to schedule the container on a node
+that has at least 256Mi memory and 200m CPU available. If there are no nodes
+with enough resources available, the container will remain in a pending state.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>The
+container also has a limit of 512Mi memory and 500m CPU. This means that the
+container will not be allowed to use more than 512Mi memory and 500m CPU even
+if more resources are available on the node.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Setting requests and
+limits is important for a number of reasons. First, it helps to ensure that
+your containers don't over-consume resources and cause other containers to
+fail. Second, it can help to improve the performance of your applications by
+ensuring that they have the resources they need to run efficiently. Third, it
+can help to prevent your applications from being killed by Kubernetes if they
+try to use too many resources.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>A securityContext
+that takes away the NET_RAW capability from our application can help us avoid
+dns spoofing.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: <a
+href="https://blog.aquasec.com/dns-spoofing-kubernetes-clusters">https://blog.aquasec.com/dns-spoofing-kubernetes-clusters</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, Create file
+k8s-PROD-deployment-rollout-status.sh like </p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.234in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#!/bin/bash</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>sleep
+  60s</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+  style='color:#789B5F'>$(kubectl -n prod rollout status deploy </span><span
+  style='color:#E06C75'>${deploymentName}</span><span style='color:#789B5F'>
+  --timeout 5s) </span><span style='color:#C678DD'>!= *</span><span
+  style='color:#789B5F'>&quot;successfully rolled out&quot;</span><span
+  style='color:#C678DD'>*</span><span style='color:#5C626D'> ]]</span><span
+  style='color:#C678DD'>; </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>then</span><span style='color:#5C626D'><span
+  style='mso-spacerun:yes'>     </span></span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Deployment
+  </span><span style='color:#E06C75'>${deploymentName}</span><span
+  style='color:#789B5F'> Rollout has Failed&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>kubectl -n
+  prod rollout undo deploy </span><span style='color:#E06C75'>${deploymentName}</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#44A0AC'>exit</span><span style='color:#5C626D'> 1</span><span
+  style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>else</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Deployment
+  </span><span style='color:#E06C75'>${deploymentName}</span><span
+  style='color:#789B5F'> Rollout is Success&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add k8s deployment
+production stage into Jenkins file</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.2756in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>stage(</span><span style='color:#789B5F'>'K8S
+  Deployment - PROD'</span><span style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>      </span>steps {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>        </span>parallel(</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#789B5F'>&quot;Deployment&quot;</span><span style='color:#5C626D'>:
+  {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>           
+  </span>withKubeConfig([</span><span style='color:#9F6B3B'>credentialsId</span><span
+  style='color:#5C626D'>: </span><span style='color:#789B5F'>'kubeconfig'</span><span
+  style='color:#5C626D'>]) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>              </span>sh </span><span
+  style='color:#789B5F'>&quot;sed -i 's#replace#</span><span style='color:#BE5046'>${</span><span
+  style='color:#789B5F'>imageName</span><span style='color:#BE5046'>}</span><span
+  style='color:#789B5F'>#g' k8s_PROD-deployment_service.yaml&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>              </span>sh </span><span
+  style='color:#789B5F'>&quot;kubectl -n prod apply -f
+  k8s_PROD-deployment_service.yaml&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>            </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>          </span>},</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#789B5F'>&quot;Rollout Status&quot;</span><span
+  style='color:#5C626D'>: {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>           
+  </span>withKubeConfig([</span><span style='color:#9F6B3B'>credentialsId</span><span
+  style='color:#5C626D'>: </span><span style='color:#789B5F'>'kubeconfig'</span><span
+  style='color:#5C626D'>]) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>              </span>sh </span><span
+  style='color:#789B5F'>&quot;bash k8s-PROD-deployment-rollout-status.sh&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>            </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>          </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>        </span>)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>      </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run build. After
+build successful you can check connection like below.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>Istio
+PeerAuthentication</h1>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, we create
+PeerAuthentication<span style='mso-spacerun:yes'>  </span>istio-system with
+yaml file below.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>peer-auth.yaml<span
+style='mso-spacerun:yes'>                                                   
+</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.3173in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>apiVersion:
+  security.istio.io/v1beta1</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kind:
+  PeerAuthentication</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>metadata:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>name: default</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>namespace: istio-system</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>mtls:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>mode: DISABLE</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This YAML file is a
+configuration file for Istio's PeerAuthentication resource, which is used to
+configure mutual TLS (mTLS) authentication between services in an Istio service
+mesh. The file specifies the following:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- apiVersion: The
+version of the Istio security API being used.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- kind: The type of
+Istio resource being defined, which is PeerAuthentication in this case.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- metadata: The
+metadata for the PeerAuthentication resource, which includes the name of the
+resource (default) and the namespace in which it is defined (istio-system).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- spec: The
+specification for the PeerAuthentication resource, which includes the mtls
+field that specifies the mTLS mode.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The mtls field
+specifies the mTLS mode for the PeerAuthentication resource, which is set to
+DISABLE in this case. This means that mTLS authentication is disabled for all
+services in the Istio service mesh.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In general, there
+are three mTLS modes that can be set for a PeerAuthentication resource:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- STRICT: All
+requests between services must use mTLS authentication.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- PERMISSIVE:
+Requests between services can use either mTLS authentication or plaintext
+(non-encrypted) communication.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- DISABLE: mTLS
+authentication is disabled for all services in the Istio service mesh.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The
+PeerAuthentication resource can be used to configure mTLS authentication for
+specific services or for all services in the Istio service mesh.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run kubectl apply:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.359in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl apply -f
+  peer-auth.yaml -n istio-system</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Check mtls mode:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.4006in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl get
+  pa -n istio-system</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>      </span>MODE<span
+  style='mso-spacerun:yes'>      </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>default<span
+  style='mso-spacerun:yes'>   </span>DISABLE<span style='mso-spacerun:yes'>  
+  </span>9s</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can change mtls
+mode with command below:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.4423in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>kubectl edit pa -n istio-system</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>mtls:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>mode: STRICT # write mode you want</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: <a
+href="https://istio.io/latest/docs/reference/config/security/peer_authentication/">https://istio.io/latest/docs/reference/config/security/peer_authentication/</a>
+</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We will run command
+below to test connection</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.484in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+  prod get svc </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>            </span>TYPE<span
+  style='mso-spacerun:yes'>        </span>CLUSTER-IP<span
+  style='mso-spacerun:yes'>       </span>EXTERNAL-IP<span
+  style='mso-spacerun:yes'>   </span>PORT(S)<span style='mso-spacerun:yes'>   
+  </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>devsecops-svc<span
+  style='mso-spacerun:yes'>   </span>ClusterIP<span style='mso-spacerun:yes'>  
+  </span>10.103.98.41<span style='mso-spacerun:yes'>    
+  </span>&lt;none&gt;<span style='mso-spacerun:yes'>        </span>8080/TCP<span
+  style='mso-spacerun:yes'>   </span>148m</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>node-service<span
+  style='mso-spacerun:yes'>    </span>ClusterIP<span
+  style='mso-spacerun:yes'>   </span>10.110.155.212<span
+  style='mso-spacerun:yes'>   </span>&lt;none&gt;<span
+  style='mso-spacerun:yes'>        </span>5000/TCP<span
+  style='mso-spacerun:yes'>   </span>148m</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>while true; do
+  curl -s 10.103.98.41:8080/increment/99; echo; sleep 1; done</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can go to kiali
+dashboard, select graph to know how connection inside out application work.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>PERMISSIVE MODE -we
+can see at the top there is a partially enabled TLS text</p>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image003.png"
+width=803 height=433
+alt="anonymous &#10;Namespace: prod &#10;Traffic &#10;Versioned app graph &#10;Hide.__ &#10;Mesh-wide TLS is partially enabled, &#10;configured by default &#10;Last 1m &#10;Edge (HTTP) &#10;From: O devsecops &#10;To: node-service &#10;Every IOS &#10;Display &#10;Find. _ _ &#10;Apr 12, PM PM &#10;unknown &#10;o &#10;o &#10;mTLS Enabled [45% of request traffic] &#10;Principals: &#10;spiffe://cluster]ocal/ns/prod/sa/default &#10;spiffe://cluster]ocal/ns/prod/sa/default &#10;Traffic &#10;Flags &#10;HTTP requests per second: &#10;1-7m &#10;devsecops-svc &#10;devsecops &#10;http &#10;latest &#10;5m &#10;node-service &#10;O node—app &#10;latest &#10;Total &#10;0.92 &#10;o &#10;25 &#10;%Success &#10;IOO_OO &#10;50 &#10;Hosts &#10;%Error &#10;0.00 &#10;75 &#10;IOO &#10;OK 3xx 4xx &#10;5xx &#10;HTTP Request Traffic min / max: &#10;RRS: 0.93 / 1.00 , %Error 000 / 0.00 &#10;HTTP Request Response Time (ms) "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>DISABLE MODE -when
+we change the mode to disabled, traffic including mtls will drop until all
+traffic is no longer encrypted</p>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image004.png"
+width=806 height=369
+alt="Apr 12, PM PM &#10;node-app &#10;Edge (HTTP) &#10;From: O devsecops &#10;To: node-service &#10;Principals: &#10;unknown &#10;unknown &#10;Traffic &#10;Flags &#10;HTTP requests per second: &#10;1•8ms &#10;devsecops-svc &#10;O devsecops &#10;http &#10;latest &#10;5ms &#10;node-service &#10;latest &#10;unknown &#10;Total &#10;1_04 &#10;o &#10;25 &#10;%Success &#10;IOO_OO &#10;50 &#10;Hosts &#10;%Error &#10;0.00 &#10;75 &#10;IOO &#10;o &#10;o &#10;OK 3xx 4xx &#10;5xx &#10;HTTP Request Traffic min / max: &#10;RRS: 0.67 / 1.00 , %Error 0.00 / 0.00 &#10;HTTP Request Response Time (ms) "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>STRICT MODE: all
+traffic is encrypted, authenticated and does not allow outside traffic to go
+inside</p>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image005.png"
+width=808 height=444
+alt="Namespace: prod &#10;Traffic &#10;Display &#10;Find. _ _ &#10;Versioned app graph &#10;Hide.__ &#10;Apr 12, PM PM &#10;Mesh-wide mTLS is enabled, configured by &#10;default &#10;Last 1m &#10;Edge (HTTP) &#10;From: node-service &#10;To: O node-app &#10;Traffic &#10;Flags &#10;HTTP requests per second: &#10;anonymous &#10;Every IOS &#10;Hosts &#10;%Error &#10;0.00 &#10;0.04 Fps &#10;0.04 rps &#10;3ms &#10;latest &#10;http &#10;7 bps &#10;node-service &#10;O node-app &#10;latest &#10;Total &#10;0.00 &#10;o &#10;25 &#10;%Success &#10;IOO_OO &#10;50 &#10;devsecops-svc &#10;unknown &#10;devsecops &#10;75 &#10;0K 3xx 4xx &#10;5xx &#10;HTTP Request Traffic min / max: &#10;RRS: 000 / 093 , %Error 0.00 / 000 &#10;HTTP Request Response Time (ms) &#10;o &#10;o &#10;avg &#10;pso &#10;p95 &#10;IOO &#10;p99 "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And you can explore
+some more features of kiali like checking metrics, traffic, logs of each
+deployment in the namespace of your choice.</p>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image006.png"
+width=807 height=572
+alt="c &#10;A Khöng båo mgt &#10;kiali &#10;192.168.207.129 20002/kiaI i/console/namespaces/p rod/wo rkloads/devsecops?tab = logs&amp;rangeDuratio n = 600&amp;refresh &#10;= 10000 &#10;Workloads &#10;Overview &#10;Namespace: prod &#10;Traffic &#10;devsecops &#10;Inbound Metrics &#10;Graph &#10;Applications &#10;Workloads &#10;Services &#10;Logs &#10;Outbound Metrics &#10;Hide. _ &#10;. I&quot; 2øØ - via_upstream &#10;Traces &#10;devsecops-Sdbf479SfS-g9kck &#10;Show___ &#10;: tu-c,vcx &#10;evsecops-containe &#10;2Ø23-ø4-12 &#10;2Ø23-ø4-12 &#10;Istio Config &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;2ø23-ø4-12 &#10;&quot;GET &#10;INFO 1 &#10;INFO 1 &#10;&quot;GET &#10;&quot;GET &#10;INFO 1 &#10;INFO 1 &#10;&quot;GET &#10;&quot;GET &#10;INFO 1 &#10;INFO 1 &#10;&quot;GET &#10;&quot;GET &#10;INFO 1 &#10;INFO 1 &#10;&quot;GET &#10;&quot;GET &#10;INFO 1 &#10;INFO 1 &#10;&quot;GET &#10;&quot;GET &#10;INFO 1 &#10;INFO 1 &#10;&quot;GET &#10;&quot;GET &#10;INFO 1 &#10;/p1usone/99 HTTP,'I &#10;[nio-W8ø-exec-6] &#10;[nio-W8ø-exec-6] &#10;com.devsecops.NumericControIIer &#10;com.devsecops.NumericControIIer &#10;Envoy &#10;1 &quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;73d1f4b5-268a-98c3-bb85-1424b2b84922 &#10;: Value Received in Request - 99 &#10;: Node Service Response - &#10;&quot; &quot;node-service: &#10;'increment/99 HTTP/I.I&quot; 2ee - via_upstream &#10;/pIusone/99 HTTP/I.I&quot; 2øø - via_upstream &#10;[nio-W8ø-exec-7] com.devsecops.NumericControIIer &#10;[nio-W8ø-exec-7] com.devsecops.NumericControIIer &#10;'increment/99 HTTP/I.I&quot; 2ee - via_upstream &#10;/pIusone/99 HTTP/I.I&quot; 2øø - via_upstream &#10;[nio-W8ø-exec-8] com.devsecops.NumericControIIer &#10;[nio-W8ø-exec-8] com.devsecops.NumericControIIer &#10;'increment/99 HTTP/I.I&quot; 2ee - via_upstream &#10;/pIusone/99 HTTP/I.I&quot; 2øø - via_upstream &#10;&quot; e 3 5 5 &quot; &quot; &quot;curl/7.81.ø&quot; &quot;024bc3ae-817e-9ddc-bgee-2f5cb6514b8a&quot; &quot;10.1B.98.41:8ø8ø&quot; &quot; &#10;&quot; ø 3 1 1 &quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;58ca226ø-7eøf-9843-858e-4c434969422a &#10;: Value Received in Request - 99 &#10;: Node Service Response - &#10;4 &quot; curl/7.81.ø&quot; &quot;a7534d44-692e-936e-86ca-37b17fbbe5bc&quot; &quot; &#10;&quot; ø 3 1 1 &quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;dee16a28-e8e8-9eee-a8c2-b69a67f43e5e&quot; &#10;: Value Received in Request - 99 &#10;: Node Service Response - &#10;&quot; e 3 5 5 &quot; &quot; &quot;curl/7.81.ø&quot; &quot;c4dø5e6d-a152-9917-9812-c45ed3øa4178&quot; &#10;&quot; ø 3 1 1 &quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;58e377ef-df3a-9e91-83e2-ceca78ac%5f &#10;: Value Received in Request - 99 &#10;: Node Service Response - &#10;&quot; &quot;node-service: &#10;&quot;node- service : 5eee &quot; &#10;&quot;10.1B.98.41:8ø8ø&quot; &quot; &#10;&quot; &quot;node-service: &#10;[nio-W8ø-exec-9] com.devsecops.NumericControIIer &#10;[nio-W8ø-exec-9] com.devsecops.NumericControIIer &#10;'increment/99 HTTP/I.I&quot; 2ee - via_upstream &#10;/pIusone/99 HTTP/I.I&quot; 2øø - via_upstream &#10;[io-W8e-exec-Iø] com.devsecops.NumericControIIer &#10;[io-W8e-exec-Iø] com.devsecops.NumericControIIer &#10;'increment/99 HTTP/I.I&quot; 2ee - via_upstream &#10;/pIusone/99 HTTP/I.I&quot; 2øø - via_upstream &#10;[nio-W8ø-exec-I] com.devsecops.NumericControIIer &#10;[nio-W8ø-exec-I] com.devsecops.NumericControIIer &#10;'increment/99 HTTP/I.I&quot; 2ee - via_upstream &#10;/pIusone/99 HTTP/I.I&quot; 2øø - via_upstream &#10;&quot; e 3 5 5 &quot; &quot; &quot;curl/7.81.ø&quot; &quot;a2568d9c-f681-9495-82da-82b5dfU63øf&quot; &#10;&quot; ø 3 2 1 &quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;65d43øe3-9a8a-913ø-ae24-535813a74592 &#10;: Value Received in Request - 99 &#10;: Node Service Response - &#10;&quot; &quot; &quot;curl/7.81.ø&quot; &quot;ec28ebe2-5495-9ød3-8257-77b5d7a6661a&quot; &quot;10.1B.98.41:8ø8ø&quot; &quot; &#10;&quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;7c53b72e-c19b-9eb5-9184-82e166eac9ø2 &#10;: Value Received in Request - 99 &#10;: Node Service Response - &#10;4 &quot; &quot; curl/7.81.ø&quot; &quot;3a499b52-21fd-91e5-ab62-6173øøg878ab&quot; &quot;10.1B.98.41:8ø8ø&quot; &quot; &#10;ø 3 1 1 &quot; &quot; &quot;Java/1.8.ø_362&quot; &quot;68c51314-b834-9d58-92bc-83743b31ef26&quot; &#10;&quot;10.1B.98.41:8ø8ø&quot; &quot; &#10;&quot; &quot;node-service: &#10;&quot; &quot;node-service: &#10;&quot;node- service : 5eee &quot; &#10;[nio-W8ø-exec-2] com.devsecops.NumericControIIer &#10;: Value Received in Request - 99 "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>ISTIO
+INGRESS</h1>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In Istio, an Ingress
+is a component that enables external traffic to access services within the
+mesh. Istio Ingress provides traffic management features such as load
+balancing, TLS termination, and routing. It allows you to define rules for
+routing traffic to specific services based on various criteria such as URL
+path, headers, and source IP address.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>A VirtualService, on
+the other hand, is a Kubernetes custom resource that is used to define rules
+for how traffic should be routed to a specific service within the Istio service
+mesh. It provides more advanced traffic management features than Ingress, such
+as traffic splitting, fault injection, and retries. With VirtualServices, you
+can define rules to send traffic to different versions of a service or to
+specific instances of a service based on various criteria such as HTTP headers
+or source IP addresses.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In summary, Istio
+Ingress provides a way for external traffic to enter the service mesh and
+provides basic routing capabilities, while VirtualService provides more
+advanced traffic management features for routing traffic within the mesh.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: <a
+href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://istio.io/latest/docs/reference/config/networking/virtual-service/">https://istio.io/latest/docs/reference/config/networking/virtual-service/</a>
+</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we go to create
+istio ingress and virtualService according to the yaml file below.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.5256in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>apiVersion</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>networking.istio.io/v1alpha3 </span><span
+  style='font-style:italic;color:#5C6370'># The API version for Istio resources</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>kind</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>Gateway </span><span style='font-style:italic;
+  color:#5C6370'># The kind of resource</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>metadata</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The metadata for the resource</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecopsgateway </span><span style='font-style:italic;
+  color:#5C6370'># The name of the Gateway</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>namespace</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>prod </span><span style='font-style:italic;color:#5C6370'>#
+  The namespace where the Gateway is deployed</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>spec</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The specification for the Gateway</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>selector</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The selector for the Gateway</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>istio</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>ingressgateway </span><span style='font-style:italic;
+  color:#5C6370'># The label of the Istio ingress gateway pod</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>servers</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The list of servers for the Gateway</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>- </span><span
+  style='color:#E06C75'>port</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The port configuration for the
+  server</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>number</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>80 </span><span style='font-style:italic;color:#5C6370'>#
+  The port number</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>http </span><span style='font-style:italic;color:#5C6370'>#
+  The port name</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+  style='color:#E06C75'>protocol</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>HTTP </span><span style='font-style:italic;color:#5C6370'>#
+  The port protocol</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>hosts</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The list of hosts for the server</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>-<span
+  style='mso-spacerun:yes'>  </span></span><span style='color:#789B5F'>&quot;*&quot;
+  </span><span style='font-style:italic;color:#5C6370'># A wildcard host that
+  matches any domain</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>---<span style='mso-spacerun:yes'>  </span></span><span
+  style='font-style:italic;color:#5C6370'># The separator for the next document</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>apiVersion</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>networking.istio.io/v1alpha3 </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>kind</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>VirtualService </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>metadata</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>name</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecopsnumeric </span><span style='font-style:italic;
+  color:#5C6370'># The name of the VirtualService</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>namespace</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>prod</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#E06C75'>spec</span><span style='color:#5C626D'>:<span
+  style='mso-spacerun:yes'>  </span></span><span style='font-style:italic;
+  color:#5C6370'># The specification for the VirtualService</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>hosts</span><span style='color:#5C626D'>: </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>- </span><span
+  style='color:#789B5F'>'*'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>gateways</span><span style='color:#5C626D'>:<span
+  style='mso-spacerun:yes'>  </span></span><span style='font-style:italic;
+  color:#5C6370'># The list of gateways for the VirtualService</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>- </span><span
+  style='color:#789B5F'>devsecopsgateway</span><span style='color:#5C626D'><span
+  style='mso-spacerun:yes'>  </span></span><span style='font-style:italic;
+  color:#5C6370'># The name of the Gateway from the first document</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+  style='color:#E06C75'>http</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The list of HTTP routes for the
+  VirtualService</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>- </span><span
+  style='color:#E06C75'>match</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The list of match conditions for
+  the route</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>- </span><span
+  style='color:#E06C75'>uri</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The URI match condition</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>prefix</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>/increment </span><span style='font-style:italic;
+  color:#5C6370'># The URI prefix to match</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>- </span><span
+  style='color:#E06C75'>uri</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>exact</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>/</span><span style='color:#5C626D'><span
+  style='mso-spacerun:yes'>  </span></span><span style='font-style:italic;
+  color:#5C6370'># The exact URI to match</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#E06C75'>route</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The list of destinations for the
+  route</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>- </span><span
+  style='color:#E06C75'>destination</span><span style='color:#5C626D'>: </span><span
+  style='font-style:italic;color:#5C6370'># The destination configuration</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>host</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>devsecopssvc </span><span style='font-style:italic;
+  color:#5C6370'># The host name of the destination service</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>port</span><span style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span></span><span
+  style='color:#E06C75'>number</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>8080</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is a YAML file
+that contains two Kubernetes resources: a Gateway and a VirtualService.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>The
+Gateway resource is named devsecops-gateway and is of type
+networking.istio.io/v1alpha3. It has a selector that specifies the Istio
+ingress gateway as the default controller. It also has one server that listens
+on port 80 and accepts HTTP traffic from any host.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>The
+VirtualService resource is named devsecops-numeric and is also of type
+networking.istio.io/v1alpha3. It specifies that all hosts should be matched and
+that the gateway to use is devsecops-gateway. It also specifies an HTTP route
+that matches URIs with prefix /increment or exact URI / and sends traffic to a
+destination service named devsecops-svc listening on port 8080.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>URI prefix and exact
+URI are two different concepts in web development. A URI is a string of
+characters that identifies a name or a resource on the internet. A URI prefix
+is a matching method based on the prefix of the URL path separated by the slash
+character. The matching is case-sensitive and performed on each segment of the
+path. On the other hand, an exact URI is a matching method that matches the
+entire URL path, including the query parameters and the fragment identifier. In
+web development, these concepts are used in routing and URL mapping to direct
+incoming requests to the appropriate controller or handler. The difference
+between URI prefix and exact URI is that URI prefix matches the URL path based
+on the prefix of the path, while exact URI matches the entire URL path,
+including the query parameters and the fragment identifier.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.5673in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl get
+  vs,gateway -n prod</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                                                  
+  </span>GATEWAYS<span style='mso-spacerun:yes'>               
+  </span>HOSTS<span style='mso-spacerun:yes'>   </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>virtualservice.networking.istio.io/devsecops-numeric<span
+  style='mso-spacerun:yes'>   </span>[&quot;devsecops-gateway&quot;]<span
+  style='mso-spacerun:yes'>   </span>[&quot;*&quot;]<span
+  style='mso-spacerun:yes'>   </span>6d23h</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                                           
+  </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>gateway.networking.istio.io/devsecops-gateway<span
+  style='mso-spacerun:yes'>   </span>6d23h</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  istio-system get svc istio-ingressgateway</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                            </span>TYPE<span
+  style='mso-spacerun:yes'>                   </span>CLUSTER-IP<span
+  style='mso-spacerun:yes'>        </span>EXTERNAL-IP<span
+  style='mso-spacerun:yes'>   </span>PORT(S)<span
+  style='mso-spacerun:yes'>                                                                     
+  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>istio-ingressgateway<span
+  style='mso-spacerun:yes'>   </span>LoadBalancer<span
+  style='mso-spacerun:yes'>   </span>10.99.213.128<span
+  style='mso-spacerun:yes'>    </span>&lt;pending&gt;<span
+  style='mso-spacerun:yes'>     </span>15021:30561/TCP,80:30886/TCP,443:32190/TCP,31400:32600/TCP,15443:30266/TCP<span
+  style='mso-spacerun:yes'>   </span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:10.0pt;color:#524F4C'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we try curl to
+test connection </p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.609in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>curl
+  localhost:30886/increment/22</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>23</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>curl
+  localhost:30886/</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kubernetes
+  DevSecOps</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We can use bash
+below and open kiali to see connection inside</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.6506in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>while true; do curl -s
+  localhost:30886/increment/22; echo; sleep 1; done</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img
+src="Istio%20service%20mesh%20-%20Production%20deployment_files/image007.png"
+width=775 height=431
+alt="anonymous &#10;Namespace: &#10;Display &#10;prod &#10;Find. _ _ &#10;Traffic &#10;Versioned app graph &#10;Hide.__ &#10;Apr 13, PM PM &#10;4. &#10;istio-ingressgateway &#10;latest &#10;(istio-system) &#10;o &#10;o &#10;Mesh-wide mTLS is enabled, configured by &#10;default &#10;Last 1m &#10;Service &#10;prod &#10;node-service &#10;health &#10;O node-app &#10;Traffic &#10;Every IOS &#10;Traces &#10;HTTP (requests per second): &#10;devsecops-svc &#10;O devsecops &#10;latest &#10;node &#10;5 &#10;-service &#10;O node-app &#10;prod &#10;In &#10;latest &#10;Out &#10;o &#10;HTTp &#10;Total &#10;IOO &#10;IOO &#10;25 &#10;%Success &#10;100.00 &#10;100.00 &#10;50 &#10;%Error &#10;000 &#10;000 &#10;75 &#10;IOO &#10;OK 3xx 4xx &#10;5xx &#10;Request Traffic min / max: &#10;RRS: 000 / 1.33 , %Error 0.00 / 000 &#10;O No gRPC traffic logged &#10;O No TCP traffic logged. "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If we remove
+url<span style='mso-spacerun:yes'>  </span>extract in virtualService</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:9.6923in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>- </span><span style='color:#E06C75'>uri</span><span
+  style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#E06C75'>exact</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>/</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#789B5F'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>By using kubectl
+edit vs -n prod<span style='mso-spacerun:yes'>  </span>In<span
+style='mso-spacerun:yes'>  </span>file and run curl localhost:30886/ to test
+connection again, we cannot receive response.</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

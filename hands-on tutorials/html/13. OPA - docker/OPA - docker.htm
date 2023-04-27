@@ -1,0 +1,496 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="OPA%20-%20docker.htm">
+<link rel=File-List href="OPA%20-%20docker_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.8069in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.3465in;width:1.7284in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt'>OPA - docker</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.8069in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Open Policy Agent,
+ also known as OPA, is a popular open source policy engine that provides a
+ unified policy language and framework that can be used across different layers
+ of the technology stack. The OPA project was started in 2016 by Styra, Inc.
+ and has quickly gained popularity in the cloud-native and DevOps communities.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>In December 2020,
+ the Open Policy Agent project announced that it was becoming a part of the
+ Cloud Native Computing Foundation (CNCF), the leading open source organization
+ that hosts and governs many popular cloud-native projects such as Kubernetes,
+ Prometheus, and Envoy.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>As a CNCF-hosted
+ project, OPA will continue to evolve and innovate with the help of the larger
+ open source community, while also benefiting from the governance and
+ organizational support provided by the CNCF.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Overall, the Open
+ Policy Agent Foundation represents an important step forward in the
+ development and adoption of policy-as-code approaches for governing modern
+ cloud-native and DevOps environments.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>OPA.REGO file:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>package main</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Do Not store
+   secrets in ENV variables</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>secrets_env = [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;passwd&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;password&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;pass&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;secret&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;key&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;access&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;api_key&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;apikey&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;token&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;tkn&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {<span
+   style='mso-spacerun:yes'>    </span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;env&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := input[i].Value</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>contains(lower(val[_]), secrets_env[_])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: Potential
+   secret in ENV key found: %s&quot;, [i, val])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Only use
+   trusted base images</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;from&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := split(input[i].Value[0],
+   &quot;/&quot;)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>count(val) &gt; 1</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: use a
+   trusted base image&quot;, [i])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Do not use
+   'latest' tag for base imagedeny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;from&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := split(input[i].Value[0],
+   &quot;:&quot;)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>contains(lower(val[1]),
+   &quot;latest&quot;)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: do not use
+   'latest' tag for base images&quot;, [i])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Avoid curl
+   bashing</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;run&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := concat(&quot; &quot;,
+   input[i].Value)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>matches :=
+   regex.find_n(&quot;(curl|wget)[^|^&gt;]*[|&gt;]&quot;, lower(val), -1)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>count(matches) &gt; 0</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: Avoid curl
+   bashing&quot;, [i])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Do not upgrade
+   your system packages</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>warn[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;run&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := concat(&quot; &quot;,
+   input[i].Value)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>matches :=
+   regex.match(&quot;.*?(apk|yum|dnf|apt|pip).+?(install|[dist-|check-|group]?up[grade|date]).*&quot;,
+   lower(val))</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>matches == true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line: %d: Do not
+   upgrade your system packages: %s&quot;, [i, val])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Do not use ADD
+   if possible</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;add&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: Use COPY
+   instead of ADD&quot;, [i])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Any user...</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>any_user {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;user&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>not any_user</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = &quot;Do not run as root, use USER
+   instead&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># ... but do not
+   root</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>forbidden_users =
+   [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;root&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;toor&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>&quot;0&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>command := &quot;user&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>users := [name | input[i].Cmd ==
+   command; name := input[i].Value]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>lastuser := users[count(users)-1]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>contains(lower(lastuser[_]),
+   forbidden_users[_])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: Last USER
+   directive (USER %s) is forbidden&quot;, [input.Line, lastuser])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Do not sudo</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;run&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := concat(&quot; &quot;,
+   input[i].Value)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>contains(lower(val), &quot;sudo&quot;)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;Line %d: Do not use
+   'sudo' command&quot;, [i])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Use multi-stage
+   builds</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>default
+   multi_stage = false</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>multi_stage =
+   true {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>input[i].Cmd == &quot;copy&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>val := concat(&quot; &quot;,
+   input[i].Flags)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>contains(lower(val),
+   &quot;--from=&quot;)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deny[msg] {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>multi_stage == false</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>msg = sprintf(&quot;You COPY, but do not
+   appear to use multi-stage builds...&quot;, [])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The first rule
+ prohibits storing secrets in environment variables. It will trigger a deny
+ message if any of the specified strings (i.e., &quot;passwd&quot;,
+ &quot;password&quot;, &quot;pass&quot;, etc.) are found in an <span
+ style='font-weight:bold'>`ENV`</span> key.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The second rule
+ ensures that only trusted base images are used. It reports any Dockerfiles
+ that use base images from sources that are not in the form of a Docker
+ registry.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The third rule
+ prohibits the use of the &quot;latest&quot; tag for base images.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The fourth rule
+ alert any use curl in a docker container.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The fifth rule
+ warns against upgrading system packages in Dockerfiles.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The sixth rule
+ prohibits the use of the <span style='font-weight:bold'>`ADD`</span> command
+ in a Dockerfile to copy files, and recommends using the <span
+ style='font-weight:bold'>`COPY`</span> command instead.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The seventh rule
+ warns against running Docker containers as root, and suggests setting the <span
+ style='font-weight:bold'>`USER`</span> directive.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The eighth rule
+ prohibits the use of the <span style='font-weight:bold'>`sudo`</span> command
+ in a Dockerfile.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The ninth rule
+ recommends the use of multi-stage Docker builds, and warns if there are any
+ COPY commands that appear outside of the build's multi-stage.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>In summary, this
+ Rego file defines rules to enforce Docker security best practices, and it can
+ be used with OPA to prevent vulnerabilities in a Dockerized service or
+ application.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference
+ dockerfile best practices: </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://cloudberry.engineering/article/dockerfile-security-best-practices/">https://cloudberry.engineering/article/dockerfile-security-best-practices/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">https://docs.docker.com/develop/develop-images/dockerfile_best-practices/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add opa Conftest</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#1863A1'>stage</span><span style='color:#5C626D'>(</span><span
+   style='color:#789B5F'>'Vulnerability Scan'</span><span style='color:#5C626D'>){</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#1863A1'>parallel</span><span style='color:#5C626D'>(</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span
+   style='color:#789B5F'>&quot;Dependency Scan&quot;</span><span
+   style='color:#5C626D'>: {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+   style='color:#789B5F'>&quot;mvn dependency-check:check&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; &nbsp; },</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#789B5F'>&quot;Trivy Scan&quot;</span><span style='color:#5C626D'>:
+   {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+   style='color:#789B5F'>&quot;bash trivy-scan1.sh&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; &nbsp; },</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#789B5F'>&quot;OPA Conftest&quot;</span><span style='color:
+   #5C626D'>: {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+   style='color:#789B5F'>'docker run --rm -v $(pwd):/project
+   openpolicyagent/conftest test --policy opa-docker-security2.rego Dockerfile'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; )</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; }</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; }</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The `OPA Conftest`
+ step runs a container image scan using the Open Policy Agent conftest tool by
+ running the container with a bind mount volume to include the project root
+ directory in container and then testing the Dockerfile against the
+ `opa-docker-security2.rego` policy using the command `docker run --rm -v
+ $(pwd):/project openpolicyagent/conftest test --policy
+ opa-docker-security2.rego Dockerfile`.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now run build and
+ it is will fail with result below:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4777in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>+
+   docker run --rm -v /var/lib/jenkins/workspace/devsecops-app-num:/project
+   openpolicyagent/conftest test --policy opa-docker-security2.rego Dockerfile</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#D54C53'>FAIL</span><span style='color:#686868'>- Dockerfile -
+   main - Do not run as root, use USER instead</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#D54C53'>FAIL</span><span style='color:#686868'>- Dockerfile -
+   main - Line 0: use a trusted base image</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#D54C53'>FAIL</span><span style='color:#686868'>- Dockerfile -
+   main - Line 3: Use COPY instead of ADD</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#D54C53'>FAIL</span><span style='color:#686868'>- Dockerfile -
+   main - You COPY, but do not appear to use multi-stage builds...</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#D54C53'>10
+   tests, 6 passed, 0 warnings, 4 failures, 0 exceptions</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>script
+   returned exit code 1</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We need edit
+ Dockerfile to measure secure like below.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>FROM </span><span style='color:#A1844F'>adoptopenjdk/openjdk8</span><span
+   style='color:#5C626D'>:</span><span style='color:#E06C75'>alpine-slim</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>EXPOSE </span><span style='font-style:italic;
+   color:#E06C75'>8080</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>ARG </span><span style='color:#E06C75'>JAR_FILE</span><span
+   style='color:#5C626D'>=</span><span style='font-style:italic;color:#E06C75'>target/*.jar</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>RUN </span><span style='font-style:italic;color:#E06C75'>addgroup
+   -S pipeline &amp;&amp; adduser -S k8s-pipeline -G pipeline</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>COPY </span><span style='color:#E06C75'>${JAR_FILE} </span><span
+   style='font-style:italic;color:#E06C75'>/home/k8s-pipeline/app.jar</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>USER </span><span style='font-style:italic;color:#E06C75'>k8s-pipeline</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#C678DD'>ENTRYPOINT </span><span style='font-style:italic;
+   color:#E06C75'>[</span><span style='color:#789B5F'>&quot;java&quot;</span><span
+   style='font-style:italic;color:#E06C75'>,</span><span style='color:#789B5F'>&quot;-jar&quot;</span><span
+   style='font-style:italic;color:#E06C75'>,</span><span style='color:#789B5F'>&quot;/home/k8s-pipeline/app.jar&quot;</span><span
+   style='font-style:italic;color:#E06C75'>]</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The Dockerfile
+ mentioned follows some of the best security practices that should be included
+ into the Dockerfile, which are:</p>
+ <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+  0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:normal'>
+  <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+      color:white'><span style='font-family:Calibri;font-size:11.5pt;
+      font-weight:normal;font-style:normal;font-family:Calibri;font-size:11.5pt;
+      color:black'>Using minimal base images: In the given Dockerfile, the
+      image has been used as &quot;alpine-slim&quot; which is a minimal and
+      lightweight operating system designed for containers that ensures a
+      smaller attack surface for the image by minimizing the potential
+      vulnerabilities.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Specifying the
+      user: The Dockerfile specifies the user &quot;k8s-pipeline&quot; instead
+      of using the default root user. This practice makes the application
+      running inside containers with limited access control to the host and
+      promotes defense-in-depth security practices.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Making use of
+      COPY instruction: The Dockerfile makes use of the COPY instruction so
+      that the only contents copied to the container filesystem are the
+      artifact needed to run the application (the JAR file). This offers better
+      control over the image size and avoids unnecessary vulnerabilities.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Using ENTRYPOINT
+      instruction: The ENTRYPOINT instruction is used to define the command
+      that will be executed when the container starts. This ensures the correct
+      command is executed and not any other commands that may be injected by an
+      attacker.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Exposing only
+      necessary ports: In the given Dockerfile, only port 8080 is exposed which
+      is used by the running application. By exposing the only necessary port,
+      we minimize the attack surface of our container.</span></li>
+ </ol>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>By following these
+ best practices, the Dockerfile ensures that only essential files are copied
+ into the container, limits the need for privileges, and minimizes the attack
+ surface of the container. This, in turn, makes the container more secure
+ against potential attackers.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

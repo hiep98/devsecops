@@ -1,0 +1,51 @@
+kubectl apply -f https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/kube-scan.yaml
+
+
+############ Risky Pod #############
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-risky-pod
+  name: nginx-risky-pod
+spec:
+  volumes:
+    - name: vol
+      hostPath:
+       path: /etc
+  shareProcessNamespace: true
+  containers:
+  - image: nginx
+    name: nginx-risky-pod
+    ports:
+    - containerPort: 80
+    resources: {}
+    securityContext:
+          capabilities:
+            add:
+             - ALL
+          readOnlyRootFilesystem: false
+          allowPrivilegeEscalation: true
+    volumeMounts:
+      - name: vol
+        mountPath: /opt
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: nginx-risky-pod
+  name: risky-pod-svc
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: nginx-risky-pod
+  type: LoadBalancer
+

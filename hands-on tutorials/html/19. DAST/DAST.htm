@@ -1,0 +1,389 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href=DAST.htm>
+<link rel=File-List href="DAST_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.7722in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.3118in;width:1.1472in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:#0C0C0C'>DAST</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.7722in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>springdoc-openapi
+ java library helps to automate the generation of API documentation using
+ spring boot projects. springdoc-openapi works by examining an application at
+ runtime to infer API semantics based on spring configurations, class structure
+ and various annotations.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt'>For the integration
+ between spring-boot and swagger-ui, add the library to the list of your
+ project dependencies (No additional configuration is needed).</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Adding
+ springdoc-openapi-ui dependency in pom.xml </p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&lt;</span><span style='color:#E06C75'>dependency</span><span
+   style='color:#5C626D'>&gt;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>&lt;</span><span
+   style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;org.springdoc&lt;/</span><span
+   style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>&lt;</span><span
+   style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;springdoc-openapi-ui&lt;/</span><span
+   style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>&lt;</span><span
+   style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;1.7.0&lt;/</span><span
+   style='color:#E06C75'>version</span><span style='color:#5C626D'>&gt;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'> </span>&lt;/</span><span
+   style='color:#E06C75'>dependency</span><span style='color:#5C626D'>&gt;</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt'>This will
+ automatically deploy swagger-ui to a spring-boot application:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#666769'><span
+      style='font-family:Calibri;font-size:13.0pt;color:black'>Documentation
+      will be available in HTML format, using the official </span><a
+      href="https://github.com/swagger-api/swagger-ui.git"><span
+      style='font-family:Calibri;font-size:13.0pt'>swagger-ui jars</span></a></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#666769'><span
+      style='font-family:Calibri;font-size:13.0pt;color:black'>The Swagger UI
+      page will then be available at </span><a
+      href="http://server:port/context-path/swagger-ui.html"><span
+      style='font-family:Calibri;font-size:13.0pt'>http://server:port/context-path/swagger-ui.html</span></a><span
+      style='font-family:Calibri;font-size:13.0pt;color:black'> and the OpenAPI
+      description will be available at the following url for json format: </span><a
+      href="http://server:port/context-path/v3/api-docs"><span
+      style='font-family:Calibri;font-size:13.0pt'>http://server:port/context-path/v3/api-docs</span></a></li>
+ </ul>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:13.0pt'>server: The server name or
+      IP</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:13.0pt'>port: The server port</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:13.0pt'>context-path: The context
+      path of the application</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:13.0pt'>Documentation can be
+      available in yaml format as well, on the following path :
+      /v3/api-docs.yaml</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'><span
+ style='color:#524F4C'><br>
+  </span>Reference: <a href="https://springdoc.org/">https://springdoc.org/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Zap API Scan
+ script can run automated security testing on this Endpoint.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'>#!/bin/bash</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>PORT=</span><span style='color:#789B5F'>$(kubectl -n
+   default get svc </span><span style='color:#E06C75'>${serviceName}</span><span
+   style='color:#789B5F'> -o json </span><span style='color:#C678DD'>|</span><span
+   style='color:#789B5F'> jq .spec.ports[].nodePort)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># first run this</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>chmod 777 </span><span style='color:#789B5F'>$(pwd)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>$(id -u)</span><span
+   style='color:#5C626D'>:</span><span style='color:#789B5F'>$(id -g)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>docker run -v </span><span style='color:#789B5F'>$(pwd)</span><span
+   style='color:#5C626D'>:/zap/wrk/:rw -t owasp/zap2docker-weekly
+   zap-api-scan.py -t </span><span style='color:#E06C75'>$applicationURL</span><span
+   style='color:#5C626D'>:</span><span style='color:#E06C75'>$PORT</span><span
+   style='color:#5C626D'>/v3/api-docs -f openapi -r zap_report.html</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>exit_code=</span><span style='color:#E06C75'>$?</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># comment above cmd and uncomment below lines to
+   run with CUSTOM RULES</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># docker run -v $(pwd):/zap/wrk/:rw -t
+   owasp/zap2docker-weekly zap-api-scan.py -t $applicationURL:$PORT/v3/api-docs
+   -f openapi -c zap-rules -w report.md -J json_report.json -r zap_report.html</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+   style='font-style:italic'># HTML Report</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'> </span>sudo mkdir -p owasp-zap-report</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'> </span>sudo mv zap_report.html owasp-zap-report</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;Exit
+   Code : </span><span style='color:#E06C75'>$exit_code</span><span
+   style='color:#789B5F'>&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'> </span></span><span
+   style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+   style='color:#E06C75'>${exit_code} </span><span style='color:#C678DD'>-ne</span><span
+   style='color:#5C626D'> 0 ]]</span><span style='color:#C678DD'>;</span><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>  </span></span><span
+   style='color:#C678DD'>then</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;OWASP
+   ZAP Report has either Low/Medium/High Risk. Please check the HTML
+   Report&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>exit</span><span style='color:#5C626D'> 1</span><span
+   style='color:#C678DD'>;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>   </span></span><span
+   style='color:#C678DD'>else</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+   style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;OWASP
+   ZAP did not report any Risk&quot;</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'> </span></span><span
+   style='color:#C678DD'>fi;</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The script uses
+ Docker to run OWASP ZAP inside a container. It then scans an API endpoint for
+ vulnerabilities using OWASP ZAP and generates an HTML report.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Here is a
+ step-by-step explanation of the script:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span>The first line `#!/bin/bash` is called a
+ shebang and tells the system that this file is a bash shell script.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>2The second line
+ gets the **nodePort** of a Kubernetes service named `${serviceName}` in the
+ default namespace and assigns it to the variable `PORT`. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Then, it changes
+ the permissions of the current working directory to allow read and write
+ access to all users. It prints the user and group IDs of the current user.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span>The third line changes the permission of the
+ current directory to 777, which means that anyone can read, write, or execute
+ files in this directory.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The fourth line
+ prints the user ID and group ID of the current user.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The fifth line runs
+ a Docker container using the `owasp/zap2docker-weekly` image. The container is
+ mounted with the current working directory stored in the `/zap/wrk/`
+ directory. The container is run with the `zap-api-scan.py` script, which
+ performs an API scan. The `applicationURL` is the base URL of the API to scan,
+ which is concatenated with the `nodePort` previously obtained. The `-f` flag
+ indicates the format of the API definition, which is OpenAPI. The `-r` flag
+ indicates the filename of the HTML report to be generated, which is
+ `zap_report.html`.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>other options :</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>• `-v
+ $(pwd):/zap/wrk/:rw`: mounts the current working directory to the `/zap/wrk/`
+ directory within the container with read/write permissions.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>• `-t
+ $applicationURL:$PORT/v3/api-docs`: specifies the target URL to scan by
+ concatenating the `applicationURL` environment variable with the `nodePort`
+ value obtained earlier and the `/v3/api-docs` endpoint. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The sixth line
+ stores the exit code of the previous command in a variable named `exit_code`.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The seventh line
+ checks if `exit_code` is not equal to 0, which means that OWASP ZAP has found
+ vulnerabilities in the API endpoint.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If `exit_code` is
+ not equal to 0, then it prints a message saying that OWASP ZAP has found
+ vulnerabilities in the API endpoint and exits with status code 1.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If `exit_code` is
+ equal to 0, then it prints a message saying that OWASP ZAP did not find any
+ vulnerabilities in the API endpoint.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The script also
+ contains commented-out code that can be used to run the scan with custom rules
+ and generate a different set of reports.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This command
+ essentially runs an API scan on the specified target URL using OWASP ZAP
+ within a Docker container. The results of the scan will be saved in the
+ `zap_report.html` file in the current working directory.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:17.0pt'>MANUAL PUBLISH HTML
+ REPORT IN JENKINS</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to projects -
+ select pipeline syntax</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="DAST_files/image001.png" width=369 height=557
+ alt="Dashboard &#10;devsecops-app-num &#10;Status &#10;Changes &#10;Build Now &#10;Configure &#10;Delete Pipeline &#10;Full Stage View &#10;SonarQube &#10;Open Blue Ocean &#10;Rename &#10;Coverage Trend &#10;Pipeline Syntax "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>select publish
+ html. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For html directory
+ entry you need to enter your report directory. My project example is
+ owasp-zap-report</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The index page is
+ the name of the report file.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The index page
+ title is optional, you can enter the title you want.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="DAST_files/image002.png" width=535 height=475
+ alt="Sample Step &#10;publishHTML: Publish HTML reports &#10;publishHTML &#10;HTML directory to archive &#10;owasp-zap-report &#10;Index page [s] ? &#10;zap_report. html &#10;Index page title[s] (Optional) &#10;owasp zap report html &#10;Report title ? &#10;owasp zap report html &#10;Publishing options v &#10;Pi peli-•e Script &#10;publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'owasp-zep-report', reportFiles: 'zap_report.html', &#10;reportNeme: 'ovvasp zap report html', reportTitles: 'owasp zap report html', useWrapperFileDirectly: true)) "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><br>
+  After all of the above click on generate pipeline script and copy the code
+ into jenkins pipeline post. </p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>  </span>post {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>    </span>always {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>junit </span><span
+   style='color:#789B5F'>'target/surefire-reports/*.xml'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span>jacoco </span><span
+   style='color:#9F6B3B'>execPattern</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>'target/jacoco.exec'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>     
+   </span>dependencyCheckPublisher </span><span style='color:#9F6B3B'>pattern</span><span
+   style='color:#5C626D'>: </span><span style='color:#789B5F'>'target/dependency-check-report.xml'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>     
+   </span>publishHTML([</span><span style='color:#9F6B3B'>allowMissing</span><span
+   style='color:#5C626D'>: </span><span style='color:#9F6B3B'>false</span><span
+   style='color:#5C626D'>, </span><span style='color:#9F6B3B'>alwaysLinkToLastBuild</span><span
+   style='color:#5C626D'>: </span><span style='color:#9F6B3B'>true</span><span
+   style='color:#5C626D'>, </span><span style='color:#9F6B3B'>keepAll</span><span
+   style='color:#5C626D'>: </span><span style='color:#9F6B3B'>true</span><span
+   style='color:#5C626D'>, </span><span style='color:#9F6B3B'>reportDir</span><span
+   style='color:#5C626D'>: </span><span style='color:#789B5F'>'owasp-zap-report'</span><span
+   style='color:#5C626D'>, </span><span style='color:#9F6B3B'>reportFiles</span><span
+   style='color:#5C626D'>: </span><span style='color:#789B5F'>'zap_report.html'</span><span
+   style='color:#5C626D'>, </span><span style='color:#9F6B3B'>reportName</span><span
+   style='color:#5C626D'>: </span><span style='color:#789B5F'>'OWASP ZAP HTML
+   Report'</span><span style='color:#5C626D'>, </span><span style='color:#9F6B3B'>reportTitles</span><span
+   style='color:#5C626D'>: </span><span style='color:#789B5F'>'OWASP ZAP HTML
+   Report'</span><span style='color:#5C626D'>, </span><span style='color:#9F6B3B'>useWrapperFileDirectly</span><span
+   style='color:#5C626D'>: </span><span style='color:#9F6B3B'>true</span><span
+   style='color:#5C626D'>])</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>      </span></span><span
+   style='font-style:italic;color:#5C6370'>// Use sendNotifications.groovy from
+   shared library and provide current build result as parameter<span
+   style='mso-spacerun:yes'>    </span></span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'><span style='mso-spacerun:yes'>     
+   </span>sendNotification currentBuild</span><span style='color:#C678DD'>.</span><span
+   style='color:#5C626D'>result</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now you build the
+ project and can get the report like below.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>WARN-NEW:
+   X-Content-Type-Options Header Missing [10021] x 4 </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+   href="http://192.168.207.129:31242/increment/10">http://192.168.207.129:31242/increment/10</a><span
+   style='color:#686868'> (200)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+   href="http://192.168.207.129:31242/compare/10">http://192.168.207.129:31242/compare/10</a><span
+   style='color:#686868'> (200)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+   href="http://192.168.207.129:31242/">http://192.168.207.129:31242/</a><span
+   style='color:#686868'> (200)</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+   href="http://192.168.207.129:31242/v3/api-docs">http://192.168.207.129:31242/v3/api-docs</a><span
+   style='color:#686868'> (200)</span></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

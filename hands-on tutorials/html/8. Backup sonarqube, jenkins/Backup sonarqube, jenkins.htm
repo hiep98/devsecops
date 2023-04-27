@@ -1,0 +1,184 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Backup%20sonarqube,%20jenkins.htm">
+<link rel=File-List href="Backup%20sonarqube,%20jenkins_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.9659in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt;color:#0C0C0C'>Backup
+sonarqube, jenkins</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:"Calibri Light";font-size:21.0pt'>Sonarqube</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:21.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker stop
+sonarqube &amp;&amp; docker rm sonarqube</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker run -d
+  --name sonarqube -p 9000:9000<span style='mso-spacerun:yes'>  </span>-v
+  sonarqube_data:/opt/sonarqube/data<span style='mso-spacerun:yes'>   
+  </span>sonarqube:lts</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker logs -f
+  sonarqube</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker ps | grep
+  sonar</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>To backup the
+  volume sonarqube_data, you can use the following command:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo tar -czvf
+  sonarqube_data.tar.gz /var/lib/docker/volumes/sonarqube_data/_data</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><br>
+This will create a compressed archive of the volume data in the current
+directory.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>To restore the
+volume data from the backup file, you can use the following command:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo mkdir -p
+  /var/lib/docker/volumes/sonarqube_data/_data</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker start
+  sonarqube</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo tar -xzvf
+  sonarqube_data.tar.gz -C /var/lib/docker/volumes/sonarqube_data/_data</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:23.0pt'>Jenkins</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>cat /etc/sysconfig/jenkins | grep
+  &quot;^JENKINS_HOME&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>JENKINS_HOME=&quot;/var/lib/jenkins&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>cat /etc/passwd | grep &quot;jenkins&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>jenkins:x:987:983:Jenkins
+  Automation Server:/var/lib/jenkins:/bin/false</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>tar cvf jenkins-backup.tar.gz
+  /var/lib/jenkins/*</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>tar cvf new-jenkins-backup.tar.gz
+  /var/lib/jenkins/*</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>ll | grep
+  jenkins-backup</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-rw-r--r-- 1 root
+  root 40960 Apr 25 13:25 jenkins-backup.tar.gz</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>tar -xvf
+  jenkins-backup.tar.gz<span style='mso-spacerun:yes'>  </span>-C
+  /var/lib/jenkins/</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

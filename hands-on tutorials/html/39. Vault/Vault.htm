@@ -1,0 +1,1482 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href=Vault.htm>
+<link rel=File-List href="Vault_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:7.6791in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:1.1458in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>Vault</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.4in;margin-left:0in;width:7.6791in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:black'><span
+style='font-weight:bold'>Install vault­</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:7.5791in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl create ns
+  vault</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl config
+  set-context --current --namespace vault</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl get all</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>helm repo add
+  hashicorp <a href="https://helm.releases.hashicorp.com">https://helm.releases.hashicorp.com</a></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>helm install vault
+  --set='ui.enabled=true' --set='ui.serviceType=NodePort'
+  --set='server.dataStorage.enabled=false'<span style='mso-spacerun:yes'>  
+  </span>hashicorp/vault --version 0.24.0</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>NAME: vault</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>LAST DEPLOYED: Tue
+  Apr 18 14:40:08 2023</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>NAMESPACE: vault</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>STATUS: deployed</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>REVISION: 1</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>NOTES:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Your release is
+  named vault. To learn more about the release, try:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp; $ helm
+  status vault</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp; $ helm get
+  manifest vault</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri'><span style='font-size:12.0pt;
+color:#686868'>&nbsp;</span><span style='font-weight:bold;font-size:17.0pt;
+color:black'>Vault Initialization</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:5.2361in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl get pod</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl exec -it
+  vault-0 -- vault status</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl exec -it
+  vault-0 -- /bin/sh</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>vault operator
+  init</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Key 1:
+  9yKQv2wqbE8eFDV2lXf6pQDlqxRwe625A2nemYHUIrKE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Key 2:
+  k1AyFsjiqb4DGeBlviYWAyKiSdvamAppmUiV/lNoiMn+</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Key 3:
+  LQnEmWY/Ao6q7tB3MQppiYMDhkXfWNtF/gyVNSBggMZw</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Key 4:
+  sfioFbDoOLxF6lsUvosNIEL3lA7Y7TtfAbVkUjfMz1KM</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Key 5:
+  wG/MfmU+ZvjI8yMHO49K75VrwbN9OrtmMsTPWiTAC1yr</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Initial Root
+  Token: s.VF5xrdAHb04InF4ov91SUGif</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Vault initialized
+  with 5 key shares and a key threshold of 3. Please securely</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>distribute the key
+  shares printed above. When the Vault is re-sealed,</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>restarted, or
+  stopped, you must supply at least 3 of these keys to unseal it</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>before it can
+  start servicing requests.</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Vault does not
+  store the generated master key. Without at least 3 keys to</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>reconstruct the
+  master key, Vault will remain permanently sealed!</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>It is possible to
+  generate new unseal keys, provided you have a quorum of</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>existing unseal
+  keys shares. See &quot;vault operator rekey&quot; for more information.</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The vault operator
+init command is used to initialize a new Vault server instance. It is part of
+the vault operator command group, which is used to manage and operate a Vault
+server.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>When you run the
+vault operator init command, Vault generates and outputs a set of five unseal
+keys and a root token. These are critical pieces of information that are needed
+to manage and access the Vault server.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Here is a brief
+overview of what happens when you run vault operator init:</p>
+
+<ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+ 0in;font-family:Calibri;font-size:11.0pt;font-weight:normal;font-style:normal'>
+ <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+     color:white'><span style='font-family:Calibri;font-size:11.5pt;font-weight:
+     normal;font-style:normal;font-family:Calibri;font-size:11.5pt;color:black'>Vault
+     generates a new encryption key that is used to protect sensitive data
+     stored in the Vault server.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:black'>Vault generates
+     five unseal keys, which are used to unlock the encryption key and decrypt
+     the sensitive data. Each unseal key is a 26-character string that is
+     randomly generated by Vault.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:black'>Vault generates a
+     root token, which is a privileged access token that can be used to perform
+     administrative tasks on the Vault server.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:black'>Vault outputs the
+     five unseal keys and root token to the console.</span></li>
+</ol>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>It's important to
+keep the unseal keys and root token safe and secure, as they provide access to
+sensitive data stored in the Vault server. Typically, the unseal keys are
+distributed among multiple trusted parties to prevent a single point of
+failure. The root token should be stored securely and used only when necessary.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:5.6708in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>vault operator
+  unseal wG/MfmU+ZvjI8yMHO49K75VrwbN9OrtmMsTPWiTAC1yr</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Key (will
+  be hidden): </p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Key &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>--- &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-----</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Seal Type &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp;shamir</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Initialized &nbsp;
+  &nbsp; &nbsp; &nbsp;true</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Sealed &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; true</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Total Shares
+  &nbsp; &nbsp; &nbsp; 5</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Threshold &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp;3</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Progress
+  &nbsp; &nbsp;1/3</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Unseal Nonce
+  &nbsp; &nbsp; &nbsp; cccf48d6-b7e9-5014-36b4-66894e0f3b0f</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Version &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1.8.3</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Storage Type
+  &nbsp; &nbsp; &nbsp; file</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>HA Enabled &nbsp;
+  &nbsp; &nbsp; &nbsp; false</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This command is used
+to unseal a Vault server that has been initialized but is not yet active. When
+a Vault server is initialized, it is sealed to protect its sensitive data. To
+start using the Vault server, you must unseal it by providing a certain number
+of unseal keys (as determined by the initialization process). Each time the
+vault operator unseal command is executed with an unseal key, the Vault server
+is moved one step closer to being fully unsealed.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:5.2111in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>vault login
+  s.VF5xrdAHb04InF4ov91SUGif</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Success! You are
+  now authenticated. The token information displayed below</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>is already stored
+  in the token helper. You do NOT need to run &quot;vault login&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>again. Future
+  Vault requests will automatically use this token.</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Key &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>--- &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-----</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>token &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;s.VF5xrdAHb04InF4ov91SUGif</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>token_accessor
+  &nbsp; &nbsp; &nbsp; KI5fSY50wm2U3DEkyGBfEPKZ</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>token_duration
+  &nbsp; &nbsp; &nbsp; ∞</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>token_renewable
+  &nbsp; &nbsp; &nbsp;false</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>token_policies
+  &nbsp; &nbsp; &nbsp; [&quot;root&quot;]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>identity_policies
+  &nbsp; &nbsp;[]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>policies &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [&quot;root&quot;]</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This command is used
+to authenticate with the Vault server using a specified method, such as using a
+username and password or a client token. Once authenticated, the user is
+granted an access token, which is used to access Vault resources.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'><span
+style='font-weight:bold'>Vault Secrets Engine</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='font-weight:bold'>&nbsp;</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:2.7423in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>vault secrets
+  enable -path=crds kv-v2</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to enable the KV (key-value) version 2 secrets engine on a
+Vault server. The -path option specifies the path at which to mount the secrets
+engine.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>In
+Vault, a secrets engine is a component that is responsible for generating,
+storing, and managing secrets. A secret is any piece of sensitive data that
+needs to be kept secure, such as passwords, API keys, and certificates.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>Vault
+supports multiple types of secrets engines, each of which is designed to handle
+a specific type of secret. Some of the commonly used secrets engines in Vault
+include:</p>
+
+<ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+ 0in;font-family:Calibri;font-size:11.0pt;font-weight:normal;font-style:normal'>
+ <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+     color:white'><span style='font-family:Calibri;font-size:11.5pt;font-weight:
+     normal;font-style:normal;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>KV
+     (Key-Value) secrets engine: Used to store and retrieve arbitrary key-value
+     pairs.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>Database
+     secrets engine: Used to dynamically generate database credentials on
+     behalf of users and applications.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>AWS secrets
+     engine: Used to generate and manage AWS access keys and secret access
+     keys.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>PKI (Public Key
+     Infrastructure) secrets engine: Used to issue and manage X.509
+     certificates.</span></li>
+</ol>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>Each
+secrets engine in Vault is mounted at a specific path in the Vault hierarchy,
+and can be enabled and configured using Vault commands. Once a secrets engine
+is enabled, applications and users can use Vault APIs or CLI commands to
+generate and retrieve secrets from that engine.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>Overall,
+the secrets engines in Vault make it easy for developers and operators to
+manage sensitive data securely, while also providing a centralized location for
+managing all of their secrets.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:1.2527in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  policy list</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to list all of the policies that have been defined on the Vault
+server. Policies are used to define access control rules for Vault resources.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:1.8465in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault<span
+  style='mso-spacerun:yes'>  </span>kv get crds/mysql</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'><span
+style='mso-spacerun:yes'> </span>This command is used to read a key-value pair
+from a Vault server. The key-value pair is specified using a path, such as
+secret/foo.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:4.1784in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>vault<span
+  style='mso-spacerun:yes'>  </span>kv put crds/mysql username=root
+  password=09132 </p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='color:#686868'><span style='mso-spacerun:yes'> </span></span>This
+command is used to write a key-value pair to a Vault server. The key-value pair
+is specified using a path, such as secret/foo, and a set of key-value pairs,
+such as key=value.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:2.5305in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>vault<span
+  style='mso-spacerun:yes'>  </span>kv metadata get crds/mysql</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='color:#686868'><span style='mso-spacerun:yes'> </span></span>This
+command is used to retrieve the metadata for a key-value pair in a Vault
+server. The metadata includes information such as the time the key-value pair
+was created and last updated, and the version number of the pair.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#0C0C0C'><span
+style='font-weight:bold'>Vault Authorization</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:4.7701in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cat &lt;&lt;EOF
+  &gt; /home/vault/app-policy.hcl</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>path
+  &quot;crds/data/mongodb&quot; {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>capabilities = [&quot;create&quot;,
+  &quot;read&quot;, &quot;update&quot;, &quot;patch&quot;, &quot;delete&quot;,
+  &quot;list&quot;]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>path
+  &quot;crds/data/mysql&quot; {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>capabilities = [&quot;read&quot;]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>EOF</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>In
+Vault, a policy is a set of rules that define what actions a user or
+application can perform on a given set of paths within the Vault hierarchy.
+Policies are written in the HCL (HashiCorp Configuration Language) syntax and
+can be defined using a text editor or using Vault CLI commands.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>In the
+example policy you provided, there are two paths specified with different
+capabilities assigned to them:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>&quot;crds/data/mongodb&quot;:
+This path specifies that the policy allows the capabilities to create, read,
+update, patch, delete and list key-value pairs located in the
+&quot;mongodb&quot; path under the &quot;crds/data&quot; path in Vault.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>&quot;crds/data/mysql&quot;:
+This path specifies that the policy allows the capability to read key-value
+pairs located in the &quot;mysql&quot; path under the &quot;crds/data&quot;
+path in Vault.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>The
+capabilities defined in the policy specify what actions the user or application
+is authorized to perform on the given path(s). In this case, the policy allows
+a user or application to perform a range of actions on MongoDB data, but only
+to read MySQL data.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>Once
+the policy is written, it can be applied to a user or application in Vault,
+allowing them to perform the actions defined in the policy on the paths
+specified.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>Overall,
+policies in Vault provide a powerful tool for managing access to sensitive
+data, allowing administrators to define granular access controls based on the
+specific needs of their users and applications.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:3.6034in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  policy write app /home/vault/app-policy.hcl</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to create or update the policy named &quot;app&quot; on the
+Vault server. The policy specifies access control rules for Vault resources
+that are used by a particular application.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:1.6562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  policy read app</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to read the policy named &quot;app&quot; from the Vault server.
+The &quot;app&quot; policy specifies access control rules for Vault resources
+that are used by a particular application.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#0C0C0C'><span
+style='font-weight:bold'>Authentication</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:1.477in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  token create</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to create a new token in HashiCorp Vault. Tokens are used to
+authenticate and authorize clients to interact with Vault. When you run this
+command, Vault will generate a new token with a specified set of permissions
+and a TTL (time to live) that determines how long the token will be valid.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:1.5097in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  token revoke</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to revoke a token in HashiCorp Vault. When you run this
+command, Vault will immediately invalidate the specified token, meaning that it
+can no longer be used to authenticate or authorize clients.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:2.2312in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  auth enable kubernetes</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to enable the Kubernetes authentication method in HashiCorp
+Vault. When you run this command, you are telling Vault to configure itself to
+accept authentication requests from Kubernetes.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:6.1631in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  write auth/kubernetes/config \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'><span
+  style='mso-spacerun:yes'>    </span>token_reviewer_jwt=&quot;$(cat
+  /var/run/secrets/kubernetes.io/serviceaccount/token)&quot; \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'><span
+  style='mso-spacerun:yes'>   
+  </span>kubernetes_host=https://${KUBERNETES_PORT_443_TCP_ADDR}:443 \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'><span
+  style='mso-spacerun:yes'>   
+  </span>kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  </p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to configure the Kubernetes authentication method in HashiCorp
+Vault. Specifically, it sets the configuration parameters for the method, such
+as the location of the Kubernetes API server and the location of the Kubernetes
+CA certificate.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:3.2708in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>SET
+  ROLE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>vault
+  write auth/kubernetes/role/phpapp \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>bound_service_account_names=app
+  \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>bound_service_account_namespaces=vault
+  \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>policies=app
+  \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>ttl=1h</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>This
+command is used to configure a role in the Kubernetes authentication method in
+HashiCorp Vault. When you run this command, you are specifying which Kubernetes
+service account (in this case, app) can be used to authenticate with Vault,
+which namespace the service account belongs to (in this case, vault), which
+policies the role should have access to (in this case, app), and how long the
+token issued by this role will be valid (in this case, 1h).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:3.9909in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>exit</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl describe
+  clusterrolebinding vault-server-binding</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This command is used
+to describe a ClusterRoleBinding in Kubernetes. A ClusterRoleBinding is a way
+to bind a ClusterRole (a set of permissions in Kubernetes) to a specific
+Kubernetes service account. When you run this command, you are getting
+information about the ClusterRoleBinding named vault-server-binding.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#0C0C0C'><span
+style='font-weight:bold'>PHP APPLICATION DEMO</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:4.4743in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>git clone <a
+  href="https://github.com/sidd-harth/php-vault-example.git">https://github.com/sidd-harth/php-vault-example.git</a></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cd
+  php-vault-example/</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker build -t
+  php:vault .</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl apply -f
+  php-app-k8s-deploy.yaml</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In
+php-app-k8s-deploy.yaml, we have code below:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  background-color:white;vertical-align:top;width:1.7708in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <div style='direction:ltr'>
+  <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+   border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+   1pt' title="" summary="">
+   <tr>
+    <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+    vertical-align:top;width:1.6576in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+    <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#292929'>apiVersion:
+    v1</p>
+    <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#292929'>kind:
+    ServiceAccount</p>
+    <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#292929'>metadata:</p>
+    <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#292929'><span
+    style='mso-spacerun:yes'>  </span>name: app</p>
+    <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#292929'><span
+    style='mso-spacerun:yes'>  </span>labels:</p>
+    <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#292929'><span
+    style='mso-spacerun:yes'>    </span>app: php</p>
+    </td>
+   </tr>
+  </table>
+  </div>
+  <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>It is will be
+interactive with command: </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>SET ROLE vault write
+auth/kubernetes/role/phpapp \ bound_service_account_names=app \
+bound_service_account_namespaces=vault \ policies=app \ ttl=1h</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>After run apply, The
+Kubernetes ServiceAccount named &quot;app&quot; in your deployment file is
+connected to the Vault command vault write auth/kubernetes/role/phpapp through
+the bound_service_account_names parameter.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>When you run the
+Vault command with bound_service_account_names=app, it tells Vault that any
+authentication requests coming from the Kubernetes ServiceAccount named
+&quot;app&quot; should be authorized by this Vault role (phpapp).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Additionally, the
+bound_service_account_namespaces parameter specifies the Kubernetes namespace
+where the ServiceAccount is located (vault in this case).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Finally, the
+policies parameter specifies the Vault policies that should be granted to any
+tokens issued by this role. In this case, the app policy is being granted.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The ttl parameter
+specifies the time-to-live for any tokens issued by this role. In this case,
+the token will expire and be revoked after 1 hour.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:5.5597in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl get svc</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                       </span>TYPE<span
+  style='mso-spacerun:yes'>        </span>CLUSTER-IP<span
+  style='mso-spacerun:yes'>      </span>EXTERNAL-IP<span
+  style='mso-spacerun:yes'>   </span>PORT(S)<span
+  style='mso-spacerun:yes'>             </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>php<span
+  style='mso-spacerun:yes'>                        </span>NodePort<span
+  style='mso-spacerun:yes'>    </span>10.106.55.59<span
+  style='mso-spacerun:yes'>    </span>&lt;none&gt;<span
+  style='mso-spacerun:yes'>        </span>80:30323/TCP<span
+  style='mso-spacerun:yes'>        </span>57s</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>We try
+to access the app and now the app has a red background and displays secret
+information</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Vault_files/image001.jpg" width=624 height=249></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:5.3194in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cat
+  patch-annotations.yaml</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>template:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>metadata:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>      </span>annotations:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>vault.hashicorp.com/agent-inject:
+  &quot;true&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-secret-username:
+  &quot;crds/data/mysql&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>vault.hashicorp.com/role:
+  &quot;phpapp&quot;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>Annotations
+in Vault HashiCorp are a way to specify metadata about Kubernetes objects that
+indicate how Vault should interact with them. Annotations are key-value pairs
+that are added to Kubernetes objects such as pods, deployments, and services to
+instruct Vault on how to inject secrets or otherwise interact with the objects.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>Some
+common annotations used in Vault include:</p>
+
+<ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+ 0in;font-family:Calibri;font-size:11.0pt;font-weight:normal;font-style:normal'>
+ <li value=5 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+     color:white'><span style='font-family:Calibri;font-size:11.5pt;font-weight:
+     normal;font-style:normal;font-family:Calibri;font-size:11.5pt;color:#C30505'>vault</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#363052'>.</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#C30505'>hashicorp</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#363052'>.</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#C30505'>com</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#363052'>/</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#C30505'>agent</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#363052'>-</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#C30505'>inject</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#363052'>: </span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#1A8D1A'>&quot;true&quot;</span><span
+     style='font-family:Calibri;font-size:11.5pt;font-weight:normal;font-style:
+     normal;font-family:Calibri;font-size:11.5pt;color:#212529'>: This
+     annotation enables the Vault Agent sidecar injector to inject secrets into
+     a pod.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>vault</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>.</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>hashicorp</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>.</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>com</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>/</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>agent</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>-</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>inject</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>-</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>secret</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>-&lt;</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>key</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>&gt;: </span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#1A8D1A'>&quot;&lt;path&gt;&quot;</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#212529'>: This
+     annotation specifies the path to a secret in Vault and the key in the
+     secret that should be injected into the pod.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>vault</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>.</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>hashicorp</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>.</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>com</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>/</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#C30505'>role</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#363052'>: </span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#1A8D1A'>&quot;&lt;name&gt;&quot;</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:#212529'>: This
+     annotation specifies the name of a Vault role that should be used to
+     authenticate requests from the Kubernetes object.</span></li>
+</ol>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt'><span
+style='color:#212529'>Annotations can be specified in a Kubernetes manifest
+file or added to an existing object using the </span><span style='color:#C30505'>kubectl
+annotate </span><span style='color:#212529'>command. Annotations provide a
+flexible way to integrate Vault with Kubernetes applications and manage secrets
+securely.</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:4.3152in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl patch
+  deploy php -p &quot;$(cat patch-annotations.yaml)&quot;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt'><span
+style='color:#2F2F2F;background:white'>This command applies the annotations
+defined in the </span><span style='color:#2F2D2D;background:white'>patch</span><span
+style='color:#2E2E2F;background:white'>-</span><span style='color:#2F2D2D;
+background:white'>annotations</span><span style='color:#2E2E2F;background:white'>.</span><span
+style='color:#2F2D2D;background:white'>yaml </span><span style='color:#2F2F2F;
+background:white'>file to the Kubernetes Deployment named </span><span
+style='color:#2F2D2D;background:white'>php</span><span style='color:#2F2F2F;
+background:white'>. Specifically, it adds the annotations </span><span
+style='color:#2F2D2D;background:white'>vault</span><span style='color:#2E2E2F;
+background:white'>.</span><span style='color:#2F2D2D;background:white'>hashicorp</span><span
+style='color:#2E2E2F;background:white'>.</span><span style='color:#2F2D2D;
+background:white'>com</span><span style='color:#2E2E2F;background:white'>/</span><span
+style='color:#2F2D2D;background:white'>agent</span><span style='color:#2E2E2F;
+background:white'>-</span><span style='color:#2F2D2D;background:white'>inject</span><span
+style='color:#2E2E2F;background:white'>: </span><span style='color:#2E312E;
+background:white'>&quot;true&quot;</span><span style='color:#2F2F2F;background:
+white'>, </span><span style='color:#2F2D2D;background:white'>vault</span><span
+style='color:#2E2E2F;background:white'>.</span><span style='color:#2F2D2D;
+background:white'>hashicorp</span><span style='color:#2E2E2F;background:white'>.</span><span
+style='color:#2F2D2D;background:white'>com</span><span style='color:#2E2E2F;
+background:white'>/</span><span style='color:#2F2D2D;background:white'>agent</span><span
+style='color:#2E2E2F;background:white'>-</span><span style='color:#2F2D2D;
+background:white'>inject</span><span style='color:#2E2E2F;background:white'>-</span><span
+style='color:#2F2D2D;background:white'>secret</span><span style='color:#2E2E2F;
+background:white'>-</span><span style='color:#2F2D2D;background:white'>username</span><span
+style='color:#2E2E2F;background:white'>: </span><span style='color:#2E312E;
+background:white'>&quot;crds/data/mysql&quot;</span><span style='color:#2F2F2F;
+background:white'>, and </span><span style='color:#2F2D2D;background:white'>vault</span><span
+style='color:#2E2E2F;background:white'>.</span><span style='color:#2F2D2D;
+background:white'>hashicorp</span><span style='color:#2E2E2F;background:white'>.</span><span
+style='color:#2F2D2D;background:white'>com</span><span style='color:#2E2E2F;
+background:white'>/</span><span style='color:#2F2D2D;background:white'>role</span><span
+style='color:#2E2E2F;background:white'>: </span><span style='color:#2E312E;
+background:white'>&quot;phpapp&quot;</span><span style='color:#2F2F2F;
+background:white'>to the metadata of the pod template.</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:7.5791in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl describe
+  pod php-7744998f8f-lcwx8</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>Args:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>      </span>echo ${VAULT_CONFIG?} | base64 -d &gt;
+  /home/vault/config.json &amp;&amp; vault agent
+  -config=/home/vault/config.json<span style='mso-spacerun:yes'>   
+  </span>State:<span style='mso-spacerun:yes'>          </span>Terminated</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt'><span
+style='color:#2F2F2F;background:white'>This command provides a detailed
+description of the Kubernetes pod named </span><span style='color:#2F2D2D;
+background:white'>php</span><span style='color:#2E2E2F;background:white'>-</span><span
+style='color:#2E3030;background:white'>7744998f8f</span><span style='color:
+#2E2E2F;background:white'>-</span><span style='color:#2F2D2D;background:white'>lcwx8</span><span
+style='color:#2F2F2F;background:white'>.</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'> </span>kubectl exec -it pod/php-7744998f8f-lcwx8 -n
+vault -c php -- cat /vault/secrets/username</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>data:
+map[apikey:813290vjlkad password:09132 username:root]</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>metadata:
+map[created_time:2023-04-19T02:07:39.660745457Z deletion_time: destroyed:false
+version:1]</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This command
+executes a command inside the container named <span style='color:#2F2D2D;
+background:white'>php</span>in the <span style='color:#2F2D2D;background:white'>php</span><span
+style='color:#2E2E2F;background:white'>-</span><span style='color:#2E3030;
+background:white'>7744998f8f</span><span style='color:#2E2E2F;background:white'>-</span><span
+style='color:#2F2D2D;background:white'>lcwx8</span>pod, and prints the contents
+of the <span style='color:#2E312E;background:white'>/vault/</span><span
+style='color:#2F2D2D;background:white'>secrets</span><span style='color:#2E2E2F;
+background:white'>/</span><span style='color:#2F2D2D;background:white'>username</span>file.
+Specifically, it decodes the value of the <span style='color:#2F2D2D;
+background:white'>VAULT_CONFIG</span>environment variable, writes it to a file
+at <span style='color:#2E312E;background:white'>/home/</span><span
+style='color:#2F2D2D;background:white'>vault</span><span style='color:#2E2E2F;
+background:white'>/</span><span style='color:#2F2D2D;background:white'>config</span><span
+style='color:#2E2E2F;background:white'>.</span><span style='color:#2F2D2D;
+background:white'>json</span>, and starts the Vault agent process with that
+configuration file. The agent then retrieves the secret named <span
+style='color:#2F2D2D;background:white'>username</span>from Vault and writes it
+to the <span style='color:#2E312E;background:white'>/vault/</span><span
+style='color:#2F2D2D;background:white'>secrets</span><span style='color:#2E2E2F;
+background:white'>/</span><span style='color:#2F2D2D;background:white'>username</span>file.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:5.3194in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cat
+  patch-annotations-template.yaml </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>template:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>metadata:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>      </span>annotations:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>vault.hashicorp.com/agent-inject:
+  &quot;true&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-status: &quot;update&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-secret-username:
+  &quot;crds/data/mysql&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-template-username: |</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>          </span>{{- with secret
+  &quot;crds/data/mysql&quot; -}}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                     </span>{{ .Data.data.username
+  }}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>          </span>{{- end }}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-secret-password:
+  &quot;crds/data/mysql&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-template-password: |</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>          </span>{{- with secret
+  &quot;crds/data/mysql&quot; -}}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                     </span>{{ .Data.data.password
+  }}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>          </span>{{- end }}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-secret-apikey:
+  &quot;crds/data/mysql&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>       
+  </span>vault.hashicorp.com/agent-inject-template-apikey: |</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>          </span>{{- with secret
+  &quot;crds/data/mysql&quot; -}}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>                     </span>{{ .Data.data.apikey }}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>          </span>{{- end }}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>        </span>vault.hashicorp.com/role:
+  &quot;phpapp&quot;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#686868'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>It<span
+style='mso-spacerun:yes'>  </span>using the Vault Agent Sidecar Injector.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The annotations are
+divided into two sections: agent and vault. The agent annotations change the
+Vault Agent containers templating configuration, such as what secrets they
+want, how to render them, etc. The vault annotations change the Vault Agent
+containers authentication configuration, such as what role they use, what
+certificates they need, etc.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Here is a brief
+explanation of each annotation in the template:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject: &quot;true&quot;`: This enables injection
+for the pod¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-status: &quot;update&quot;`: This blocks
+further mutations by adding the value `injected` to the pod after a successful
+mutation¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-secret-username:
+&quot;crds/data/mysql&quot;`: This tells the Vault Agent to retrieve the secret
+`username` from the path `crds/data/mysql` in Vault¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-template-username: | ...`: This tells the
+Vault Agent how to render the secret `username` using a Go template¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-secret-password:
+&quot;crds/data/mysql&quot;`: This tells the Vault Agent to retrieve the secret
+`password` from the same path as `username`¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-template-password: | ...`: This tells the
+Vault Agent how to render the secret `password` using a Go template¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-secret-apikey: &quot;crds/data/mysql&quot;`:
+This tells the Vault Agent to retrieve the secret `apikey` from the same path
+as `username` and `password`¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/agent-inject-template-apikey: | ...`: This tells the Vault
+Agent how to render the secret `apikey` using a Go template¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-
+`vault.hashicorp.com/role: &quot;phpapp&quot;`: This tells the Vault Agent what
+role to use for authenticating with Vault using the Kubernetes auth method¹.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(1) Agent Sidecar
+Injector Annotations | Vault | HashiCorp Developer. <a
+href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(2) Running Vault
+with Kubernetes - HashiCorp. <a
+href="https://www.hashicorp.com/products/vault/kubernetes">https://www.hashicorp.com/products/vault/kubernetes</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(3) » Vault Agent
+Injector Examples - Vault by HashiCorp. <a
+href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://testdriven.io/blog/managing-secrets-with-vault-and-consul">https://testdriven.io/blog/managing-secrets-with-vault-and-consul</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/">https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:6.3645in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl patch
+  deploy php -p &quot;$(cat patch-annotations-template.yaml)&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl exec -it
+  pod/php-697475985f-n58bq -n vault -c php -- cat /vault/secrets/username</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Root</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;margin-left:.375in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+ 0in;font-family:Calibri;font-size:11.0pt;font-weight:normal;font-style:normal'>
+ <li value=8 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+     color:white'><span style='font-family:Calibri;font-size:11.5pt;font-weight:
+     normal;font-style:normal;font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>kubectl:
+     This is the command-line tool used to interact with Kubernetes clusters.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>patch: This
+     sub-command is used to update or modify resources in a Kubernetes cluster.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:#0C0C0C'>deploy:</span><span
+     style='font-family:Calibri;font-size:11.5pt;color:black'> This specifies
+     the type of resource to be patched, which in this case is a deployment.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:black'>php: This is the
+     name of the deployment that we want to patch.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+     style='font-family:Calibri;font-size:11.5pt;color:black'>-p &quot;$(cat
+     patch-annotations-template.yaml)&quot;: This is an option that specifies
+     the patch to be applied to the deployment. The patch is specified using a
+     YAML or JSON file that contains the updated metadata for the deployment.
+     The $(cat patch-annotations-template.yaml) command substitution is used to
+     read the contents of the file patch-annotations-template.yaml and pass it
+     as a string to the -p option.</span></li>
+</ol>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Overall, the command
+kubectl patch deploy php -p &quot;$(cat patch-annotations-template.yaml)&quot;
+is used to update the metadata for the deployment named &quot;php&quot; by
+applying a patch contained in the YAML file patch-annotations-template.yaml. The
+specific changes made to the metadata will depend on the contents of the patch
+file.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, we refresh the
+app and we see that the app has get the secrets</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Vault_files/image002.jpg" width=624 height=283></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#0C0C0C'><span
+style='font-weight:bold'>How it works Internally</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Vault_files/image003.jpg" width=624 height=313></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, we'll try to
+see how Vault works internally.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The recommended
+installation method is through the latest Vault helm site, which supports the
+Vault-k8s injection functionality. It launches two pods, Vault-0 and the
+Vault-agent-injector. An admin or Vault user can exit into the Vault-0 pod to
+initialize the Vault, add secrets, define policies, configure authentication
+and roles. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The
+vault-agent-injector pod is a Kubernetes mutation webhook controller. The
+controller intercepts pod events and applies mutation to the pod if annotation
+exist within the request. When we deploy our application to Kubernetes, it
+generally goes through the kube-apiserver. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>It goes through the
+authentication, authorization, mutation, admission controller if any, does a
+round of schema validation after mutation, and it also does a validation
+admission controller before getting persisted in the etcd data store. Then a
+scheduler will deploy the pod, mount the required service accounts on one of
+the available notes. If we execute into this pod and search for
+/vault/secretsdirectory, it would return not found because the secrets are not
+yet mounted from Vault. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>How does this
+container get the secrets from the Vault server? </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We can use the
+kubectl patch command to apply the annotations to an existing pod object. This
+will be intercepted by the Vault-agent-injector webhook service which will
+invoke the mutation admission controller and then inject the correct init and
+the sidecar containers. The init container will pre-populate the shared memory
+volume with the requested secrets prior to the other container starting. The
+sidecar container, which is the Vault agent container, will continue to
+authenticate and render secrets to the same location as the pod runs. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>How do these
+containers fetch secrets from the Vault server? </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Checking the logs of
+the Vault init connector, initially, it tries to authenticate with the Vault
+server. The primary method of authentication with Vault when using the
+Vault-agent-injector is the service account attached to the pod. It is going to
+send the JSON Web Token to Vault for authentication. Vault now has to validate
+the pod service account JSON Web Token. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For Kubernetes
+authentication, the service account must be bond to a Vault role and a policy
+granting access to the secrets desire. For accessing the Kubernetes TokenReview
+API to validate the provided part service account token is still valid or not,
+the Vault service account used in this auth method will need to have access to
+the TokenReview API. The service account should be granted system auth
+delegator permission. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Once the TokenReview
+API request has been sent, the TokenReview API in the queue, API server, it
+will respond back the status authenticated through as a payload along with the
+details of the service account like the namespace and the service account name.
+This is how the curl command generally looks like. It's a post command to the
+TokenReview API. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Within the headers,
+you pass in the Vault-agent-injector's service account token. Within the
+payload, you send in the pod service account token to check if it is still
+valid or not. All this is sent to the TokenReview API which will try to
+validate it. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If the pod app
+service account token is valid, it's going to respond back with a payload of
+status authenticated as true. Within the payload, it also sends back the
+service account name and to which namespace it belongs to. The service account
+name and namespace will be matched with the policy to authorize access to the
+secrets. Once authorized, Vault is going to create auth token and return it to
+the init connectors. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The token is stored
+in the /home/vault/.vault-token directory. Once the authentication is
+successful, it is stored in this directory. Next, the init container will
+request the Vault for the secrets and passing the auth token which it received
+in the previous call. Vault will match the auth token with policy for specific
+secrets, and secrets are returned to the init connectors. The init container
+will store the secret in empty directory volume which is shared by all the
+three containers within the pod. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, when we execute
+into the pod and search for /vault/secrets directory, it would display all the
+rendered secrets. This is a pretty straightforward workflow pattern for
+injecting a secret into a running application that has no native vault logic
+built in. The application only needs to concern themselves with finding a
+secret at a specific file path. That's it for now. Thank you.</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,424 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href=SAST.htm>
+<link rel=File-List href="SAST_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:9.9465in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.352in;width:1.1034in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt'>SAST</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:9.9465in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run sonarqube<span
+ style='mso-spacerun:yes'>  </span>with docker</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker run -d
+   --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000
+   sonarqube:latest</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Or</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker run -d
+   --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000
+   sonarqube:lts</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sonarqube docker
+ run cannot access port 9000 in website.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker run
+   --network=host -e SONAR_HOST_URL='http://127.0.0.1:9000' --user=&quot;$(id
+   -u):$(id -g)&quot; -v &quot;$PWD:/usr/src&quot;
+   sonarsource/sonar-scanner-cli</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Read logs</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker logs
+   sonarqube -f</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference to read
+ more detail</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://docs.sonarqube.org/latest/setup-and-upgrade/install-the-server/">https://docs.sonarqube.org/latest/setup-and-upgrade/install-the-server/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://docs.sonarqube.org/latest/analyzing-source-code/test-coverage/java-test-coverage/">Java
+ test coverage (sonarqube.org)</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to dashboard
+ with port 9000, after login and add manual maven project</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image001.png" width=480 height=165></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Project key is your
+ project name</p>
+ <p style='margin:0in'><img src="SAST_files/image002.png" width=480 height=305></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Select maven</p>
+ <p style='margin:0in'><img src="SAST_files/image003.png" width=480 height=231></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Copy code to
+ jenkins file</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>stage('SonarQube
+   - SAST') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>withSonarQubeEnv('SonarQube') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>sh &quot;mvn clean verify
+   sonar:sonar \</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>-Dsonar.projectKey=numeric-app \</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> 
+   </span>-Dsonar.host.url=http://192.168.126.132:9000 \</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> 
+   </span>-Dsonar.login=sqp_76f368be3de38b7cbc9eedcd1f14798bc1a19397&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#1E4E79'>SONARQUBE
+ QUALITY GATES</h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h2 style='margin:0in;font-family:Calibri;font-size:15.0pt;color:#2E75B5'>Generate
+ a token in SonarQube, please follow these steps:</h2>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Log in to your SonarQube
+      instance as an administrator.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on your user avatar in
+      the top-right corner and select &quot;My Account&quot; from the dropdown
+      menu.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on
+      &quot;Security&quot; in the left-hand navigation menu.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on &quot;Generate
+      Tokens&quot; in the &quot;Tokens&quot; section.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Enter a name for your token
+      in the &quot;Name&quot; field.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Select the appropriate
+      permissions for your token in the &quot;Permissions&quot; field (e.g.
+      &quot;Execute Analysis&quot; for a token to be used with a CI/CD
+      pipeline).</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on the
+      &quot;Generate&quot; button to generate your token.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Copy the token value
+      into<span style='mso-spacerun:yes'>  </span>that is displayed on the
+      screen and store it in a safe place, as it will not be displayed again.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image004.png" width=644 height=322
+ alt="Projects &#10;Issues &#10;Rules &#10;Quality Profiles &#10;Quality Gates &#10;Administration &#10;Q Search for projects &#10;A &#10;Tokens &#10;Administrator &#10;Profile &#10;Security &#10;Notifications &#10;Projects &#10;Administrator &#10;My Account &#10;Log out &#10;If you want to enforce security by not providing credentials of a real SonarQube user to run your code scan or to invoke web services, you can provide a IJser Token &#10;as a replacement of the user logim This will increase the security of pur installation by not letting your analysis users password going through pur networlc &#10;Generate Tokens &#10;Name &#10;jenkins-quality-gatel &#10;Type &#10;Project Analysis Token &#10;Project &#10;Select Project &#10;Expires in &#10;30 days &#10;O New token &quot;jenkins-quality-gate&quot; has been created Make sure copy it now, Vou won't be able to see it again! &#10;Copy &#10;Name &#10;sqp_d2cd4a38b1e5e14fb7a8a9abf6f99627e816ff93 &#10;Type &#10;Project &#10;Project &#10;Project &#10;numeric &#10;numeric &#10;Last use &#10;1 day ago &#10;Never &#10;C reated &#10;Analyze &quot;numeric &#10;jenkins-quality-gate &#10;March 6, &#10;March 8, &#10;2023 &#10;2023 &#10;Expiration &#10;April 5, 2023 &#10;April 7, 2023 &#10;Revoke &#10;Revoke "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h2 style='margin:0in;font-family:Calibri;font-size:15.0pt;color:#2E75B5'>Create
+ Global credential in jenkins:</h2>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on
+      &quot;Credentials&quot; in the main menu.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on the
+      &quot;System&quot; tab at the top of the screen and then &quot;Global
+      credentials&quot; under the &quot;System&quot; category.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on the &quot;Add
+      Credentials&quot; link on the left-hand side.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Select &quot;Secret
+      text&quot; and<span style='mso-spacerun:yes'>  </span>copy the token
+      value into in the fields provided.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Optionally, you can set a
+      &quot;Description&quot; to help identify the credential later.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Click on the &quot;OK&quot;
+      button to save the credentials.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Note: Global
+ credentials are available to all Jenkins jobs and pipelines. Use them with
+ caution and ensure that you have proper security measures in place to restrict
+ access to these credentials.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image005.png" width=700 height=287
+ alt="Dashboard &#10;Manage Jenkins &#10;Credentials &#10;System &#10;Global credentials (unrestricted) &#10;New credentials &#10;Kind &#10;Secret text &#10;Scope &#10;Global (Jenkins, nodes, items, all child items, etc) &#10;Secret &#10;sonarQube &#10;Description ? &#10;sonarqube "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>Setup
+ credential:</h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Click on
+ &quot;Manage Jenkins&quot; and select &quot;Configure System&quot;.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image006.png" width=363 height=189
+ alt="System Configuration &#10;Configure System &#10;Configure global settings and paths. "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Scroll down to the
+ &quot;SonarQube&quot; section and click on the &quot;Add SonarQube&quot;
+ button.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Enter a name for
+ your SonarQube server in the &quot;Name&quot; field.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Enter the URL of
+ your SonarQube server in the &quot;Server URL&quot; field.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Select on the
+ &quot;Credentials&quot; under the<span style='mso-spacerun:yes'> 
+ </span>&quot;<span style='color:#14141F'>Server authentication token</span>&quot;
+ section.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Click on the
+ &quot;OK&quot; button to save the credentials.</p>
+ <p style='margin:0in'><img src="SAST_files/image007.png" width=607 height=615
+ alt="Dashboard &#10;Manage Jenkins &#10;Configure System &#10;SonarQube servers &#10;If checked, job administrators will be able to inject a SonarQube server configuration as environment variables in the build. &#10;Environment variables &#10;Enable injection of SonarQube server configuration as build environment variables &#10;SonarQube installations &#10;List of SonarQube installations &#10;Name &#10;sonarqube &#10;Server URL &#10;Default is http://localhost:9000 &#10;http•.//1 92.168.126.132:9000 &#10;Server authentication token &#10;SonarQube authentication token. Mandatory when anonymous access is disabled. &#10;sonarqube &#10;+ Add &#10;Advanced... &#10;Add SonarQube &#10;Pipeline Speed / Durabilitv &#10;Apply "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Click on the
+ &quot;Administration&quot; button in the left-hand panel and select
+ &quot;Webhooks&quot; from the dropdown menu.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image008.png" width=779 height=192
+ alt="sonarqube Projects &#10;Administration &#10;Configuration &#10;Security &#10;Issues &#10;Projects &#10;Rules &#10;Quality Profiles &#10;Quality Gates &#10;Administration &#10;Q Search for projects &#10;System &#10;Marketplace &#10;General Settings &#10;Encryption &#10;Webhooks &#10;Create &#10;notify extemal services when a project analysis is done. An HTTP POST request including a JSON payload is sent &#10;URLs. Learn more in the t? Webhooks &#10;No webhook defined. "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Click on the
+ &quot;Create&quot; button to create a new webhook.</p>
+ <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+  0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:normal'>
+  <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+      color:white'>&nbsp;</li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Enter a name for
+      your webhook in the &quot;Name&quot; field.</span></li>
+ </ol>
+ <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+  0in;font-family:Calibri;font-size:13.0pt;font-weight:normal;font-style:normal'>
+  <li value=3 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+      color:white'>&nbsp;</li>
+ </ol>
+ <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+  0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:normal'>
+  <li value=4 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+      color:white'><span style='font-family:Calibri;font-size:11.5pt;
+      font-weight:normal;font-style:normal;font-family:Calibri;font-size:11.5pt;
+      color:black'>Enter the URL of the endpoint that will receive the webhook
+      in the &quot;URL&quot; field.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'>&nbsp;</li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:white'><span
+      style='font-family:Calibri;font-size:11.5pt;color:black'>Click on the
+      &quot;Create&quot; button to create the webhook.</span></li>
+ </ol>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>That's it! Your
+ SonarQube webhook is now created and will send data to the specified endpoint
+ for the selected events.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image009.png" width=441 height=531
+ alt="Create Webhook &#10;All fields marked with * are required &#10;Name • &#10;jenkins-webhook &#10;URL • &#10;http 1328080/sonarqube-webhook/ &#10;Server endpoint that Will receive the webhook payload, for example: &#10;&quot;http://my_server/foo&quot;_ If HTTP Basic authentication is used, HTTPS is &#10;recommended to avoid man in the middle attacks. Example: &#10;&quot;https://myLogin:myPassword@my_server/foo&quot; &#10;Secret &#10;If provided, secret will be used as the key to generate the HMAC hex &#10;(lowercase) digest value in the 'X-Sonar-Webhook-HMAC-SHA256' &#10;header &#10;Create &#10;Cancel "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>reference: <a
+ href="https://docs.sonarqube.org/latest/analyzing-source-code/scanners/jenkins-extension-sonarqube/">https://docs.sonarqube.org/latest/analyzing-source-code/scanners/jenkins-extension-sonarqube/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><br>
+  Update stage</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#1863A1'>stage</span><span style='color:#5C626D'>(</span><span
+   style='color:#789B5F'>'SonarQube - SAST'</span><span style='color:#5C626D'>)
+   {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#1863A1'>withSonarQubeEnv</span><span style='color:#5C626D'>(</span><span
+   style='color:#789B5F'>'SonarQube'</span><span style='color:#5C626D'>) {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+   style='color:#789B5F'>&quot;mvn sonar:sonar
+   -Dsonar.projectKey=numeric-application
+   -Dsonar.host.url=http://devsecops-demo.eastus.cloudapp.azure.com:9000</span><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; }</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+   style='color:#1863A1'>timeout</span><span style='color:#5C626D'>(</span><span
+   style='color:#9F6B3B'>time</span><span style='color:#5C626D'>: </span><span
+   style='color:#9F6B3B'>2</span><span style='color:#5C626D'>, </span><span
+   style='color:#9F6B3B'>unit</span><span style='color:#5C626D'>: </span><span
+   style='color:#789B5F'>'MINUTES'</span><span style='color:#5C626D'>) {</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; &nbsp; script {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+   style='color:#5C626D'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+   waitForQualityGate </span><span style='color:#9F6B3B'>abortPipeline</span><span
+   style='color:#5C626D'>: </span><span style='color:#9F6B3B'>true</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; &nbsp; }</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; &nbsp; }</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;
+   &nbsp; }</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>This
+ is a Jenkins Pipeline stage that performs a static application security
+ testing (SAST) scan using SonarQube. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>The
+ stage has the name 'SonarQube - SAST' and contains two steps:</p>
+ <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+  0in;font-family:Calibri;font-size:14.0pt;font-weight:normal;font-style:normal'>
+  <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+      color:#212529'><span style='font-family:Calibri;font-size:13.0pt;
+      font-weight:normal;font-style:normal;font-family:Calibri;font-size:13.0pt'>The
+      first step uses the withSonarQubeEnv function to set up the environment
+      to use SonarQube, which is a tool used to analyze the code quality and
+      security of the application. The configuration specifies the SonarQube
+      instance to use by passing 'SonarQube' as the parameter.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#212529'><span
+      style='font-family:Calibri;font-size:13.0pt'>The second step runs a Maven
+      command to execute the SonarQube analysis on the application code. The
+      parameters passed to the command include the project key and the URL of
+      the SonarQube instance. </span></li>
+ </ol>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>The
+ step also includes a timeout block that limits the execution time of the
+ analysis to 2 minutes. After the analysis is completed, the waitForQualityGate
+ function is used to wait for the quality gate to pass or fail. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>If
+ the quality gate passes, the pipeline continues to the next stage. If it
+ fails, the pipeline is aborted and the build is marked as failed.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'>Build
+ pipeline and I see it fail</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image010.png" width=919 height=493
+ alt="numeric &#10;Overview Issues &#10;main O &#10;Security Hotspots &#10;March 8, 2023 version &#10;Measures &#10;Code Activity &#10;MEASURES &#10;New Code &#10;Since March 6, 2023 &#10;Started 1 day ago &#10;- New augs &#10;Project Settings • &#10;QUALITY GATE STATUS O &#10;Failed &#10;1 conditims fäled &#10;The quality gate used by this project &#10;does not comply with Clean as You &#10;Code. &#10;Fixing this qualty qate will help you achieve a &#10;Clean Code state &#10;t? Leam why &#10;1 condition(s) failed on overall code &#10;13 Code Smells is greater than 12 &#10;Overall Code &#10;Project Information &#10;Reliability &#10;Security &#10;0 &#10;New Vulnerabilities &#10;New Security Hotspots O &#10;Added Debt &#10;Coverage on O New Lines to cover &#10;Reviewed &#10;New Code Smells &#10;Duplications on O New Lines &#10;Security Review &#10;Maintainability "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We need remove
+ import code below to improve security:</p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+ style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.beans.factory.annotation.Autowired</span><span
+ style='color:#5C626D'>;</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+ style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.beans.factory.annotation.Value</span><span
+ style='color:#5C626D'>;</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+ style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.boot.web.client.RestTemplateBuilder</span><span
+ style='color:#5C626D'>;</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+ style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.context.annotation.Bean</span><span
+ style='color:#5C626D'>;</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="SAST_files/image011.png" width=745 height=450
+ alt="numeric &#10;Overview Issues &#10;main O &#10;Security Hotspots Measures Code Activity &#10;March 8, 2023 version &#10;Project Settings • &#10;ELIZ &#10;avalcom/devsecops/Nu mericControllerJava &#10;Remove this unused import &#10;'org.springframework.beans.factory.an &#10;notation.Autowired'. &#10;Code Smell &#10;Remove this unused import &#10;'org.springframework.beans.factory.an &#10;notation.Value'. &#10;Code Smell &#10;Remove this unused import &#10;'org.springframework.boot.web.client. &#10;RestTemplateBuilder'. &#10;Code Smell &#10;Remove this unused import &#10;'org.springframework.context.annotati &#10;on.Bean•. &#10;Code Smell &#10;Remove this duplicated import. &#10;Code Smell &#10;Remove this duplicated import. &#10;Code Smell &#10;Rename this constant name to match &#10;the regular expression &#10;Code Smell &#10;Rename this class name to match the &#10;regular expression &#10;srs•. &#10;Remove this unused import 'org.springframework.beans.factory.annotation.Autowired'. &#10;unnecessary imports should be removed java:S1128 &#10;Code Smell O Minor • O Open • Not assigned 2min effort 0 comments &#10;Project Information &#10;Get permalink &#10;12 daysago• L5 &#10;unused • &#10;Where is the issue? &#10;Why is this an issue? &#10;numeric src/main/java.com/devsecopsJNumericControllerjava &#10;import org.slf4i . LoggerFactory; &#10;import or . s rin framework. beans . facto . annotation . Autowired; &#10;Remove this unused import 'org.springframework.beans.factory.annotation.Autowired'. &#10;import org.springfram@work . beans .factory.annotation . Value; &#10;Remove this unused import 'org.springframeworkheansfactory.annotationValue'_ &#10;import org.springfram@work . boot .web.cIient.RestTempIate8uiIder; &#10;Remove this unused import &#10;import org.springfram@work . context.annotation Sean; &#10;Remove this unused import 'org.springframeworkcontext_annotationBean'_ &#10;import org.springframework . http.ResponseEntity; &#10;import org.springfram@work . stereotype.Service; &#10;Remove this duplicated import &#10;See all issues in this file &#10;import &#10;import &#10;import &#10;import &#10;org &#10;org &#10;org &#10;org &#10;. springframework . web. bind . annotation . GetMappi ng; &#10;. springframework . web. bind . annotation . PathVari able; &#10;. springframework . web. bind . annotation . RestControIIer ; &#10;. springframework . stereotype. Service; "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Build pipeline
+ again</p>
+ <p style='margin:0in'><img src="SAST_files/image012.png" width=721 height=404
+ alt="numeric &#10;main O &#10;Overview Issues Security Hotspots &#10;QUALITY GATE STATUS O &#10;Passed &#10;Al cmdtnns passed _ &#10;March 8, 2023 version &#10;Measures &#10;Code Activity &#10;MEASURES &#10;New Code &#10;Since March 6, 2023 &#10;Started 1 day ago &#10;- New augs &#10;Project Settings • &#10;Overall Code &#10;The quality gate used by this project &#10;does not comply with Clean as You &#10;Code. &#10;Fixing this qualty qate will help you achieve a &#10;Clean Code state &#10;t? Leam why &#10;Project Information &#10;Reliability &#10;Security &#10;0 &#10;New Vulnerabilities &#10;New Security Hotspots O &#10;Added Debt &#10;Coverage on O New Lines to cover &#10;Reviewed &#10;New Code Smells &#10;Duplications on O New Lines &#10;Security Review &#10;Maintainability "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

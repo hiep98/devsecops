@@ -1,0 +1,6 @@
+## Jenkins Password
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+## Install Plugins
+Change Dir to /****/setup/jenkins-plugins
+Run cmd - bash plugin-installer.sh

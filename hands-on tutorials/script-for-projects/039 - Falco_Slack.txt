@@ -1,0 +1,6 @@
+helm upgrade falco falcosecurity/falco \
+--set falcosidekick.enabled=true \
+--set falcosidekick.webui.enabled=true \
+--set falcosidekick.config.slack.webhookurl="https://hooks.slack.com/services/XXXX" \
+--set falcosidekick.config.customfields="environment:production\,datacenter:paris"
+-n falco 

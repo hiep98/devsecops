@@ -1,0 +1,1220 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Custom%20jenkins%20alert.htm">
+<link rel=File-List href="Custom%20jenkins%20alert_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.7652in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.3048in;width:2.8625in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:#1E4E79'>Custom
+jenkins alert</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.1493in;margin-left:0in;width:8.7652in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'><span
+ style='mso-spacerun:yes'> </span>Create jenkins bot</h1>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'><span
+ style='mso-spacerun:yes'> </span></h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to <a
+ href="https://api.slack.com/apps">https://api.slack.com/apps</a><span
+ style='mso-spacerun:yes'>  </span>and select </p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;color:#000C1A;background:
+      white'>Go to<span style='mso-spacerun:yes'>  </span></span><a
+      href="https://api.slack.com/apps"><span style='font-family:Calibri;
+      font-size:11.5pt;background:white'>https://api.slack.com/apps</span></a><span
+      style='font-family:Calibri;font-size:11.5pt;color:#000C1A;background:
+      white'> and click &quot;Create New App&quot;.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Pick an app
+      name, i.e. &quot;Jenkins&quot; and a workspace that you'll be installing
+      it to.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Click
+      &quot;Create App&quot;. This will leave you on the &quot;Basic
+      Information&quot; screen for your new app.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;color:#000C1A;background:
+      white'>Scroll down to &quot;Display Information&quot; and fill it out.
+      You can get the Jenkins logo from:<span style='mso-spacerun:yes'> 
+      </span></span><a href="https://jenkins.io/artwork/"><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>https://jenkins.io/artwork/</span></a><span
+      style='font-family:Calibri;font-size:11.5pt;color:#000C1A;background:
+      white'>.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Scroll back
+      up to &quot;Add features and functionality&quot;.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Click
+      &quot;Permissions&quot; to navigate to the &quot;OAuth &amp;
+      Permissions&quot; page.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Scroll down
+      to &quot;Scopes&quot;. Under &quot;Bot Token Scopes&quot;</span></li>
+  <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+   0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:normal'>
+   <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+       color:#000C1A'><span style='font-family:Calibri;font-size:11.5pt;
+       font-weight:normal;font-style:normal;font-family:Calibri;font-size:11.5pt;
+       background:white'>Add chat:write Scope.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+       style='font-family:Calibri;font-size:11.5pt;background:white'>(optional)
+       Add files:write Scope if you will be uploading files.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+       style='font-family:Calibri;font-size:11.5pt;background:white'>(optional)
+       Add chat:write.customize Scope if you will be sending messages with a
+       custom username and/or avatar.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+       style='font-family:Calibri;font-size:11.5pt;color:#000C1A;background:
+       white'>(optional) Add reactions:write Scope if you will be </span><a
+       href="https://plugins.jenkins.io/slack/#plugin-content-emoji-reactions"><span
+       style='font-family:Calibri;font-size:11.5pt;background:white'>adding
+       reactions</span></a><span style='font-family:Calibri;font-size:11.5pt;
+       color:#000C1A;background:white'>.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+       style='font-family:Calibri;font-size:11.5pt;color:#000C1A;background:
+       white'>(optional) Add users:read and users:read.email Scope if you will
+       be </span><a
+       href="https://plugins.jenkins.io/slack/#plugin-content-user-id-look-up"><span
+       style='font-family:Calibri;font-size:11.5pt;background:white'>looking
+       users up by email</span></a><span style='font-family:Calibri;font-size:
+       11.5pt;color:#000C1A;background:white'>.</span></li>
+  </ol>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>(optional)
+      Click &quot;App Home&quot; in the sidebar</span></li>
+  <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+   0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:normal'>
+   <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+       color:#000C1A'><span style='font-family:Calibri;font-size:11.5pt;
+       font-weight:normal;font-style:normal;font-family:Calibri;font-size:11.5pt;
+       background:white'>(optional) Edit the slack display name for the bot.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+       style='font-family:Calibri;font-size:11.5pt;background:white'>Return to
+       the &quot;OAuth &amp; Permissions&quot; page.</span></li>
+  </ol>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Custom%20jenkins%20alert_files/image001.png"
+ width=668 height=723
+ alt="Scopes &#10;A Slack app's capabilities and permissions are governed by the scopes it requests. &#10;Bot Token Scopes &#10;Scopes that govern what your app can access. &#10;OAuth scope &#10;files:write &#10;chat:write &#10;chat:write.customize &#10;emoji:read &#10;reactions:read &#10;reactions:write &#10;Add an OAuth Scope &#10;Description &#10;Upload, edit, and delete files as jenkins &#10;Send messages as jenkins &#10;Send messages as jenkins with a customized &#10;username and avatar &#10;View custom emoji in a workspace &#10;View emoji reactions and their associated &#10;content in channels and conversations that &#10;jenkins has been added to &#10;Add and edit emoji reactions "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Custom%20jenkins%20alert_files/image002.png"
+ width=651 height=473
+ alt="jenkins is requesting permission to access the &#10;devsecops Slack workspace &#10;What will jenkins be able to view? &#10;00 &#10;Content and info about channels &amp; conversations &#10;Content and info about your workspace &#10;What will jenkins be able to do? &#10;Perform actions in channels &amp; conversations &#10;Cancel &#10;Allow "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Custom%20jenkins%20alert_files/image003.png"
+ width=669 height=310
+ alt="OAuth Tokens for Your Workspace &#10;These tokens were automatically generated when you installed the app to your team. &#10;You can use these to authenticate your app. Learn more. &#10;Bot User OAuth Token &#10;Copy &#10;Access Level: Workspace &#10;Reinstall to Workspace "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>At the top
+      of the page, click &quot;Install App to Workspace&quot;. This will
+      generate a &quot;Bot User OAuth Access Token&quot;.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Copy the
+      &quot;Bot User OAuth Access Token&quot;.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#000C1A'>&nbsp;</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;font-size:11.5pt;
+      color:#000C1A'><img src="Custom%20jenkins%20alert_files/image004.png"
+      width=669 height=660
+      alt="Add Credentials &#10;Domain &#10;Global credentials (unrestricted) &#10;Kind &#10;Secret text &#10;Scope &#10;Global (Jenkins, nodes, items, all child items, etc) &#10;Secret &#10;slack-Ogtß &#10;O This ID is already in use &#10;Description ? &#10;slack-bot &#10;Cancel "></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#000C1A'>&nbsp;</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-style:italic;font-family:Calibri;font-size:11.5pt;background:
+      white'>On Jenkins</span><span style='font-family:Calibri;font-size:11.5pt;
+      background:white'>: Find the Slack configuration in &quot;Manage Jenkins
+      → Configure System&quot;.</span></li>
+  <ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+   0in;font-family:Calibri;font-size:12.5pt;font-weight:normal;font-style:italic'>
+   <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+       font-style:italic;color:#000C1A'><span style='font-family:Calibri;
+       font-size:11.5pt;font-weight:normal;font-style:italic;font-style:italic;
+       font-family:Calibri;font-size:11.5pt;background:white'>On Jenkins</span><span
+       style='font-family:Calibri;font-size:11.5pt;font-weight:normal;
+       font-style:normal;font-style:normal;font-family:Calibri;font-size:11.5pt;
+       background:white'>: Click &quot;Add&quot; to create a new &quot;Secret
+       text&quot; Credential with that token.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;font-style:
+       italic;color:#000C1A'><span style='font-style:italic;font-family:Calibri;
+       font-size:11.5pt;background:white'>On Jenkins</span><span
+       style='font-style:normal;font-family:Calibri;font-size:11.5pt;
+       background:white'>: Select the new &quot;Secret text&quot; in the
+       dropdown.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;font-style:
+       italic;color:#000C1A'><span style='font-style:italic;font-family:Calibri;
+       font-size:11.5pt;background:white'>On Jenkins</span><span
+       style='font-style:normal;font-family:Calibri;font-size:11.5pt;
+       background:white'>: Make note of the &quot;Default channel / member
+       id&quot;.</span></li>
+   <li style='margin-top:0;margin-bottom:0;vertical-align:middle;font-style:
+       italic;color:#000C1A'><span style='font-style:italic;font-family:Calibri;
+       font-size:11.5pt;background:white'>On Jenkins</span><span
+       style='font-style:normal;font-family:Calibri;font-size:11.5pt;
+       background:white'>: Tick the &quot;Custom slack app bot user&quot;
+       option.</span></li>
+  </ol>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-family:Calibri;font-size:11.5pt;background:white'>Invite the
+      Jenkins bot user into the Slack channel(s) you wish to be notified in.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#000C1A'>&nbsp;</p>
+ <p style='margin:0in'><img src="Custom%20jenkins%20alert_files/image005.png"
+ width=803 height=329
+ alt="Slack &#10;Workspace ? &#10;devsecops-rcm2595 &#10;Credential &#10;slack-bot &#10;+ Add &#10;Default channel / member id &#10;general &#10;Custom slack app bot user &#10;Advanced v &#10;Success &#10;Apply &#10;Test Connection "></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#000C1A'><span
+      style='font-style:italic;font-family:Calibri;font-size:11.5pt;background:
+      white'>On Jenkins</span><span style='font-family:Calibri;font-size:11.5pt;
+      background:white'>: Click test connection. A message will be sent to the
+      default channel / default member.</span></li>
+ </ul>
+ <p style='margin:0in'><img src="Custom%20jenkins%20alert_files/image006.png"
+ width=530 height=63
+ alt="jenkins-bot APP 6:27 PM &#10;Slack/Jenkins plugin: you're all set on http://192.168.207.129:8080/ "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#000C1A'><span
+ style='background:white'>We will receive this notification if test connection
+ sucess.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#000C1A'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+ style='color:#000C1A;background:white'>Read more: </span><a
+ href="https://plugins.jenkins.io/slack/#plugin-content-creating-your-app"><span
+ style='background:white'>https://plugins.jenkins.io/slack/#plugin-content-creating-your-app</span></a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>Custom
+ alert with Block Kit Builder</h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#212529'><span
+ style='background:white'>Block Kit is a framework for building Slack messages
+ that allows developers to create modular and flexible message layouts. Block
+ Kit Builder provides a visual interface for creating and customizing Block Kit
+ messages, making it easier for non-developers to create messages without
+ writing any code.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span><a
+ href="https://app.slack.com/block-kit-builder">https://app.slack.com/block-kit-builder</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>Update
+ vars/sendNotification.groovy</h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def call(String
+   buildStatus = 'STARTED') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>buildStatus = buildStatus ?: 'SUCCESS'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>def color</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>if (buildStatus == 'SUCCESS') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>color = '#47ec05'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>emoji = ':ww:'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>} else if (buildStatus == 'UNSTABLE') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>color = '#d5ee0d'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>emoji = ':deadpool:'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>} else {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>color = '#ec2805'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>emoji = ':hulk:'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>// def msg =
+   &quot;${buildStatus}: `${env.JOB_NAME}`
+   #${env.BUILD_NUMBER}:\n${env.BUILD_URL}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>//
+   slackSend(color: color, message: msg)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>attachments = [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>&quot;color&quot;: color,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>&quot;blocks&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;header&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;plain_text&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;text&quot;: &quot;K8S
+   Deployment - ${deploymentName} Pipeline<span style='mso-spacerun:yes'> 
+   </span>${env.emoji}&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;emoji&quot;: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;section&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;fields&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;*Job
+   Name:*\n${env.JOB_NAME}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;*Build
+   Number:*\n${env.BUILD_NUMBER}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;accessory&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;image&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;image_url&quot;: &quot; <a
+   href="https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/jenkins.png">https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/jenkins.png</a>&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;alt_text&quot;:
+   &quot;Slack Icon&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;section&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;:
+   &quot;*Failed Stage Name: * `${env.failedStage}`&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;accessory&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;button&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;plain_text&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;:
+   &quot;Jenkins Build URL&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;emoji&quot;: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;value&quot;:
+   &quot;click_me_123&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;url&quot;:
+   &quot;${env.BUILD_URL}&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;action_id&quot;:
+   &quot;button-action&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;divider&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;section&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;fields&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;:
+   &quot;*Kubernetes Deployment Name:*\n${deploymentName}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;*Node
+   Port*\n32564&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>], </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;accessory&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;image&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;image_url&quot;: &quot; <a
+   href="https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/k8s.png">https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/k8s.png</a>&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;alt_text&quot;:
+   &quot;Kubernetes Icon&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;section&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;:
+   &quot;*Kubernetes Node: * `controlplane`&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;accessory&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;button&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;plain_text&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;:
+   &quot;Application URL&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;emoji&quot;: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;value&quot;:
+   &quot;click_me_123&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;url&quot;:
+   &quot;${applicationURL}:32564&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;action_id&quot;:
+   &quot;button-action&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;divider&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;section&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;fields&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;*Git
+   Commit:*\n${GIT_COMMIT}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;*GIT
+   Previous Success Commit:*\n${GIT_PREVIOUS_SUCCESSFUL_COMMIT}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>], </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;accessory&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;image&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;image_url&quot;: &quot; <a
+   href="https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/github.png">https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/github.png</a>&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;alt_text&quot;:
+   &quot;Github Icon&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>[</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;type&quot;:
+   &quot;section&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;mrkdwn&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;*Git
+   Branch: * `${GIT_BRANCH}`&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;accessory&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;type&quot;:
+   &quot;button&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;text&quot;: [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;type&quot;:
+   &quot;plain_text&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;text&quot;: &quot;Github
+   Repo URL&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;emoji&quot;: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>],</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;value&quot;:
+   &quot;click_me_123&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;url&quot;:
+   &quot;${env.GIT_URL}&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>&quot;action_id&quot;:
+   &quot;button-action&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'> </span>slackSend(iconEmoji: emoji, attachments:
+   attachments)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This is a Groovy
+ script designed to send a notification to a Slack channel based on the outcome
+ of a Jenkins build. The alert uses the Jenkins Slack plugin to post messages
+ to the Slack channel.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The script defines
+ a function called call that takes an optional buildStatus parameter, which
+ defaults to 'STARTED'. The function first sets buildStatus to 'SUCCESS' if it
+ is not already defined.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Next, the function
+ sets the color and emoji for the Slack message based on the buildStatus value.
+ </p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>If buildStatus is
+ 'SUCCESS', the color is set to green ('#47ec05') and the emoji is set to
+ ':ww:'. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>If buildStatus is
+ 'UNSTABLE', the color is set to yellow ('#d5ee0d') and the emoji is set to
+ ':deadpool:'. Otherwise, the color is set to red ('#ec2805') and the emoji is
+ set to ':hulk:'.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The Slack message
+ is defined using an attachments array. The attachments array contains a single
+ attachment object that specifies the color and content of the Slack message.
+ The attachment contains several sections that provide information about the
+ build, including the job name, build number, failed stage name, Kubernetes
+ deployment name, node port, application URL, Git commit, </p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Git branch, and
+ GitHub repo URL.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The message is sent
+ using the slackSend function with the iconEmoji and attachments parameters.
+ The iconEmoji parameter specifies the emoji to use as the icon for the Slack
+ message. The attachments parameter specifies the attachments array containing
+ the message content.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>Jenkinsfile
+ - Add Slack Notification in Post Success </h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.5048in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>@Library('slack')
+   _</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>///////
+   ******************************* Code for fectching Failed Stage Name
+   ******************************* ///////</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>import
+   io.jenkins.blueocean.rest.impl.pipeline.PipelineNodeGraphVisitor</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>import
+   io.jenkins.blueocean.rest.impl.pipeline.FlowNodeWrapper</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>import
+   org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>import
+   org.jenkinsci.plugins.workflow.actions.ErrorAction</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>// Get
+   information about all stages, including the failure cases</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>// Returns a list
+   of maps: [[id, failedStageName, result, errors]]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>@NonCPS</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>List &lt; Map
+   &gt; getStageResults(RunWrapper build) {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>// Get all pipeline nodes that represent
+   stages</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>def visitor = new
+   PipelineNodeGraphVisitor(build.rawBuild)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>def stages = visitor.pipelineNodes.findAll
+   {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>it.type ==
+   FlowNodeWrapper.NodeType.STAGE</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>return stages.collect {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>stage -&gt;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>// Get all the errors from the stage</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>def errorActions =
+   stage.getPipelineActions(ErrorAction)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>def errors = errorActions?.collect {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>it.error</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}.unique()</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>return [</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>id: stage.id,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>failedStageName: stage.displayName,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>result:
+   &quot;${stage.status.result}&quot;,</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>errors: errors</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>// Get
+   information of all failed stages</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>@NonCPS</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>List &lt; Map
+   &gt; getFailedStages(RunWrapper build) {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>return getStageResults(build).findAll {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>it.result == 'FAILURE'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>///////
+   ******************************* Code for fectching Failed Stage Name
+   ******************************* ///////</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>pipeline {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>agent any</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>environment {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>deploymentName = &quot;devsecops&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>containerName =
+   &quot;devsecops-container&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>serviceName = &quot;devsecops-svc&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>imageName =
+   &quot;siddharth67/numeric-app:${GIT_COMMIT}&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>applicationURL = &quot; <a
+   href="http://devsecops-demo.eastus.cloudapp.azure.com">http://devsecops-demo.eastus.cloudapp.azure.com</a>&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>applicationURI =
+   &quot;/increment/99&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>stages {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>stage('Testing Slack - 1') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>sh 'exit 0'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>stage('Testing Slack - Error Stage') {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>steps {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>sh 'exit 0'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>post {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>   
+   </span>always { </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>     
+   </span>junit 'target/surefire-reports/*.xml'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>     
+   </span>jacoco execPattern: 'target/jacoco.exec'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>     
+   </span>pitmutation mutationStatsFile:
+   '**/target/pit-reports/**/mutations.xml'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>     
+   </span>dependencyCheckPublisher pattern:
+   'target/dependency-check-report.xml'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>     
+   </span>publishHTML([allowMissing: false, alwaysLinkToLastBuild: true,
+   keepAll: true, reportDir: 'owasp-zap-report', reportFiles:
+   'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP
+   ZAP HTML Report'])</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>// //Use sendNotifications.groovy from
+   shared library and provide current build result as parameter </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>     
+   </span>//sendNotification currentBuild.result</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>//<span style='mso-spacerun:yes'>   
+   </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>success {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>script {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>/* Use slackNotifier.groovy from
+   shared library and provide current build result as parameter */</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>env.failedStage = &quot;none&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>env.emoji = &quot;:white_check_mark:
+   :tada: :thumbsup_all:&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>sendNotification currentBuild.result</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>failure {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>script {</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>//Fetch information about<span
+   style='mso-spacerun:yes'>  </span>failed stage</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>def failedStages =
+   getFailedStages(currentBuild)</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>env.failedStage =
+   failedStages.failedStageName</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>env.emoji = &quot;:x: :red_circle:
+   :sos:&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>sendNotification currentBuild.result</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This is a Jenkins
+ pipeline script that defines two functions for fetching information about
+ failed stages in a Jenkins pipeline build.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The first function,
+ getStageResults(RunWrapper build), fetches information about all stages in the
+ pipeline, including the failure cases. It does this by using the
+ PipelineNodeGraphVisitor class to traverse the pipeline graph and find all
+ nodes that represent stages. For each stage node, it collects information such
+ as the stage ID, display name, status result, and any errors associated with
+ the stage. The function returns a list of maps, where each map contains this
+ information for a single stage.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The second
+ function, getFailedStages(RunWrapper build), uses the getStageResults function
+ to fetch information about all stages and then filters this list to only
+ include the stages that have a status result of 'FAILURE'. This function
+ returns a list of maps, where each map contains information about a single
+ failed stage, including the stage ID, display name, and any errors associated
+ with the stage.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The script also
+ includes an import statement for a Jenkins shared library called 'slack', and
+ it uses the @NonCPS annotation to indicate that the two functions should not
+ be checkpointed and should be executed entirely in memory. Additionally, the
+ script includes some import statements for various Jenkins and pipeline
+ classes that are needed for the getStageResults function.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Within the post
+ block, there is a failure section, which is executed only if the pipeline
+ build has failed.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Within the failure
+ section, there is a script block, which contains some code for sending a
+ notification about the failed build.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The code first
+ calls the getFailedStages function, which was defined in a previous part of
+ the pipeline script, to fetch information about the failed stages in the
+ pipeline build. It then sets two environment variables: failedStage, which is
+ set to the name of the first failed stage, and emoji, which is set to a string
+ of emojis to be included in the notification message.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Finally, the
+ sendNotification function is called with the currentBuild.result as its
+ argument, which sends a notification message with the result of the pipeline
+ build (i.e., &quot;FAILURE&quot;) and includes the failedStage and emoji
+ variables in the message.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Overall, this post
+ block and the getFailedStages function are part of a larger pipeline script
+ that is designed to send notifications when a pipeline build fails, and to
+ include information about the failed stages in the notification message.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>BING:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The code has two
+ main parts:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- A @Library
+ annotation that imports a shared library called 'slack', which presumably
+ contains some functions or variables related to sending notifications to
+ Slack.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- A custom function
+ called getFailedStages that takes a RunWrapper object as an argument and
+ returns a list of maps containing information about all the failed stages in
+ the pipeline run. The function uses some classes and methods from the
+ io.jenkins.blueocean.rest.impl.pipeline package, which provides an API for
+ accessing pipeline data. The function iterates over all the pipeline nodes
+ that represent stages, and collects their id, name, result, and errors into a
+ list.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The purpose of this
+ function is probably to report the failed stages to Slack or some other
+ channel, using the imported library. The function is annotated with @NonCPS,
+ which means it is not subject to the CPS (Continuation Passing Style)
+ transformation that Jenkins applies to pipeline scripts. This allows the
+ function to use some Groovy features that are not compatible with CPS, such as
+ closures and collections.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>I hope this helps
+ you understand the code better. If you want to learn more about Jenkins
+ pipeline code, you can check out these resources:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- Pipeline as Code:
+ <a href="https://www.jenkins.io/doc/book/pipeline-as-code/">https://www.jenkins.io/doc/book/pipeline-as-code/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- Pipeline: <a
+ href="https://www.jenkins.io/doc/book/pipeline/">https://www.jenkins.io/doc/book/pipeline/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- Scripted Pipeline
+ Syntax: <a
+ href="https://www.jenkins.io/doc/book/pipeline/syntax/#scripted-pipeline">https://www.jenkins.io/doc/book/pipeline/syntax/#scripted-pipeline</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- Blue Ocean
+ Pipeline REST API: <a
+ href="https://github.com/jenkinsci/blueocean-plugin/tree/master/blueocean-rest">https://github.com/jenkinsci/blueocean-plugin/tree/master/blueocean-rest</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Source:
+ Conversation with Bing, 4/20/2023</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(1) Pipeline as
+ Code. <a href="https://www.jenkins.io/doc/book/pipeline-as-code/">https://www.jenkins.io/doc/book/pipeline-as-code/</a>.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(2) Pipeline. <a
+ href="https://www.jenkins.io/doc/book/pipeline/">https://www.jenkins.io/doc/book/pipeline/</a>.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>---------------</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>BING</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The code starts
+ with a @Library annotation, which imports a shared library called 'slack'.
+ This library provides some functions for sending notifications to Slack
+ channels. Then it defines a function called getStageResults, which takes a
+ RunWrapper object as an argument and returns a list of maps containing
+ information about all the stages in the pipeline, such as their ids, names,
+ results, and errors. This function uses some classes from the
+ io.jenkins.blueocean package, which are part of the Blue Ocean plugin that
+ provides a modern user interface for Jenkins pipelines³.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, the code
+ defines another function called getFailedStages, which takes a RunWrapper
+ object as an argument and returns a list of maps containing information about
+ only the failed stages in the pipeline. This function calls the
+ getStageResults function and filters out the stages that have a result of
+ 'FAILURE'.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Then the code
+ begins the declarative pipeline block with the keyword pipeline. Inside this
+ block, there are several sections and directives that define the behavior and
+ structure of the pipeline. The first section is agent, which specifies where
+ the entire pipeline or a specific stage will execute in the Jenkins
+ environment. In this case, the agent is set to any, which means that any
+ available agent can run the pipeline.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The next section is
+ post, which defines some actions to take after the pipeline or a stage has
+ completed. In this case, there are two post conditions: success and failure.
+ The success condition executes when the pipeline or stage has completed
+ successfully, and the failure condition executes when the pipeline or stage
+ has failed. Inside each condition, there is a script block that contains some
+ Groovy code to execute. The code uses some environment variables such as
+ currentBuild and env to access information about the current build and its
+ environment.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The code inside the
+ success condition sets the env.failedStage variable to &quot;none&quot; and
+ the env.emoji variable to some emoji symbols that indicate success. Then it
+ calls the sendNotification function from the slack library and passes the
+ currentBuild.result as an argument. This function sends a notification to a
+ Slack channel with some information about the build result and status.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The code inside the
+ failure condition calls the getFailedStages function and assigns its return
+ value to a variable called failedStages. Then it sets the env.failedStage
+ variable to the name of the failed stage and the env.emoji variable to some
+ emoji symbols that indicate failure. Then it calls the sendNotification
+ function from the slack library and passes the currentBuild.result as an
+ argument. This function sends a notification to a Slack channel with some
+ information about the build result and status.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The code does not
+ have any stages section, which is where normally one would define the stages
+ of the pipeline and their steps. This means that this code is meant to be used
+ as a shared library or a template for other pipelines that define their own
+ stages.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Source:
+ Conversation with Bing, 4/20/2023</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(3) Getting Started
+ with Pipelines. <a
+ href="https://www.jenkins.io/pipeline/getting-started-pipelines/">https://www.jenkins.io/pipeline/getting-started-pipelines/</a>.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>----------------------------</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.5pt'>GOOGLE BARD</p>
+ <p style='margin-top:0pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The code you provided is a Jenkins pipeline that can be used to notify
+ Slack when a build fails. The pipeline first imports the following libraries:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>slack:
+      This library is used to send notifications to Slack.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>io.jenkins.blueocean.rest.impl.pipeline.PipelineNodeGraphVisitor:
+      This library is used to get information about the stages of a pipeline.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>io.jenkins.blueocean.rest.impl.pipeline.FlowNodeWrapper:
+      This library is used to represent a stage in a pipeline.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper:
+      This library is used to represent a build in Jenkins.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>org.jenkinsci.plugins.workflow.actions.ErrorAction:
+      This library is used to represent an error action in a pipeline.</span></li>
+ </ul>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The pipeline then defines a function called getStageResults(). This
+ function takes one argument, build, which is a RunWrapper object that
+ represents the build. The function returns a list of maps. Each map in the
+ list represents a stage in the build. The maps have the following properties:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>id:
+      The ID of the stage.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>failedStageName:
+      The name of the failed stage.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>result:
+      The result of the stage.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>errors:
+      A list of errors that occurred in the stage.</span></li>
+ </ul>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The pipeline then defines a function called getFailedStages(). This
+ function takes one argument, build, which is a RunWrapper object that
+ represents the build. The function returns a list of maps. Each map in the
+ list represents a failed stage in the build. The maps have the same properties
+ as the maps returned by the getStageResults() function.</p>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The script then defines a function called getFailedStages(). This
+ function takes one argument, build, which is a RunWrapper object. The function
+ simply calls the getStageResults() function and passes it the build argument.
+ The function then filters the results to only include stages with a result of
+ FAILURE.</p>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The script finally calls the slackSend() function to send a
+ notification to Slack. The function passes the following arguments to the
+ slackSend() function:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>color:
+      The color of the notification</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>title:
+      The title of the notification</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>text:
+      The text of the notification</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>attachments:
+      The attachments for the notification</span></li>
+ </ul>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The slackSend() function is a Groovy function that is defined in the
+ slack library. The function sends a notification to Slack. The notification
+ can have a color, title, text, and attachments.</p>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The pipeline then defines a post section. This section is executed
+ when the build is finished. The post section has two branches: a success
+ branch and a failure branch.</p>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The success branch is executed when the build succeeds. The success
+ branch does the following:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Sets
+      the environment variable failedStage to the empty string.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Sets
+      the environment variable emoji to a list of emojis that indicate success.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Calls
+      the sendNotification() function with the current build's result as the
+      argument.</span></li>
+ </ul>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The failure branch is executed when the build fails. The failure
+ branch does the following:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Gets
+      a list of failed stages from the getFailedStages() function.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Sets
+      the environment variable failedStage to the name of the first failed
+      stage.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Sets
+      the environment variable emoji to a list of emojis that indicate failure.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>Calls
+      the sendNotification() function with the current build's result as the
+      argument.</span></li>
+ </ul>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The sendNotification() function is a function that is defined in the
+ slack library. This function takes one argument, result, which is the result
+ of the build. The function sends a notification to Slack that contains the
+ following information:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>The
+      name of the build.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>The
+      result of the build.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>The
+      name of the failed stage, if the build failed.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt'>A
+      list of emojis that indicate the result of the build.</span></li>
+ </ul>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The following is an example of a notification that is sent to Slack
+ when a build succeeds:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#444746'>Build
+ `my-build` has succeeded!</p>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>The following is an example of a notification that is sent to Slack
+ when a build fails:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#444746'>Build
+ `my-build` has failed!<br>
+  The failed stage is `deploy`.</p>
+ <p style='margin-top:3pt;margin-bottom:3pt;font-family:Calibri;font-size:12.0pt;
+ color:#1F1F1F'>thumb_upthumb_downrefreshGoogle it</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>more_vert</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p><cite style='margin:0in;font-family:Calibri;font-size:10.0pt'><span
+ style='color:#524F4C'>From &lt; </span><a href="https://bard.google.com/u/1/"><span
+ style='color:#595959'>https://bard.google.com/u/1/</span></a><span
+ style='color:#524F4C'>&gt; </span></cite></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:18pt;margin-bottom:18pt;font-family:Calibri;font-size:
+ 12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,696 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File
+href="Fix%20X-Content-Type-Options%20Header%20Missing.htm">
+<link rel=File-List
+href="Fix%20X-Content-Type-Options%20Header%20Missing_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:5.4798in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>Fix
+X-Content-Type-Options Header Missing</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we go to fix
+X-Content-Type-Options Header Missing. I was found this article have
+instruction to fix this issue.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://stackoverflow.com/questions/52034082/how-to-set-header-x-content-type-options-nosniff-in-springboot-application">https://stackoverflow.com/questions/52034082/how-to-set-header-x-content-type-options-nosniff-in-springboot-application</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>First, we need and
+dependency below into pom.xml</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>&lt;</span><span style='color:#E06C75'>dependency</span><span
+  style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>&lt;</span><span
+  style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;org.springframework.boot&lt;/</span><span
+  style='color:#E06C75'>groupId</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span>&lt;</span><span
+  style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;spring-boot-starter-security&lt;/</span><span
+  style='color:#E06C75'>artifactId</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span></span><span
+  style='font-style:italic;color:#5C6370'>&lt;!--
+  &lt;version&gt;2.3.12.RELEASE&lt;/version&gt; --&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span>&lt;/</span><span
+  style='color:#E06C75'>dependency</span><span style='color:#5C626D'>&gt;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Second, we create a
+new class, this class need inside source code folder. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is my directory
+&quot;devsecops/WebSecurityConfig.java&quot;. So package will be the same with
+project name.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>package</span><span style='color:#5C626D'>
+  com.devsecops;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span
+  style='color:#5C626D'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.security.config.annotation.web.configuration.EnableWebSecurity</span><span
+  style='color:#5C626D'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>import </span><span style='color:#A1844F'>org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span
+  style='color:#5C626D'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>@</span><span style='color:#C678DD'>EnableWebSecurity</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>public class</span><span style='color:#A1844F'>
+  WebSecurityConfig </span><span style='color:#C678DD'>extends</span><span
+  style='color:#A1844F'> WebSecurityConfigurerAdapter </span><span
+  style='color:#5C626D'>{</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span>@</span><span
+  style='color:#C678DD'>Override</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:#C678DD'>protected void </span><span style='color:#1863A1'>configure</span><span
+  style='color:#5C626D'>(</span><span style='color:#A1844F'>HttpSecurity</span><span
+  style='color:#5C626D'> http) </span><span style='color:#C678DD'>throws </span><span
+  style='color:#A1844F'>Exception</span><span style='color:#5C626D'> {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='font-style:italic;color:#5C6370'>http.csrf().disable();</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>} </p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>According to this
+code, You will disable csrf protection. So you can remove
+http.csrf().disable(); out of code for secure measurement.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Another way if you
+have false positive alerts like below and you want to ignore the warnings then
+you can do the following, we can also add our own rules to ignore it. Now, you
+run command below.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>docker run -v </span><span style='color:#789B5F'>$(pwd)</span><span
+  style='color:#5C626D'>:/zap/wrk/:rw -t owasp/zap2docker-weekly
+  zap-api-scan.py -t </span><span style='color:#E06C75'>$applicationURL</span><span
+  style='color:#5C626D'>:</span><span style='color:#E06C75'>$PORT</span><span
+  style='color:#5C626D'>/v3/api-docs -f openapi -g zap-rules </span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In this
+command,<span style='mso-spacerun:yes'>  </span>&quot;-g&quot; tag is used to
+indicate the set of rules that will be used during the scan. Here,
+&quot;zap-rules&quot; refers to the set of rules that are bundled with OWASP
+ZAP, an open-source web application security scanner. These rules are used to
+detect and report the security vulnerabilities present in the API endpoints of
+an application.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can see below is
+a sample rule after run command above</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  zap-api-scan rule configuration file</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  Change WARN to IGNORE to ignore rule or FAIL to fail if rule matches</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  Active scan rules set to IGNORE will not be run which will speed up the scan</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  Only the rule identifiers are used - the names are just for info</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  You can add your own messages to each rule by appending them after a tab on
+  each line.</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10003<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Vulnerable JS Library (Powered by Retire.js) - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10009<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(In Page Banner Information Leak - Passive/beta)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10010<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Cookie No HttpOnly Flag - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10011<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Cookie Without Secure Flag - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10015<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Re-examine Cache-control Directives - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10017<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Cross-Domain JavaScript Source File Inclusion - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10019<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Content-Type Header Missing - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10020<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(Anti-clickjacking Header - Passive/release)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>10021<span
+  style='mso-spacerun:yes'>   </span>WARN<span style='mso-spacerun:yes'>   
+  </span>(X-Content-Type-Options Header Missing - Passive/release</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>Example
+  false positive:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='color:#686868'>WARN-NEW: X-Content-Type-Options Header Missing [</span><span
+  style='color:#5C626D'>100000</span><span style='color:#686868'>] x 4 </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+  href="http://192.168.207.129:31242/increment/10">http://192.168.207.129:31242/increment/10</a><span
+  style='color:#686868'> (200)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+  href="http://192.168.207.129:31242/compare/10">http://192.168.207.129:31242/compare/10</a><span
+  style='color:#686868'> (200)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+  href="http://192.168.207.129:31242/">http://192.168.207.129:31242/</a><span
+  style='color:#686868'> (200)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='color:#686868'><span style='mso-spacerun:yes'>        </span></span><a
+  href="http://192.168.207.129:31242/v3/api-docs">http://192.168.207.129:31242/v3/api-docs</a><span
+  style='color:#686868'> (200)</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, run this
+command:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>docker run -v </span><span style='color:#789B5F'>$(pwd)</span><span
+  style='color:#5C626D'>:/zap/wrk/:rw -t owasp/zap2docker-weekly
+  zap-api-scan.py -t </span><span style='color:#E06C75'>$applicationURL</span><span
+  style='color:#5C626D'>:</span><span style='color:#E06C75'>$PORT</span><span
+  style='color:#5C626D'>/v3/api-docs -f openapi -c zap-rules -r zap_report.html</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The `-c` flag in the
+command you provided is used to specify a configuration file containing rules
+for the scan. The rules file is used to configure which rules should be run
+during the scan and how they should be handled. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In our case, the
+rules file is named `zap-rules`. It contains a list of rules with their
+corresponding rule identifiers and their handling configuration. The handling
+configuration can be set to either `WARN`, `IGNORE`, or `FAIL`. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For example, rule
+number `10003` has a handling configuration of `WARN` and its name is
+&quot;Vulnerable JS Library (Powered by Retire.js)&quot;. This means that if
+this rule matches during the scan, it will generate a warning message.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>To write your own
+rules file, you can create a text file with a `.conf` extension and use the
+following format:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&lt;rule_id&gt;
+  &lt;handling_configuration&gt; &lt;rule_name&gt;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For example:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>10001<span
+  style='mso-spacerun:yes'>        </span>WARN<span
+  style='mso-spacerun:yes'>        </span>Example Rule 1</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>10002<span
+  style='mso-spacerun:yes'>        </span>IGNORE<span
+  style='mso-spacerun:yes'>         </span>Example Rule 2</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Note: keep the space
+between each value with the tab button, do not use space button.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now you can create
+file like below to create custom rule to ignore false positive.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The first value is
+the rule ID, you can see the report above, we have the ID 100000, the second
+value and we configure it as IGNORE, the last value is the url we see in the
+report fox.</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  zap-api-scan rule configuration file</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  Change WARN to IGNORE to ignore rule or FAIL to fail if rule matches</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  Active scan rules set to IGNORE will not be run which will speed up the scan</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  Only the rule identifiers are used - the names are just for info</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#E06C75'>#
+  You can add your own messages to each rule by appending them after a tab on
+  each line.</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>100000<span style='mso-spacerun:yes'> 
+  </span>IGNORE<span style='mso-spacerun:yes'>  </span></span><a
+  href="http://192.168.207.129:31242">http://192.168.207.129:31242</a></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+style='color:black'>Reference: </span><a
+href="https://www.zaproxy.org/docs/docker/api-scan/">OWASP ZAP – ZAP - API Scan
+(zaproxy.org)</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'> </span><a
+href="https://www.zaproxy.org/docs/docker/api-scan/#rules-file-format">https://www.zaproxy.org/docs/docker/api-scan/#rules-file-format</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Run again:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>docker run -v </span><span style='color:#789B5F'>$(pwd)</span><span
+  style='color:#5C626D'>:/zap/wrk/:rw -t owasp/zap2docker-weekly
+  zap-api-scan.py -t </span><span style='color:#E06C75'>$applicationURL</span><span
+  style='color:#5C626D'>:</span><span style='color:#E06C75'>$PORT</span><span
+  style='color:#5C626D'>/v3/api-docs -f openapi -c zap-rules -r zap_report.html</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:15.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:15.0pt'>ADDTION CREATE
+CUSTOM RULE:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For example, if you
+have a configuration file named `my_zap_rules.conf`, you can use the `-c` tag
+to specify that configuration file:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker run -v
+  $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-t
+  $applicationURL:$PORT/v3/api-docs -f openapi -c my_zap_rules.conf \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-r zap_report.html</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>A configuration file
+is a set of rules and configurations that you can use to tailor ZAP's scanning
+to your application. It can contain various settings such as the scope of the
+scan, authentication settings, and other customizations.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'> </span>Each rule in a configuration file defines a
+specific security test that will be performed by ZAP. For example, a rule can
+be defined to check for SQL injection vulnerabilities, cross-site scripting
+(XSS) vulnerabilities, or other security issues.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Here's an example of
+a rule that checks for SQL injection vulnerabilities:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:15.0pt'>SQL injection check</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>alertSqlInjection=\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>enabled\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>alertThresholdHigh=3\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>alertThresholdMedium=2\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>attackStrength=medium\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>ignorePublicOrigin=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>ignoreTimeThresholdInSecs=3600\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>maxErrors=-1\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>matchRegex=\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>onlyForward=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>parameterName=\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>poa=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>useUnionBasedSqlInjection=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>useErrorBasedSqlInjection=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>useBooleanBasedSqlInjection=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>usePiggyBackedSqlInjection=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>useOutOfBandSqlInjection=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>useSecondOrderSqlInjection=true</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This rule checks for
+SQL injection vulnerabilities in the application. It specifies various settings
+such as the attack strength, whether to use union-based, error-based, or
+boolean-based SQL injection techniques, and whether to use out-of-band
+techniques.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The SQL Injection
+check in the provided configuration file checks for SQL injection
+vulnerabilities in the application being tested by ZAP. This vulnerability
+allows an attacker to inject malicious SQL code into a query, which can result
+in data loss, data manipulation or unauthorized access to sensitive data.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The configuration
+file specifies various settings for the SQL Injection check, which can be
+matched against the requests and responses made by the application being
+tested. Here's an explanation of some of the important settings in the rule:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`enabled`: This
+setting specifies whether the rule is enabled or disabled. When set to , the
+rule will be used during the scan.`enabled`</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`attackStrength`:
+This setting defines the strength of the SQL injection attack. It can be set to
+either , or . The strength determines the complexity of the payload generated
+by ZAP. A higher strength increases the likelihood of detecting vulnerabilities
+but can also result in more false positives.`low``medium``high`</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`useUnionBasedSqlInjection`:
+When set to , ZAP will use union-based SQL injection, which is a technique that
+allows an attacker to retrieve data from the database.`true`</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`useErrorBasedSqlInjection`:
+When set to , ZAP will use error-based SQL injection, which is a technique that
+relies on error messages generated by the database to retrieve data.`true`</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`useBooleanBasedSqlInjection`:
+When set to , ZAP will use boolean-based SQL injection, which is a technique
+that relies on the true or false responses generated by the database to
+retrieve data.`true`</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`usePiggyBackedSqlInjection`:
+When set to , ZAP will use piggy-backed SQL injection, which is a technique
+that injects malicious code into fields that are not directly used in the
+query, but are included in the response.`true`</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>During the scan, ZAP
+will use the settings specified in the configuration file to generate payloads
+and test the application for SQL injection vulnerabilities. If ZAP detects a
+vulnerability, it will generate an alert, which can be viewed in the ZAP GUI or
+in the report generated after the scan.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Example XSS check in
+a ZAP configuration file:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>alertXss=\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>enabled\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>alertThresholdHigh=3\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>alertThresholdMedium=2\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>attackStrength=medium\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>ignorePublicOrigin=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>ignoreTimeThresholdInSecs=3600\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>maxErrors=-1\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>matchRegex=\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>onlyForward=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>parameterName=\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>poa=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>scanHeadersAllRequests=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>scanHeadersInAttack=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>showEvidence=true\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>stripScriptTags=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>testAllTags=false\</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>variant=0</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This rule checks for
+cross-site scripting (XSS) vulnerabilities in the application being tested by
+ZAP. An XSS vulnerability allows an attacker to inject malicious code into a
+web page that can steal data or modify the behavior of the page.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The configuration
+file specifies various settings for the XSS check, which can be matched against
+the requests and responses made by the application being tested. Here's an
+explanation of some of the important settings in the rule:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`enabled`: This
+setting specifies whether the rule is enabled or disabled. When set to
+`enabled`, the rule will be used during the scan.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`attackStrength`:
+This setting defines the strength of the XSS attack. It can be set to either
+`low`, `medium` or `high`. The strength determines the complexity of the
+payload generated by ZAP. A higher strength increases the likelihood of
+detecting vulnerabilities but can also result in more false positives.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`stripScriptTags`:
+When set to `false`, ZAP will not remove script tags from the response before
+testing for XSS vulnerabilities. If the application is vulnerable to XSS
+attacks, ZAP will generate an alert with details of the attack.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>`testAllTags`: When
+set to `false`, ZAP will only test input fields for XSS vulnerabilities. If set
+to `true`, ZAP will test all tags for vulnerabilities, including tags that are
+normally not used for user input.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'> </span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Learn more:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">SQL
+Injection Prevention - OWASP Cheat Sheet Series</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://github.com/zaproxy/zap-extensions/blob/main/addOns/ascanrules/src/main/java/org/zaproxy/zap/extension/ascanrules/SqlInjectionScanRule.java">zap-extensions/SqlInjectionScanRule.java
+at main · zaproxy/zap-extensions · GitHub</a></p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+- Within the Azure VM 
+- Clone the Forked GitHub Repository
+- Change to "***/setup/vm-install-script/" directory
+- Run bash install-script.sh
+
+###
+kubectl get node -o wide
+kubectl run nginx-pod --image nginx
+kubectl expose po nginx-pod --port 80 --type NodePort
+kubectl get svc
+
+Get the NodePort and use your VM external IP to access Nginx Welcome page.

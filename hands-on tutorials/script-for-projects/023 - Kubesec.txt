@@ -1,0 +1,210 @@
+################################e kubesec-scan.sh ################################
+
+#!/bin/bash
+
+#kubesec-scan.sh
+
+# using kubesec v2 api
+scan_result=$(curl -sSX POST --data-binary @"k8s_deployment_service.yaml" https://v2.kubesec.io/scan)
+scan_message=$(curl -sSX POST --data-binary @"k8s_deployment_service.yaml" https://v2.kubesec.io/scan | jq .[0].message -r ) 
+scan_score=$(curl -sSX POST --data-binary @"k8s_deployment_service.yaml" https://v2.kubesec.io/scan | jq .[0].score ) 
+
+
+# using kubesec docker image for scanning
+# scan_result=$(docker run -i kubesec/kubesec:512c5e0 scan /dev/stdin < k8s_deployment_service.yaml)
+# scan_message=$(docker run -i kubesec/kubesec:512c5e0 scan /dev/stdin < k8s_deployment_service.yaml | jq .[].message -r)
+# scan_score=$(docker run -i kubesec/kubesec:512c5e0 scan /dev/stdin < k8s_deployment_service.yaml | jq .[].score)
+
+	
+    # Kubesec scan result processing
+    # echo "Scan Score : $scan_score"
+
+	if [[ "${scan_score}" -ge 5 ]]; then
+	    echo "Score is $scan_score"
+	    echo "Kubesec Scan $scan_message"
+	else
+	    echo "Score is $scan_score, which is less than or equal to 5."
+	    echo "Scanning Kubernetes Resource has Failed"
+	    exit 1;
+	fi;
+
+################################e kubesec-scan.sh ################################
+
+
+#################################### Updated k8s_deployment_service.yaml #################################### 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devsecops
+  name: devsecops
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devsecops
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: devsecops
+    spec:
+      serviceAccountName: default
+      containers:
+      - image: replace
+        name: devsecops-container
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 100
+          readOnlyRootFilesystem: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: devsecops
+  name: devsecops-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: devsecops
+  type: NodePort
+
+#################################### Updated k8s_deployment_service.yaml #################################### 
+
+
+
+############## Jenkinsfile - Kubesec Scan ############## 
+
+pipeline {
+  agent any
+
+  environment {
+    deploymentName = "devsecops"
+    containerName = "devsecops-container"
+    serviceName = "devsecops-svc"
+    imageName = "siddharth67/numeric-app:${GIT_COMMIT}"
+    applicationURL = "http://devsecops-demo.eastus.cloudapp.azure.com/"
+    applicationURI = "/increment/99"
+  }
+
+  stages {
+
+    stage('Build Artifact - Maven') {
+      steps {
+        sh "mvn clean package -DskipTests=true"
+        archive 'target/*.jar'
+      }
+    }
+
+    stage('Unit Tests - JUnit and JaCoCo') {
+      steps {
+        sh "mvn test"
+      }
+    }
+
+    stage('Mutation Tests - PIT') {
+      steps {
+        sh "mvn org.pitest:pitest-maven:mutationCoverage"
+      }
+    }
+
+    stage('SonarQube - SAST') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh "mvn sonar:sonar \
+		              -Dsonar.projectKey=numeric-application \
+		              -Dsonar.host.url=http://devsecops-demo.eastus.cloudapp.azure.com:9000"
+        }
+        timeout(time: 2, unit: 'MINUTES') {
+          script {
+            waitForQualityGate abortPipeline: true
+          }
+        }
+      }
+    }
+
+    stage('Vulnerability Scan - Docker') {
+      steps {
+        parallel(
+          "Dependency Scan": {
+            sh "mvn dependency-check:check"
+          },
+          "Trivy Scan": {
+            sh "bash trivy-docker-image-scan.sh"
+          },
+          "OPA Conftest": {
+            sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+          }
+        )
+      }
+    }
+
+    stage('Docker Build and Push') {
+      steps {
+        withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+          sh 'printenv'
+          sh 'sudo docker build -t siddharth67/numeric-app:""$GIT_COMMIT"" .'
+          sh 'docker push siddharth67/numeric-app:""$GIT_COMMIT""'
+        }
+      }
+    }
+
+
+    stage('Vulnerability Scan - Kubernetes') {
+      steps {
+        parallel(
+          "OPA Scan": {
+            sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
+          },
+          "Kubesec Scan": {
+            sh "bash kubesec-scan.sh"
+          }
+        )
+      }
+    }
+
+
+    stage('K8S Deployment - DEV') {
+      steps {
+        parallel(
+          "Deployment": {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "bash k8s-deployment.sh"
+            }
+          },
+          "Rollout Status": {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "bash k8s-deployment-rollout-status.sh"
+            }
+          }
+        )
+      }
+    }
+
+  }
+
+  post {
+    always {
+      junit 'target/surefire-reports/*.xml'
+      jacoco execPattern: 'target/jacoco.exec'
+      pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+    }
+
+    // success {
+
+    // }
+
+    // failure {
+
+    // }
+  }
+
+}
+
+

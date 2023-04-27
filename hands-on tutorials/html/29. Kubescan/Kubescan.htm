@@ -1,0 +1,160 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href=Kubescan.htm>
+<link rel=File-List href="Kubescan_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:1.6319in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>Kubescan</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kubescan scans
+Kubernetes cluster objects such as deployments, services, pods, and secrets for
+security risks and vulnerabilities, and provides a comprehensive report of
+identified risks based on their level of severity.<span
+style='mso-spacerun:yes'>  </span>It can detect misconfigured RBAC (Role-Based
+Access Control) settings, privileged containers, exposed services, and other
+issues that could compromise your cluster security. This allows security teams
+to detect security issues in the Kubernetes environment during development,
+deployment and runtime, and provides actionable recommendations to remediate
+the risks</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kube-Scan gives a
+risk score, from 0 (no risk) to 10 (high risk) for each workload. The risk is
+based on the runtime configuration of each workload (currently 20+ settings).
+The exact rules and scoring formula are part of the open-source framework
+KCCSS, the Kubernetes Common Configuration Scoring System.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>KCCSS is similar to
+the Common Vulnerability Scoring System (CVSS), the industry-standard for
+rating vulnerabilities, but instead focuses on the configurations and security
+settings themselves. Vulnerabilities are always detrimental, but configuration
+settings can be insecure, neutral, or critical for protection or remediation.
+KCCSS scores both risks and remediations as separate rules, and allows users to
+calculate a risk for every runtime setting of a workload and then to calculate
+the total risk of the workload.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Source:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://github.com/octarinesec/kube-scan">https://github.com/octarinesec/kube-scan</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Install kubesec in
+k8s:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl apply -f <a
+  href="https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/kube-scan.yaml">https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/kube-scan.yaml</a><br>
+    &nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n
+  kube-scan get all</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                             </span>READY<span
+  style='mso-spacerun:yes'>   </span>STATUS<span style='mso-spacerun:yes'>   
+  </span>RESTARTS<span style='mso-spacerun:yes'>   </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>pod/kube-scan-79d8f5cd7c-q6r4v<span
+  style='mso-spacerun:yes'>   </span>2/2<span style='mso-spacerun:yes'>    
+  </span>Running<span style='mso-spacerun:yes'>   </span>10<span
+  style='mso-spacerun:yes'>         </span>5d23h</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                   </span>TYPE<span
+  style='mso-spacerun:yes'>        </span>CLUSTER-IP<span
+  style='mso-spacerun:yes'>      </span>EXTERNAL-IP<span
+  style='mso-spacerun:yes'>   </span>PORT(S)<span style='mso-spacerun:yes'>  
+  </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>service/kube-scan-ui<span
+  style='mso-spacerun:yes'>   </span>ClusterIP<span style='mso-spacerun:yes'>  
+  </span>10.111.116.27<span style='mso-spacerun:yes'>  
+  </span>&lt;none&gt;<span style='mso-spacerun:yes'>        </span>80/TCP<span
+  style='mso-spacerun:yes'>    </span>5d23h</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                        </span>READY<span
+  style='mso-spacerun:yes'>   </span>UP-TO-DATE<span
+  style='mso-spacerun:yes'>   </span>AVAILABLE<span style='mso-spacerun:yes'>  
+  </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>deployment.apps/kube-scan<span
+  style='mso-spacerun:yes'>   </span>1/1<span style='mso-spacerun:yes'>    
+  </span>1<span style='mso-spacerun:yes'>            </span>1<span
+  style='mso-spacerun:yes'>           </span>5d23h</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>                                  
+  </span>DESIRED<span style='mso-spacerun:yes'>   </span>CURRENT<span
+  style='mso-spacerun:yes'>   </span>READY<span style='mso-spacerun:yes'>  
+  </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>replicaset.apps/kube-scan-79d8f5cd7c<span
+  style='mso-spacerun:yes'>   </span>1<span style='mso-spacerun:yes'>        
+  </span>1<span style='mso-spacerun:yes'>         </span>1<span
+  style='mso-spacerun:yes'>       </span>5d23h</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl
+  port-forward --namespace kube-scan svc/kube-scan-ui 8081:80</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to dashboard and
+we can see RISK and REMEDIATION</p>
+
+<p style='margin:0in'><img src="Kubescan_files/image001.png" width=779
+height=475
+alt="C &#10;A Khöng bSo mgt 192.168.207.129:8081 &#10;K8S Risk Assessment &#10;Medium &#10;injectc•r &#10;MEDIUM &#10;MEDIUM &#10;KUBE-SCAN &#10;RESOURCE &#10;devsecops &#10;CLUSTER &#10;NAMESPACE &#10;default &#10;KIND &#10;Deployment &#10;Workload has a container which its CPU or Memory limit was not configured &#10;show more &#10;Workload is exposed through a node port &#10;show more &#10;Workload allows privilege escalation &#10;show more &#10;REMEDIATION &#10;A listening port isn't configured &#10;show more "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

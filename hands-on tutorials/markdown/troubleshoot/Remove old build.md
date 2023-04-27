@@ -1,0 +1,61 @@
+# Remove old build
+Delete old build in linux  
+
+```
+sudo find /  -type d -name "builds"  
+  
+/var/lib/jenkins/jobs/devsecops-app-num/builds  
+  
+rm -r {1..100}
+``` 
+  
+Reload config in jenkins dashboard  
+  
+  
+Jenkins script remove all build, just keep build 19,23  
+
+```
+def jobName = "devsecops-app-num"  
+def job = Jenkins.instance.getItem(jobName)  
+job.getBuilds().each {  
+    if (it.number != 19 &amp;&amp; it.number != 23) {  
+        it.delete()  
+    }  
+}  
+job.nextBuildNumber = 1  
+job.save()
+``` 
+  
+  
+  
+You can optimize the if statement by using a list of build numbers that you want to keep and checking if the current build number is in that list. Here's how you can do it:  
+  
+
+```
+def jobName = "copy_folder"  
+def job = Jenkins.instance.getItem(jobName)  
+  
+// List of build numbers to keep  
+def buildsToKeep = 19, 23, 25, 30, 33, 50  
+  
+job.getBuilds().each {  
+    if (!buildsToKeep.contains(it.number)) {  
+        it.delete()  
+    }  
+}  
+job.nextBuildNumber = 1  
+job.save()
+``` 
+  
+  
+This script will delete all builds except for the ones with build numbers in the `buildsToKeep` list.  
+  
+Source: Conversation with Bing, 4/8/2023(1) How to use if else statement with Groovy? - Stack Overflow. https://stackoverflow.com/questions/27392655/how-to-use-if-else-statement-with-groovy%20Accessed%204/8/2023.  
+2 Groovy - If/Else Statement - TutorialsPoint. https://www.tutorialspoint.com/groovy/groovy_if_else_statement.htm Accessed 4/8/2023.  
+3 Groovy - Nested If Statement - TutorialsPoint. https://www.tutorialspoint.com/groovy/groovy_nested_if_statement.htm Accessed 4/8/2023.  
+4 Groovy Decision Making - Javatpoint. https://www.javatpoint.com/groovy-decision-making%20Accessed%204/8/2023.  
+5 How do I write a compound if statement in Groovy? closed. https://stackoverflow.com/questions/46932505/how-do-i-write-a-compound-if-statement-in-groovy%20Accessed%204/8/2023.  
+6 Conditional Statements - Groovy Tutorial - OneCompiler. https://onecompiler.com/tutorials/groovy/control-statements/conditional-statements%20Accessed%204/8/2023.  
+  
+  
+

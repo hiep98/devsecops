@@ -1,0 +1,131 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Falco%20Slack%20Notifications.htm">
+<link rel=File-List href="Falco%20Slack%20Notifications_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:3.2743in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>Falco
+Slack Notifications</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to <a
+href="https://api.slack.com/apps">https://api.slack.com/apps</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Select incoming
+webhooks</p>
+
+<p style='margin:0in'><img
+src="Falco%20Slack%20Notifications_files/image001.png" width=671 height=568
+alt="falco app &#10;Settings &#10;Basic Information &#10;Collaborators &#10;Socket Mode &#10;Install App &#10;Manage Distribution &#10;Features &#10;App Home &#10;Org Level Apps &#10;Incoming Webhooks &#10;Interactivity &amp; Shortcuts &#10;Slash Commands &#10;Workflow Steps &#10;OAuth &amp; Permissions &#10;Event Subscriptions &#10;User ID Translation &#10;App Manifest NEW &#10;Beta Features &#10;Submit to App &#10;Directory &#10;Review &amp; Submit &#10;Give feedback &#10;Slack &#10;Help &#10;Contact &#10;Policies &#10;Our Blog &#10;Incoming Webhooks &#10;Activate Incoming Webhooks &#10;On &#10;Incoming webhooks are a simple way to post messages from external sources into Slack. &#10;They make use of normal HTTP requests with a JSON payload, which includes the &#10;message and a few other optional details. You can include message attachments to &#10;display richly-formatted messages. &#10;Adding incoming webhooks requires a bot user. If your app doesn't have a bot user, we'll &#10;add one for you. &#10;Each time your app is installed, a new Webhook URL will be generated. &#10;If you deactivate incoming webhooks, new Webhook URLs will not be generated when &#10;your app is installed to your team. If you'd like to remove access to existing Webhook &#10;URLs, you will need to Revoke All OAuth Tokens. &#10;Webhook URLs for Your Workspace &#10;To dispatch messages with your webhook URL, send your message in JSON as the body &#10;of an I application/ison POST request. &#10;Add this webhook to your workspace below to activate this curl example. &#10;Sample curl request to post to a channel: &#10;curl -X POST -H 'Content-type: application/ison' &#10;YOUR KEBHOOK URL HERE &#10;Webhook U RL &#10;No webhooks have been added yet. &#10;Add New Webhook to Workspace &#10;- -data &#10;' {&quot;text&quot;: &quot;Hello, World! &quot;Y &#10;Channel &#10;Added By "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Select add new
+webhook to workspace</p>
+
+<p style='margin:0in'><img
+src="Falco%20Slack%20Notifications_files/image002.png" width=667 height=449
+alt="falco app is requesting permission to access the &#10;devsecops Slack workspace &#10;Where should falco app post? &#10;# falco app requires a channel to post to as an app &#10;# falco &#10;Cancel &#10;Allow "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Select channel and
+allow</p>
+
+<p style='margin:0in'><img
+src="Falco%20Slack%20Notifications_files/image003.png" width=668 height=456
+alt="Webhook URLs for Your Workspace &#10;To dispatch messages with your webhook URL, send your message in JSON as the body &#10;of an I application/ison POST request. &#10;Add this webhook to your workspace below to activate this curl example. &#10;Sample curl request to post to a channel: &#10;curl -X POST -H 'Content-type: application/ ison' &#10;-data &#10;' {&quot;text &#10;&quot; : &quot;Hello, &#10;Worl &#10;https://hooks . slack . com/services/ &#10;Webhook U RL &#10;https://hooks.slack.com/services &#10;Add New Webhook to Workspace &#10;Copy &#10;Copy &#10;Channel &#10;#falco &#10;Added By &#10;Apr 14, 2023 "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We can copy sample
+curl to test connection and update webhook-url into falco.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>helm upgrade falco
+  falcosecurity/falco \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--set
+  falcosidekick.enabled=true \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--set
+  falcosidekick.webui.enabled=true \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--set
+  falcosidekick.config.slack.webhookurl=&quot;https://hooks.slack.com/services/&lt;ID&gt;&quot;
+  \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-n falco </p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Execute shell nginx
+to test notification:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl exec -it
+  nginx -- sh</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img
+src="Falco%20Slack%20Notifications_files/image004.png" width=633 height=585
+alt="falcoapp APP 6:33 PM &#10;Hello, World! &#10;falco app APP 6:40 PM &#10;11:40:47.624929340: Notice A shell was spawned in a container with an attached &#10;terminal (user-root user_loginuid=-l k8s.ns=default k8s.pod=nginx &#10;container=3251ad309d7a shell-sh parent-runc cmdline=sh pid=206143 &#10;terminal-34816 container_id=3251ad309d7a image=nginx) &#10;rule &#10;Terminal shell in container &#10;source &#10;syscall &#10;T 1059, container, mitre execution, shell &#10;container.image.repository &#10;nglnx &#10;k8s.pod.name &#10;nglnx &#10;proc.name &#10;sh &#10;user.name &#10;time &#10;priority &#10;Notice &#10;hostname &#10;falco-grxx4 &#10;container.id &#10;3251ad309d7a &#10;k8s.ns.name &#10;default &#10;proc.cmdline &#10;sh &#10;proc.pname &#10;runc &#10;+0000 UTC &#10;https://github.com/falcosecurity/falcosidekick "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

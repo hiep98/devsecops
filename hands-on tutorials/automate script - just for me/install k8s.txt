@@ -1,0 +1,51 @@
+sudo apt install docker.io
+
+
+docker ––version
+
+sudo systemctl enable docker
+
+sudo systemctl start docker
+
+sudo systemctl status docker
+
+
+
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+
+
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" 
+
+
+
+sudo apt-get install kubeadm kubelet kubectl
+
+sudo apt-mark hold kubeadm kubelet kubectl
+
+kubeadm version
+
+sudo swapoff –a
+
+sudo hostnamectl set-hostname master-node
+
+
+
+
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+
+
+
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+
+
+for Worker:
+kubeadm join 192.168.126.132:6443 --token ceifff.ry6ggf25ufcowz5v \
+        --discovery-token-ca-cert-hash sha256:4db83b3103f78d5e823aca074321dcfd0d5dcd1230db871a8fc92a4133ae1432
+
+
+

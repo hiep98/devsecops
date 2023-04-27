@@ -1,0 +1,1050 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Alert%20manager.htm">
+<link rel=File-List href="Alert%20manager_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:14.2444in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.2909in;width:2.1673in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>Alert
+manager</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:14.2444in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <h1 style='margin:0in;font-family:Calibri;font-size:14.0pt;color:#0C0C0C'>Install
+ Alertmanager</h1>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.5111in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Wget <a
+   href="https://github.com/prometheus/alertmanager/releases/download/v0.25.0/alertmanager-0.25.0.linux-amd64.tar.gz">https://github.com/prometheus/alertmanager/releases/download/v0.25.0/alertmanager-0.25.0.linux-amd64.tar.gz</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>tar xvzf
+   alertmanager-0.25.0.linux-amd64.tar.gz </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cd
+   alertmanager-0.25.0.linux-amd64/</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>./alertmanager </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>cat
+   alertmanager.yml </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>route:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>group_by: ['alertname']</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>group_wait: 30s</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>group_interval: 5m</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>repeat_interval: 1h</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>receiver: 'web.hook'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>receivers:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- name: 'web.hook'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>webhook_configs:</p>
+   <p style='margin:0in;font-family:Calibri'><span style='font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>- url: </span><span style='font-size:
+   11.0pt'>'</span><a href="http://127.0.0.1:5001/"><span style='font-size:
+   11.0pt'>http://127.0.0.1:5001/</span></a><span style='font-size:11.0pt'>'</span></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>inhibit_rules:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- source_match:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>severity: 'critical'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>target_match:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>severity: 'warning'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>equal: ['alertname', 'dev', 'instance']</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:19.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span><a
+ href="https://acloudguru.com/hands-on-labs/installing-prometheus-alertmanager">https://acloudguru.com/hands-on-labs/installing-prometheus-alertmanager</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:19.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:14.0pt'>Default Config</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>global:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>resolve_timeout: 5m</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>http_config:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>follow_redirects: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>enable_http2: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>smtp_hello: localhost</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>smtp_require_tls: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>pagerduty_url: <a
+   href="https://events.pagerduty.com/v2/enqueue">https://events.pagerduty.com/v2/enqueue</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>opsgenie_api_url: <a
+   href="https://api.opsgenie.com/">https://api.opsgenie.com/</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>wechat_api_url: <a
+   href="https://qyapi.weixin.qq.com/cgi-bin/">https://qyapi.weixin.qq.com/cgi-bin/</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>victorops_api_url: <a
+   href="https://alert.victorops.com/integrations/generic/20131114/alert/">https://alert.victorops.com/integrations/generic/20131114/alert/</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>telegram_api_url: <a
+   href="https://api.telegram.org">https://api.telegram.org</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>webex_api_url: <a
+   href="https://webexapis.com/v1/messages">https://webexapis.com/v1/messages</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>route:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>receiver: web.hook</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>group_by:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- alertname</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>continue: false</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>group_wait: 30s</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>group_interval: 5m</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>repeat_interval: 1h</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>inhibit_rules:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- source_match:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>severity: critical</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>target_match:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>severity: warning</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>equal:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- alertname</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- dev</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- instance</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>receivers:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- name: web.hook</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>webhook_configs:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- send_resolved: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>http_config:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>follow_redirects: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>enable_http2: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>url: <a href="http://127.0.0.1:5001/">http://127.0.0.1:5001/</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>max_alerts: 0</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>templates: []</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image001.png" width=764
+ height=996
+ alt="Alertmanager &#10;Status &#10;Uptime: &#10;Alerts &#10;Silences &#10;Status &#10;Settings &#10;Help &#10;Cluster Status &#10;Name: &#10;OlGYF4EDXDHKYFD9WCEMJAF5ZS &#10;Status: &#10;ready &#10;Peers: &#10;• Name: OlGYF4EDXDHKYFD9WCEMJAF5ZS &#10;Address: 192.168.207.129:9094 &#10;Version Information &#10;Branch: &#10;HEAD &#10;BuildDate: &#10;20221222-14:51 &#10;Builduser: &#10;root@abe866dd5717 &#10;GoVersion: &#10;gol.19.4 &#10;Revision: &#10;258fab7cdd551f2cf251ed0348f0ad7289aee789 &#10;Version: &#10;0.25.o &#10;Config &#10;global : &#10;resolve timeout: 1m &#10;http_config: &#10;follow redirects: true &#10;enable http2: true &#10;smtp hello: &#10;localhost &#10;smtp_require_tls: true &#10;pagerduty_url : &#10;https : / / events . pagerduty.com/v2/enqueue "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:14.0pt'>Update
+ alertmanager.yml</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:10.4701in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>global:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>resolve_timeout: 1m</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>slack_api_url: '<a
+   href="https://hooks.slack.com/services/%3cID%3e">https://hooks.slack.com/services/&lt;ID&gt;</a>'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>route:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>receiver: 'slack-notifications'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>receivers:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- name:
+   'slack-notifications'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>slack_configs:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>- send_resolved: true</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>channel: '#prometheus'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>icon_url: <a
+   href="https://avatars3.githubusercontent.com/u/3380462">https://avatars3.githubusercontent.com/u/3380462</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>title: |-</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>[{{ .Status | toUpper }}{{ if eq
+   .Status &quot;firing&quot; }}:{{ .Alerts.Firing | len }}{{ end }}] {{
+   .CommonLabels.alertname }} for {{ .CommonLabels.job }}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>{{- if gt (len .CommonLabels) (len
+   .GroupLabels) -}}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>{{&quot; &quot;}}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>{{- end }}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>title_link: '{{ template
+   &quot;slack.default.titlelink&quot; . }}'</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>text: &gt;-</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>{{ range .Alerts -}}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>       </span>*Alert:* {{ .Annotations.summary }}{{
+   if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>       </span>*Description:* {{
+   .Annotations.description }}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>       </span>*Details:*</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>{{ range .Labels.SortedPairs }} •
+   *{{ .Name }}:* `{{ .Value }}`</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>{{ end }}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>       </span>{{ end }}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;line-height:16pt;font-family:Calibri;font-size:10.0pt;
+ color:#767676'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is a
+ configuration file for Alertmanager, a component of the Prometheus monitoring
+ system that manages alerts sent by Prometheus server. The configuration file
+ defines how alerts are processed and routed to different receivers, such as
+ email, Slack, PagerDuty, etc.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Here's a breakdown
+ of the different sections and settings in this particular <span
+ style='color:#C30505'>alertmanager</span><span style='color:#363052'>.</span><span
+ style='color:#C30505'>yml</span>file:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+ style='color:#000088'>global </span>section contains global settings for
+ Alertmanager, including:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>resolve_timeout</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The time to
+      wait before resolving an alert if it has stopped firing (default is 5m).</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>slack_api_url</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The URL for
+      the Slack API webhook that Alertmanager uses to send notifications to
+      Slack. This is specific to the Slack integration and must be configured
+      with your own Slack webhook URL.</span></li>
+ </ul>
+ <p style='margin:0in;margin-left:.6111in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+ style='color:#C30505'>route </span>section defines the default receiver for
+ alerts, which in this case is set to <span style='color:#C30505'>slack</span><span
+ style='color:#363052'>-</span><span style='color:#C30505'>notifications</span>.
+ This means that any alerts that are not specifically routed to another
+ receiver will be sent to the <span style='color:#C30505'>slack</span><span
+ style='color:#363052'>-</span><span style='color:#C30505'>notifications</span>receiver.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The <span
+ style='color:#C30505'>receivers </span>section defines the available receivers
+ for alerts, which in this case only includes one receiver named <span
+ style='color:#C30505'>slack</span><span style='color:#363052'>-</span><span
+ style='color:#C30505'>notifications</span>. The settings for this receiver
+ include:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>name</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The name of
+      the receiver.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>slack_configs</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The
+      Slack-specific configuration for the receiver.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Under the <span
+ style='color:#C30505'>slack_configs</span>setting, the following configuration
+ options are defined:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>send_resolved</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: Whether or not
+      to send notifications when an alert has been resolved.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>channel</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The Slack
+      channel to send the notifications to (e.g. &quot;#prometheus&quot;).</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>icon_url</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The URL for
+      the icon that appears next to the notification in Slack.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>title</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The title of
+      the notification, which is a template that includes the status of the
+      alert, the name of the alert, and the job associated with the alert.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>title_link</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: A template for
+      the URL to use for the title of the notification, which in this case is
+      using a default template defined elsewhere in the configuration file.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#C30505'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#C30505'>text</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:black'>: The body of
+      the notification, which includes the summary and description of the
+      alert, as well as any additional label values associated with the alert.
+      The </span><span style='font-family:Calibri;font-size:12.0pt;color:#C30505'>range
+      </span><span style='font-family:Calibri;font-size:12.0pt;color:black'>function
+      is used to loop over all alerts in the group and create a list of them in
+      the notification body.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Overall, this
+ configuration file is defining how alerts should be sent to Slack and what
+ information should be included in the notification message. It is only one
+ example of how Alertmanager can be configured, and there are many other
+ configuration options and integrations available.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='color:#2E2E2F;background:white'>The </span><span style='color:#380D0D;
+ background:white'>title </span><span style='color:#2E2E2F;background:white'>field
+ in the </span><span style='color:#380D0D;background:white'>slack_configs</span><span
+ style='color:#2E2E2F;background:white'>section of the </span><span
+ style='color:#380D0D;background:white'>alertmanager</span><span
+ style='color:#28272F;background:white'>.</span><span style='color:#380D0D;
+ background:white'>yml</span><span style='color:#2E2E2F;background:white'>configuration
+ file is a template for the title of the notification that is sent to Slack
+ when an alert is fired. It contains the following elements:</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#28272F'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>|-</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#380D0D;background:white'>\n</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#2E2E2F;background:white'>: This is a YAML block
+      scalar style that indicates a multi-line string literal. The </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>|</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#2E2E2F;background:white'>character indicates that the string
+      should be preserved exactly as it is, including line breaks, and the </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>-</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#2E2E2F;background:white'>character indicates that any trailing
+      whitespace on each line should be ignored.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#28272F'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>{{ .</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#331F33;background:white'>Status </span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#28272F;background:white'>|</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#380D0D;background:
+      white'> toUpper </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>}}</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#2E2E2F;background:white'>: This is a Go template
+      expression that retrieves the </span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#331F33;background:white'>Status</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#2E2E2F;background:
+      white'>field of the alert and converts it to uppercase using the </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#380D0D;background:
+      white'>toUpper</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#2E2E2F;background:white'>function. The </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>.</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#2E2E2F;background:white'>character refers to the current context,
+      which is the alert group that triggered the notification.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#28272F'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>{{ </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#16162F;background:white'>if</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#380D0D;background:white'> eq </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>.</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#331F33;background:white'>Status </span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#274E27;background:white'>&quot;firing&quot;
+      </span><span style='font-family:Calibri;font-size:12.0pt;color:#28272F;
+      background:white'>}}:{{ .</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#331F33;background:white'>Alerts</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>.</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#331F33;background:white'>Firing </span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#28272F;background:white'>|</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#380D0D;background:
+      white'> len </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>}}{{ </span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#16162F;background:white'>end </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>}}</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#2E2E2F;background:white'>: This is another Go template expression
+      that checks if the </span><span style='font-family:Calibri;font-size:
+      12.0pt;color:#331F33;background:white'>Status</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#2E2E2F;background:
+      white'>field of the alert is &quot;firing&quot;, and if it is, adds a
+      colon and the number of firing alerts to the title. The </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#331F33;background:
+      white'>Alerts</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>.</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#331F33;background:white'>Firing</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#2E2E2F;background:
+      white'>field returns a list of all alerts that are currently firing, and
+      the </span><span style='font-family:Calibri;font-size:12.0pt;color:#380D0D;
+      background:white'>len</span><span style='font-family:Calibri;font-size:
+      12.0pt;color:#2E2E2F;background:white'>function returns the length of
+      that list.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#28272F'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>{{ .</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#331F33;background:white'>CommonLabels</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>.</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#380D0D;background:white'>alertname </span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#28272F;background:white'>}} </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#16162F;background:
+      white'>for </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>{{ .</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#331F33;background:white'>CommonLabels</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>.</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#380D0D;background:white'>job </span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#28272F;background:white'>}}</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#2E2E2F;background:
+      white'>: This retrieves the </span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#380D0D;background:white'>alertname </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#2E2E2F;background:
+      white'>and </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#380D0D;background:white'>job </span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#2E2E2F;background:white'>fields from the </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#331F33;background:
+      white'>CommonLabels</span><span style='font-family:Calibri;font-size:
+      12.0pt;color:#2E2E2F;background:white'>section of the alert group and
+      formats them into a string that describes the alert.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#28272F'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>{{- </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#16162F;background:white'>if</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#380D0D;background:white'> gt </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>(</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#380D0D;background:white'>len </span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#28272F;background:white'>.</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#331F33;background:
+      white'>CommonLabels</span><span style='font-family:Calibri;font-size:
+      12.0pt;color:#28272F;background:white'>) (</span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#380D0D;background:white'>len </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#28272F;background:
+      white'>.</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#331F33;background:white'>GroupLabels</span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#28272F;background:white'>) -}} {{</span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#274E27;background:
+      white'>&quot; &quot;</span><span style='font-family:Calibri;font-size:
+      12.0pt;color:#28272F;background:white'>}} {{- </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#16162F;background:
+      white'>end </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>}}</span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#2E2E2F;background:white'>: This is another Go
+      template expression that checks if the number of labels in the </span><span
+      style='font-family:Calibri;font-size:12.0pt;color:#331F33;background:
+      white'>CommonLabels </span><span style='font-family:Calibri;font-size:
+      12.0pt;color:#2E2E2F;background:white'>section is greater than the number
+      of labels in the </span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#331F33;background:white'>GroupLabels</span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#2E2E2F;background:white'>section, and if
+      it is, adds a space to the end of the title. This is used to ensure that
+      the title is aligned properly when different alerts have different label
+      sets.</span></li>
+ </ul>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#380D0D'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#380D0D;background:
+      white'>title_link</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>: </span><span style='font-family:Calibri;
+      font-size:12.0pt;color:#274E27;background:white'>'{{ template
+      &quot;slack.default.titlelink&quot; . }}'</span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#2E2E2F;background:white'>: This is a
+      reference to another template in the configuration file that specifies
+      the URL to link the title to.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#380D0D'><span
+      style='font-family:Calibri;font-size:12.0pt;color:#380D0D;background:
+      white'>text</span><span style='font-family:Calibri;font-size:12.0pt;
+      color:#28272F;background:white'>: &gt;- ...</span><span style='font-family:
+      Calibri;font-size:12.0pt;color:#2E2E2F;background:white'>: This is a
+      multi-line string literal that defines the body of the notification,
+      which contains more details about the alerts that have fired. It uses
+      another Go template expression to loop over all alerts in the group and
+      generate a list of their details.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(1) Notification
+ template examples | Prometheus. <a
+ href="https://prometheus.io/docs/alerting/latest/notification_examples/">https://prometheus.io/docs/alerting/latest/notification_examples/</a>.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(2) Creating
+ Awesome Alertmanager Templates for Slack - Hodovi. <a
+ href="https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/">https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/</a>.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(3) Step-by-step
+ guide to setting up Prometheus Alertmanager with Slack .... <a
+ href="https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/">https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/</a>.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://prometheus.io/docs/alerting/latest/configuration/#slack_config">https://prometheus.io/docs/alerting/latest/configuration/#slack_config</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://prometheus.io/docs/alerting/latest/notification_examples/">https://prometheus.io/docs/alerting/latest/notification_examples/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, create new
+ webhook and copy like webhook url like tutorial before. </p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image002.png" width=752
+ height=523
+ alt="- slack api &#10;alert &#10;Settings &#10;Basic Information &#10;Collaborators &#10;Socket Mode &#10;Install App &#10;Manage Distribution &#10;Features &#10;App Home &#10;Org Level Apps &#10;Incoming Webhooks &#10;Interactivity &amp; Shortcuts &#10;Slash Commands &#10;Workflow Steps &#10;OAuth &amp; Permissions &#10;Event Subscriptions &#10;User ID Translation &#10;App Manifest NEW &#10;Beta Features &#10;Submit to App &#10;Directory &#10;Review &amp; Submit &#10;Give feedback &#10;Slack &#10;Help &#10;Incoming Webhooks &#10;Activate Incoming Webhooks &#10;Q Search &#10;On &#10;Incoming webhooks are a simple way to post messages from external sources into Slack. &#10;They make use of normal HTTP requests with a JSON payload, which includes the &#10;message and a few other optional details. You can include message attachments to &#10;display richly-formatted messages. &#10;Adding incoming webhooks requires a bot user. If your app doesn't have a bot user, we'll &#10;add one for you. &#10;Each time your app is installed, a new Webhook URL will be generated. &#10;If you deactivate incoming webhooks, new Webhook URLs will not be generated when &#10;your app is installed to your team. If you'd like to remove access to existing Webhook &#10;URLs, you will need to Revoke All OAuth Tokens. &#10;Webhook URLs for Your Workspace &#10;To dispatch messages with your webhook URL, send your message in JSON as the body &#10;of an I application/ison POST request. &#10;Add this webhook to your workspace below to activate this curl example. &#10;Sample curl request to post to a channel: &#10;curl -X POST -H 'Content-type: application/ison' &#10;YOUR KEBHOOK URL HERE &#10;Webhook U RL &#10;No webhooks have been added yet. &#10;- -data &#10;' {&quot;text&quot;: &quot;Hello, World! &quot;Y &#10;Channel &#10;Added By "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image003.png" width=761
+ height=632
+ alt="alert is requesting permission to access the &#10;devsecops Slack workspace &#10;Where should alert post? &#10;# alert requires a channel to post to as an app &#10;# random &#10;Cancel &#10;Allow "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add new webhook url
+ into alertmanager.yml </p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:5.5743in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>global:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>resolve_timeout: 1m</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>slack_api_url: '<a
+   href="https://hooks.slack.com/services/%3cID%3e">https://hooks.slack.com/services/&lt;ID&gt;</a>'</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Use /-/reload to
+ reload config</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:3.3034in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>   </span>curl -X POST &lt;IP&gt;:9093/-/reload</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to promotheus
+ dashboard and check runtime Information, we can see alert manager endpoint</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image004.png" width=691
+ height=585
+ alt="0 &#10;Prometheus &#10;Alerts Graph Status &#10;Runtime Information &#10;Start time &#10;Working directory &#10;Configuration reload &#10;Last successful configuration reload &#10;WAL corruptions &#10;Goroutines &#10;GOMAXPROCS &#10;GOGC &#10;GODEBUG &#10;Storage retention &#10;Build Information &#10;Version &#10;Revision &#10;Branch &#10;BuildUser &#10;BuildDate &#10;GoVersion &#10;Alertmanagers &#10;Endpoint &#10;http://192.1 68.207.129:9093 &#10;/api/v2/alerts &#10;Help &#10;Thu, 20 Apr 2023 GMT &#10;/prometheus &#10;Successful &#10;139 &#10;8 &#10;15d &#10;2.34.o &#10;HEAD &#10;root@121ad7ea5487 &#10;gol.17.8 "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#14324D'>CREATE
+ ALERT RULE</h1>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>First, we go to
+ prometheus config to know simple config.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:13.5951in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+   href="https://github.com/istio/istio/blob/master/samples/addons/prometheus.yaml">https://github.com/istio/istio/blob/master/samples/addons/prometheus.yaml</a></p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>data:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>allow-snippet-annotations:
+   &quot;false&quot;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>alerting_rules.yml: |</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>{}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>alerts: |</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>{}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This yaml file
+ linked is a configuration file for Prometheus in istio. The data section of
+ the file contains the following key-value pairs:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>allow-snippet-annotations:
+      This setting controls whether Prometheus will allow users to add custom
+      annotations to Prometheus rules. If set to &quot;false&quot;, users will
+      only be able to use the pre-defined annotations.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>alerting_rules.yml: This
+      file contains the YAML configuration for Prometheus alerting rules.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>alerts: This file contains
+      the YAML configuration for Prometheus alerts.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The
+ alerting_rules.yml and alerts files are both empty, which means that
+ Prometheus will not be configured to send any alerts by default. If you want
+ to configure Prometheus to send alerts, you will need to add your own rules
+ and alerts to these files.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For more
+ information on configuring Prometheus, please see the Prometheus
+ documentation: <a
+ href="https://prometheus.io/docs/prometheus/latest/configuration/">https://prometheus.io/docs/prometheus/latest/configuration/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we update
+ alerting target and rule into prometheus.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:12.2513in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+   istio-system get configmap</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+   style='mso-spacerun:yes'>                                  </span>DATA<span
+   style='mso-spacerun:yes'>   </span>AGE</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>prometheus<span
+   style='mso-spacerun:yes'>                            </span>5<span
+   style='mso-spacerun:yes'>      </span>9d</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+   istio-system edit configmap prometheus</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>prometheus.yml: |</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>global: # This section defines global
+   settings for Prometheus</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>evaluation_interval: 1m # Evaluate
+   rules every 1 minute</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>scrape_interval: 15s # Scrape targets
+   every 15 seconds</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>scrape_timeout: 10s # Timeout for
+   scraping targets</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>alerting: # This section defines
+   alerting settings for Prometheus</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>alertmanagers: # This section
+   specifies the alertmanager instances to send alerts to</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>- static_configs: # This section
+   specifies the static list of alertmanager targets</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>- targets: <a
+   href="http://192.168.207.129:9093">http://192.168.207.129:9093</a> # This is
+   the address of the alertmanager instance</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>apiVersion: v1 #
+   This is the API version for Kubernetes resources</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>data: # This
+   section contains the data for the configmap resource</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>alerting_rules.yml: | # This is the name
+   of the file that contains the alerting rules</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>{</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>&quot;groups&quot;: [ # This is a list
+   of groups of rules</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>{</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;name&quot;:
+   &quot;Rules&quot;, # This is the name of the group</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>&quot;rules&quot;: [ # This is a
+   list of rules in the group</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>{</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;alert&quot;:
+   &quot;InstanceDown&quot;, # This is the name of the alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;expr&quot;: &quot;up ==
+   0&quot;, # This is the expression that triggers the alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;for&quot;:
+   &quot;0m&quot;, # This is the duration that the expression must be true
+   before firing the alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;annotations&quot;: { #
+   This section contains additional information for the alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>                </span>&quot;title&quot;:
+   &quot;Instance {{ $labels.instance }} down&quot;, # This is the title of the
+   alert, using label templating</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>                </span>&quot;description&quot;:
+   &quot;{{ $labels.instance }} of job {{ $labels.job }} has been down for more
+   than 1 minute.&quot; # This is the description of the alert, using label
+   templating</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>},</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;labels&quot;: { # This
+   section contains additional labels for the alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>                </span>&quot;severity&quot;:
+   &quot;critical&quot; # This is a label that indicates the severity of the
+   alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>},</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>{</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;alert&quot;:
+   &quot;KubernetesPodClientError&quot;, # This is another alert name</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;expr&quot;:
+   &quot;istio_requests_total{reporter=\&quot;destination\&quot;,
+   response_code=\&quot;403\&quot;} &gt; 10&quot;, # This is another expression
+   that triggers the alert, using metric and label filtering</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;labels&quot;: { # This
+   section contains additional labels for this alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>                </span>&quot;severity&quot;:
+   &quot;warning&quot; # This is another label that indicates the severity of
+   this alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>},</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>&quot;annotations&quot;: { #
+   This section contains additional information for this alert</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>                </span>&quot;summary&quot;:
+   &quot;Kubernetes pod Client Error (instance {{ $labels.instance }})&quot;, #
+   This is another title of this alert, using label templating</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>                </span>&quot;description&quot;:
+   &quot;Pod {{ $labels.instance }} of job {{ $labels.job }} reported client
+   specific issues&quot; # This is another description of this alert, using
+   label templating</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>              </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>            </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>          </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>        </span>}</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>      </span>]</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>}</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This file is a
+ configuration<span style='mso-spacerun:yes'>  </span>contains the following
+ settings:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>evaluation_interval:
+ This setting controls how often Prometheus will evaluate its rules. The
+ default value is 1 minute.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>scrape_interval:
+ This setting controls how often Prometheus will scrape metrics from its
+ targets. The default value is 15 seconds.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>scrape_timeout:
+ This setting controls how long Prometheus will wait for a response from a
+ target before giving up. The default value is 10 seconds.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>alertmanagers: This
+ section configures Prometheus to send alerts to an Alertmanager. The
+ Alertmanager is a separate service that is responsible for handling alerts and
+ notifying users.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>It contains the
+ following rules:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>InstanceDown: This
+ rule alerts if an instance has been down for more than 1 minute.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>KubernetesPodClientError:
+ This rule alerts if a Kubernetes pod has reported more than 10 client errors.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Each rule has the
+ following settings:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>alert: This is the
+ name of the alert.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>expr: This is the
+ expression that Prometheus will use to evaluate the rule.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>for: This is the
+ duration for which Prometheus will keep an alert in the firing state.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>annotations: This
+ is a map of annotations that will be added to alerts that fire.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>labels: This is a
+ map of labels that will be added to alerts that fire.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>we can add larger
+ rule based on rule file below and using converter yaml to json:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+ href="https://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/istio/embedded-exporter.yml">https://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/istio/embedded-exporter.yml</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>After update
+ config, we restart pod prometheus:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:10.6055in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+   istio-system describe pod -l=app=prometheus </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+   istio-system delete pod -l=app=prometheus</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+   istio-system get pod -l=app=prometheus</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl -n
+   istio-system logs prometheus-7cc75b7c8c-nmbmw --container prometheus-server</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, we go to
+ prometheus to check rule again</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image005.png"
+ width=1007 height=349
+ alt="0 &#10;Prometheus &#10;Rules &#10;Alerts &#10;Graph &#10;Status &#10;Help &#10;Rules &#10;Rule &#10;alert: &#10;expr: &#10;labels: &#10;Error &#10;InstanceDown &#10;up = &#10;severity: critical &#10;annotations: &#10;description: Slabels.instance l} of job $labels.job has been down for more than 1 minute. &#10;title: Instance {{ $labels.instance down &#10;45.886s ago &#10;Last Evaluation &#10;45.888s ago &#10;45.888s ago &#10;0.520ms &#10;Evaluation Time &#10;0.354ms &#10;0.155ms &#10;alert: &#10;expr: &#10;labels: &#10;KubernetesPodClientError &#10;istio_requests_total{reporter= 'Idestination&quot; &#10;&quot;403&quot;) &gt; 10 &#10;severity: warning &#10;annotations: &#10;description: Pod {{ $labels.instance of job {{ $labels.job l} reported client specific issues &#10;summary: Kubernetes pod Client Error (instance {{ $labels.instance }}) "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image006.png"
+ width=1008 height=883
+ alt="0 &#10;Prometheus &#10;Alerts Graph Status &#10;Runtime Information &#10;Start time &#10;Working directory &#10;Configuration reload &#10;Last successful configuration reload &#10;WAL corruptions &#10;Goroutines &#10;GOMAXPROCS &#10;GOGC &#10;GODEBUG &#10;Storage retention &#10;Build Information &#10;Version &#10;Revision &#10;Branch &#10;BuildUser &#10;BuildDate &#10;GoVersion &#10;Alertmanagers &#10;Endpoint &#10;http://192.1 68.207.129:9093 &#10;/api/v2/alerts &#10;Help &#10;Mon, 17 Apr 2023 16:11:15 GMT &#10;/prometheus &#10;Successful &#10;139 &#10;8 &#10;15d &#10;2.34.o &#10;HEAD &#10;root@121ad7ea5487 &#10;gol.17.8 "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Disable peer
+ authentication to run test rule.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:11.8138in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl edit
+   pa -n istio-system</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>  </span>mtls:</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+   style='mso-spacerun:yes'>    </span>mode: DISABLE</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create nginx
+ service:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:11.8763in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n prod
+   run nginx --image nginx</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n prod
+   expose pod nginx --port 80</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n prod
+   get svc</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Use curl to test
+ connection:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:11.8763in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>curl &lt;IP nginx
+   svc&gt;:80</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>or </p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n prod
+   exec -it nginx -- curl 10.32.0.28:80</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, we go to
+ nginx and delete index.html.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:11.9388in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n prod
+   exec -it nginx -- bash</p>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>rm
+   /usr/share/nginx/html/index.html </p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We check the
+ connection again by using the following bash script and get a 403 error.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>while true; do curl
+ -s 10.101.73.244:80;<span style='mso-spacerun:yes'>  </span>sleep 1; done</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now let's go back
+ to the dashboard to check if the rule is working</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image007.png"
+ width=1220 height=417
+ alt="0 &#10;Prometheus &#10;Alerts Graph &#10;Pending (O) &#10;/etc/config/alerting_rules.yml &gt; Rules &#10;&gt; InstanceDown (O active) &#10;v KubernetesPodClientError (1 active) &#10;KubernetesPodCLientError &#10;name : &#10;Status &#10;Help &#10;Q &#10;&quot;4B&quot;} &gt; la &#10;Show annotations &#10;Filter by name or labels &#10;istio_requests_total{reporter=&quot;destination&quot; , response code= &#10;expr: &#10;labels : &#10;severity: warning &#10;annotations : &#10;description: Pod {{ &#10;sumary: Kubernetes &#10;Labels &#10;$1abe1s. instance &#10;pod Client Error &#10;of job {{ &#10;(instance {{ &#10;$1abe1s.job reported client specific issues &#10;$1abe1s. instance &#10;Active Since &#10;2023-04- &#10;Value &#10;93 "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>we can click on
+ expr to execute the query</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image008.png"
+ width=1225 height=253
+ alt="0 &#10;Prometheus &#10;Alerts Graph Status • Help &#10;Enable query history Enable autocomplete &#10;Use local time &#10;&quot;destination' &#10;Enab'e highlighting &#10;&quot;403 &quot; &#10;10 &#10;Enable linter &#10;Loed time: 32ms &#10;Resolution: IAS &#10;Execute &#10;Result series: I &#10;Table &#10;Graph &#10;Evaluation time &#10;requet_protocol=&quot;http&quot;, &#10;source_principal=&quot;unknown&quot;, &#10;&quot;unknown&quot;} &#10;Remove Panel "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>and alert is also
+ sent to slack</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image009.png" width=687
+ height=229
+ alt="alert APP 7:52 PM &#10;[FIRING:I] KubernetesPodClientError for kubernetes-pods &#10;Alert: Kubernetes pod Client Error (instance 10.32.028:15020) - &#10;Description: Pod 10.32.0.28:15020 of job kubernetes-pods reported client specific &#10;Issues &#10;Details: &#10;• alertname: KubernetesPodC1ientError &#10;• connection_security_policy. mutual_tls &#10;Show more "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>similar to
+ alertmanager, we can select silence.</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image010.png" width=956
+ height=629
+ alt="Alertmanager &#10;Alerts &#10;Silences &#10;Sta tus &#10;Settings &#10;Help &#10;Filter &#10;Group &#10;Receiver: All &#10;destination canonical revision=&quot;latest&quot; &#10;&quot; unknown&quot; &#10;Silenced &#10;New Silence &#10;Inhibited &#10;Z Silence &#10;Custom matcher, e.g. &#10;enF&quot;production&quot; &#10;+ Expand all groups &#10;Not grouped 1 alert &#10;+ Info &#10;alertname= &quot; Ku bernetesPodClientError&quot; &#10;&quot; nginx&quot; + &#10;IZ Source Z Silence Link &#10;destination cluster=&quot;Kubernetes&quot; &#10;&quot;nginx.prod.svc.cluster.local&quot; + &#10;destination service name: &quot;nginx&quot; + &#10;&quot; nginx&quot; &#10;destination_workload_namespace= &quot; prod&quot; &#10;instance— &#10;-&quot;10.32.0.28:15020&quot; &#10;&quot;prod &quot; &#10;job= &quot;kubernetes-pods&quot; &#10;&quot;403&quot; + &#10;response_flags=&quot; ' &#10;namespace: &quot;prod&quot; &#10;severity= &quot;warning ' &#10;pod: &quot;nginx&quot; + &#10;reporter: &quot;destination&quot; &#10;request_protocol=&quot;http &#10;&quot; istio &quot; &#10;&quot;unknown&quot; &#10;service_istio_io_canonical_name=&quot;nginx&quot; &#10;source canonical revision = &quot;latest&quot; + &#10;source version= &quot;unknown&quot; &#10;service istio io canonical revision = &quot;latest&quot; + &#10;source canonical ' &#10;source workload: &quot;unknown&quot; &#10;source cluster: &quot;unknown&quot; &#10;source_principal=&quot;unknown&quot; &#10;source_workload_namespace= &quot; u n known "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We can enter the
+ creator and comment information to assign the person in charge of handling
+ this case</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image011.png" width=946
+ height=647
+ alt="Silence &#10;ID &#10;Starts at &#10;Ends at &#10;Updated at &#10;Created by &#10;Comment &#10;State &#10;Matchers &#10;Affected alerts: 1 &#10;Edit &#10;Expire &#10;el 733ea3-fOea-4528-ad50-bbc82ba44f2e &#10;some one &#10;this issue have been assign &#10;active &#10;alertname=KubernetesPodClientError &#10;destination_ca non ice ng inx &#10;licy=none &#10;destination canonical revision= latest &#10;destination cluster= Kubernetes &#10;destination_principa unknown &#10;destination_service = ng inx. prod.svc.cluster.local &#10;destination_service_name=nginx &#10;destination_service_namespace=prod &#10;destination_workload=nginx &#10;destination_workload_namespace=prod instance= 10.32.0.28:15020 &#10;job= kubernetes-pods &#10;namespace—prod pod=nginx reporter—destination request_protocol=http response_code=403 response_flags= &#10;security_istio_io_tlsMode=istio &#10;service_istio_io_canonical_name=nginx &#10;service istio io canonical revision—latest &#10;run=nglnx &#10;severity—warning source_app=unknown &#10;source canonical revision—latest &#10;source canonical &#10;source cluster—unknown &#10;source_principal=unknown &#10;source version—unknown &#10;source workload—unknown &#10;source_workload_namespace=unknown &#10;+ Info &#10;Source "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>similarly we
+ continue to test the rule instance down by deleting pod nginx:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:10.6368in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n prod
+   delete pod nginx </p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to dashboard to
+ run query</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image012.png"
+ width=1286 height=281
+ alt="0 &#10;Prometheus &#10;Alerts Graph Status • Help &#10;LJse local time Enable query history Enable autocomplete &#10;Q up = &#10;e &#10;Enab'e highlighting &#10;Enable linter &#10;Table &#10;Graph &#10;Evaluation time &#10;job=&quot;kubernetes-pods&quot;, run=&quot;nginx&quot;, "></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And we receive
+ slack alert</p>
+ <p style='margin:0in'><img src="Alert%20manager_files/image013.png" width=666
+ height=204
+ alt="alert APP 8:36 PM &#10;[FIRING:I] InstanceDown for kubernetes-pods &#10;Alert: -I criticall &#10;Description: 10.32.0.28:15020 of job kubernetes-pods has been down for more than 1 &#10;minute. &#10;Details: &#10;• alertname: InstanceDown &#10;• instance: 110.32. a.28:15aæel &#10;Show more "></p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

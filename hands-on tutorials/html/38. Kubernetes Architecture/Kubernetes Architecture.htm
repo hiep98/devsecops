@@ -1,0 +1,654 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Kubernetes%20Architecture.htm">
+<link rel=File-List href="Kubernetes%20Architecture_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:9.0416in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.2979in;width:3.318in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:20.0pt'>Kubernetes
+Architecture</p>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:9.0416in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <h1 style='margin:0in;font-family:Calibri;font-size:15.0pt'>Kubernetes
+ Architecture</h1>
+ <p style='margin:0in;font-family:Calibri;font-size:10.0pt'>&nbsp;</p>
+ <p style='margin:0in'><img src="Kubernetes%20Architecture_files/image001.png"
+ width=837 height=470
+ alt="POD &#10;DEV &#10;Automation Toolsets &#10;ADMIN &#10;Partner Apps &#10;Public Apps &#10;External Developers &#10;API Server Legend &#10;API &#10;ETCD DATA STORE &#10;SCHEDULER &#10;CONTROLLER &#10;kubelet &#10;CNI &#10;CSI &#10;CRI &#10;OCI D &#10;kube-proxy &#10;CNI &#10;CSI &#10;POD &#10;kubelet &#10;CRI &#10;OCI D &#10;wo &#10;POD &#10;POD &#10;CNI &#10;CSI &#10;kubelet &#10;CRI &#10;OCI &#10;ube-proxy &#10;STORAGE &#10;Volume &#10;Persistent &#10;Volume Claim &#10;Storage &#10;Class &#10;Persistent &#10;Volume &#10;Eas I GCE I NFS &#10;RHEL I Ubuntu I CentOS &#10;Aut h n (RBAC) &#10;kube-proxy &#10;RHEL I Ubuntu I CentOS &#10;Kubernetes Service La &#10;Ingress &#10;Mutation Admission Controller &#10;RHEL I Ubuntu I CentOS &#10;Authentication (IdP) &#10;Object Schema Validation Validation Admission Controller• &#10;Dockershim &#10;Network Legend Network &#10;Build App JAR &#10;Network &#10;Static Analysis &#10;So &#10;containerd &#10;containerd &#10;runc &#10;runc &#10;runsc &#10;container &#10;container &#10;container &#10;r mor &#10;gVisor Kernel &#10;SysCalls &#10;Host &#10;Linux &#10;Kernel &#10;Runtime on Node &#10;using Container Runtime &#10;Sandbox on Worker Node &#10;StMage 1 1 URL &#10;Unit Test &#10;Dockerizing &#10;Static Analysis K8S &#10;I OPA I Trivy &#10;Deploy KBS &#10;I POO &#10;PodSecuritvPoIicv &#10;1m Poli ebhoo k &#10;Service Mesh &#10;Pod • Pending &#10;Pod • Running &#10;Linux "></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>Kubernetes is a container orchestration
+ system that automates the deployment, scaling, and management of containerized
+ applications. It is designed to be scalable and reliable, and to make it easy
+ to deploy and manage containerized applications at scale.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>Kubernetes is a distributed system that
+ consists of two main components: the control plane and the data plane.</span></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The control plane&nbsp;is responsible for managing the
+      cluster and ensuring that the desired state of the cluster is maintained.
+      It consists of a number of components, including the API server, the
+      scheduler, and the controllers.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The data plane&nbsp;is responsible for running the
+      containers and providing the services that the applications need. It
+      consists of a number of nodes, each of which runs a kubelet and a
+      kube-proxy.</span></li>
+ </ul>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>The Control Plane</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>The control plane is responsible for
+ managing the cluster and ensuring that the desired state of the cluster is
+ maintained. It consists of the following components:</span></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>API Server</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is the front-end of
+      the control plane. It exposes the Kubernetes API, which is used by users,
+      administrators, and other components to communicate with the cluster. The
+      API server validates and processes requests and updates the cluster state
+      in etcd.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>etcd</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is a distributed
+      key-value store that stores the cluster state and configuration data. It
+      is the source of truth for the cluster and provides a consistent and
+      reliable way to store data across multiple nodes.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Scheduler</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is responsible for
+      assigning pods to nodes based on resource availability, constraints,
+      policies, and other factors. It watches for new pods that have no node
+      assigned and selects a suitable node for them.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Controller
+      Manager</span><span style='font-family:Calibri;font-size:12.0pt'>: This
+      runs several controllers that regulate the cluster state and handle
+      routine tasks. For example, there are controllers for nodes, pods,
+      endpoints, services, replication, etc. Each controller watches for
+      changes in its domain and tries to reconcile the current state with the
+      desired state.</span></li>
+ </ul>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>&nbsp;</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>The Data Plane</span></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Data Plane</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is composed of all
+      the nodes in the cluster. A node is a physical or virtual machine that
+      runs one or more pods. A pod is the smallest unit of deployment in
+      Kubernetes and consists of one or more containers that share resources
+      and network. The data plane components are:</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Kubelet</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is an agent that runs
+      on each node and communicates with the API server. It ensures that the
+      pods assigned to its node are running and healthy. It also reports the
+      node status and metrics to the API server.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Kube-proxy</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is a network proxy
+      that runs on each node and maintains network rules for pods. It enables
+      pod-to-pod, pod-to-service, and external-to-service communication by
+      forwarding packets according to iptables rules.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Container
+      Runtime Interface (CRI)</span><span style='font-family:Calibri;
+      font-size:12.0pt'>: This is an interface that defines how kubelet
+      interacts with different container runtimes such as Docker, containerd,
+      CRI-O, etc. It allows kubelet to manage container lifecycle operations
+      such as pulling images, creating containers, starting/stopping containers,
+      etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Container
+      Network Interface (CNI)</span><span style='font-family:Calibri;
+      font-size:12.0pt'>: This is an interface that defines how different
+      network plugins provide network connectivity for pods. It allows kubelet
+      to configure network interfaces and routes for pods using various network
+      plugins such as Calico, Flannel, Weave Net, etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Container
+      Storage Interface (CSI)</span><span style='font-family:Calibri;
+      font-size:12.0pt'>: This is an interface that defines how different
+      storage plugins provide persistent storage for pods. It allows kubelet to
+      attach/detach, mount/unmount, and format volumes for pods using various
+      storage plugins such as AWS EBS, GCE PD, Ceph RBD, etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Open
+      Container Initiative (OCI)</span><span style='font-family:Calibri;
+      font-size:12.0pt'>: This is a set of specifications that define how
+      containers should be packaged, run, and distributed. It includes two
+      specifications: OCI Image Specification and OCI Runtime Specification.
+      The former defines how container images should be stored and transferred,
+      while the latter defines how container runtimes should execute
+      containers.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:12.0pt'>Above
+ the nodes, there is the kubelet, which is responsible for managing pods (the
+ smallest deployable units in Kubernetes) on the nodes. The kube-proxy is a
+ network proxy that routes traffic to the appropriate pods and services. The
+ CNI (Container Network Interface) provides an interface for networking plugins
+ to integrate with Kubernetes.</p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span></p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:12.0pt'>At
+ the cluster level, the API server acts as the gateway for all API requests and
+ provides a REST API for clients to interact with the cluster. The etcd data
+ store stores the configuration data of the cluster. The scheduler assigns pods
+ to nodes based on resource availability and other factors. The controller
+ manager runs controllers that manage various aspects of the cluster, such as
+ scaling and self-healing.</p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The following
+ diagram shows a simplified overview of the Kubernetes architecture and its
+ components:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;Control
+ Plane &nbsp;| &nbsp; &nbsp; &nbsp;| &nbsp; Data Plane &nbsp; &nbsp;|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;etcd
+ datastore |&lt;----&gt;| kubelet &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;api server
+ &nbsp; &nbsp; |&lt;----&gt;| CNI &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp;<span style='mso-spacerun:yes'>    </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;scheduler
+ &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp;| CRI &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp;<span style='mso-spacerun:yes'>      </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;controller
+ &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| CSI &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp;<span style='mso-spacerun:yes'>        </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;manager
+ &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp;| OCI &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp;<span style='mso-spacerun:yes'>  </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| kube-proxy
+ &nbsp; &nbsp;<span style='mso-spacerun:yes'>  </span>&nbsp;|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;^ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; ^</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp;<span style='mso-spacerun:yes'>   </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;v &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; v</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+--------------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;<span
+ style='mso-spacerun:yes'>   </span>&nbsp;| &nbsp; &nbsp; &nbsp; |<span
+ style='mso-spacerun:yes'>                            </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; Master
+ Node &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp; Worker Node &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;<span
+ style='mso-spacerun:yes'>  </span>| &nbsp; &nbsp;<span
+ style='mso-spacerun:yes'>   </span>|<span
+ style='mso-spacerun:yes'>                            </span>|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+--------------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;^ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; ^</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;v &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; v</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;Pod
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&lt;----&gt;| &nbsp; &nbsp;Pod &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp;|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;^ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; ^</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp; &nbsp;
+ &nbsp; &nbsp;v &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; v</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp;Container
+ &nbsp; &nbsp; &nbsp;|&lt;----&gt;| &nbsp;Container &nbsp; &nbsp; &nbsp;|</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;| &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>+-----------------+
+ &nbsp; &nbsp; &nbsp;+-----------------+</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:0pt;margin-bottom:7pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>A
+ Pod is the smallest and most basic unit of a Kubernetes application. It
+ consists of one or more containers that share the same network namespace and
+ storage volumes. A Pod can also have various add-on components, such as:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Init
+      Containers</span><span style='font-family:Calibri;font-size:12.0pt'>:
+      Containers that run before the main containers in a Pod and perform
+      initialization tasks.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Ephemeral
+      Containers</span><span style='font-family:Calibri;font-size:12.0pt'>:
+      Containers that run temporarily in a Pod for debugging or troubleshooting
+      purposes.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Sidecar
+      Containers</span><span style='font-family:Calibri;font-size:12.0pt'>:
+      Containers that run alongside the main containers in a Pod and provide
+      additional functionality or services.</span></li>
+ </ul>
+ <p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>Kubernetes
+ also provides various services and resources to expose and manage Pods and
+ their communication, such as:</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Service</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: An abstraction that
+      defines a logical set of Pods and a policy to access them. It can have
+      different types, such as ClusterIP, NodePort, LoadBalancer, ExternalName,
+      etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Ingress</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: An API object that defines
+      rules to route external traffic to Services within the cluster. It can
+      support features such as single service routing, simple fanout routing,
+      name-based routing, TLS termination, etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>EndpointSlices</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: An API object that stores
+      information about the network endpoints of a Service. It improves
+      scalability and performance of network communication within the cluster.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>DNS for
+      Services and Pods</span><span style='font-family:Calibri;font-size:12.0pt'>:
+      A built-in service that provides DNS resolution for Services and Pods
+      within the cluster.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='font-weight:bold'>Kubernetes Services Layer</span>: This is a layer of
+ abstraction that provides a stable and consistent way to access pods. A
+ service is a logical grouping of pods that perform a common function. A
+ service has a unique name and IP address within the cluster and acts as a load
+ balancer for its pods. </p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:12.0pt'>The
+ Kubernetes cluster addon components include nodeport, clusterip, load
+ balancer, and external name, which provide different ways of exposing services
+ to users outside the cluster. The ingress controller provides a way to route
+ external traffic to the appropriate services within the cluster.</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>ClusterIP</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This is the default type
+      of service. It assigns a virtual IP address to the service within the
+      cluster and allows internal communication between pods or between
+      services.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>NodePort</span><span
+      style='font-family:Calibri;font-size:12.0pt'>: This type of service
+      exposes a port on each node that forwards</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>ClusterIP:&nbsp;A clusterIP service exposes the service
+      on a unique IP address in the cluster.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>LoadBalancer:&nbsp;A load balancer service exposes the
+      service to the internet using a load balancer.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>ExternalName:&nbsp;An externalName service resolves to
+      a hostname or IP address outside of the cluster.</span></li>
+ </ul>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>Kubernetes provides a number of cluster
+ add-on components that can be used to extend the functionality of the cluster.
+ These components include:</span></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>Dashboard:&nbsp;The dashboard is a web-based UI that
+      can be used to manage the cluster.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>Logging:&nbsp;The logging component provides a way to
+      collect and store logs from the pods in the cluster.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>Monitoring:&nbsp;The monitoring component provides a
+      way to collect and store metrics from the pods in the cluster.</span></li>
+ </ul>
+ <p style='margin-top:0pt;margin-bottom:7pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Authentication</p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>IdP
+      (Identity Provider)</span><span style='font-family:Calibri;font-size:
+      12.0pt'>: This is a component that authenticates users and issues tokens
+      for accessing the Kubernetes API. Kubernetes supports various IdPs, such
+      as OIDC, LDAP, Webhook, etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>RBAC
+      (Role-Based Access Control)</span><span style='font-family:Calibri;
+      font-size:12.0pt'>: This is a mechanism that controls what actions users
+      and service accounts can perform on Kubernetes resources based on their
+      roles and permissions.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Admission
+      Controllers</span><span style='font-family:Calibri;font-size:12.0pt'>:
+      These are plugins that intercept requests to the Kubernetes API and
+      perform validation or mutation before they are processed by the
+      kube-apiserver. Kubernetes has several built-in admission controllers,
+      such as PodSecurityPolicy, ResourceQuota, LimitRanger, etc.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>Object
+      Schema Validation</span><span style='font-family:Calibri;font-size:12.0pt'>:
+      This is a feature that ensures that the objects created or updated via
+      the Kubernetes API conform to their specifications and schemas. It uses
+      OpenAPI validation rules to check for errors or inconsistencies.</span></li>
+ </ul>
+ <p style='margin-top:0pt;margin-bottom:7pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>Dockerfile</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>A Dockerfile is a text file that
+ contains instructions for building a Docker image. A Docker image is a
+ lightweight, standalone, executable package of software that includes
+ everything needed to run an application: code, runtime, system tools, system
+ libraries, and settings.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>Registry</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>A registry is a repository for storing
+ Docker images. The most popular registries are Docker Hub and Quay.io.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>&nbsp;</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>Containerd component</p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>At the bottom of the hierarchy, there is the host kernel and the
+ Docker engine, which are responsible for running containers on the nodes. The
+ containerd component (which includes runsc, runc, apparmor, seccomp, and
+ gvisor) manages containers and container images in a secure and efficient
+ manner.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='background:white'>Runc: It is a lightweight container runtime that
+ provides a minimal namespace and isolation for each container.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='background:white'>Runsc: It is an experimental container runtime that
+ uses gVisor to provide a virtualized environment for each container.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='background:white'>AppArmor and Seccomp: They are used to configure the
+ security profile for each container.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='background:white'>Gvisor: It is a user-space kernel that provides a
+ sandboxed environment for each container.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='background:white'>Kernel Syscall and Host Linux Kernel: They provide
+ the underlying system call support and resource management for each container.</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+ style='background:white'>Dockershim and Docker Engine: These are container
+ runtimes that exist in Kubernetes for backward compatibility with Docker-based
+ applications.</span></p>
+ <p style='margin-top:0pt;margin-bottom:7pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kubernetes
+ architecture reference:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><a
+ href="https://devopscube.com/kubernetes-architecture-explained/">https://devopscube.com/kubernetes-architecture-explained/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><a
+ href="https://www.clickittech.com/devops/kubernetes-architecture-diagram/">https://www.clickittech.com/devops/kubernetes-architecture-diagram/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><a
+ href="https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/">https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><a
+ href="https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams">https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><a
+ href="https://kubernetes.io/docs/contribute/style/diagram-guide/#example-3-k8s-system-flow">Diagram
+ Guide | Kubernetes</a></p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:11.0pt'><a
+ href="https://www.redhat.com/sysadmin/kubernetes-components">A sysadmin's
+ guide to basic Kubernetes components | Enable Sysadmin (redhat.com)</a></p>
+ <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:11.0pt'><a
+ href="https://kubernetes.io/docs/concepts/overview/components/">Kubernetes
+ Components | Kubernetes</a></p>
+ <p style='margin-top:5pt;margin-bottom:5pt;font-family:Calibri;font-size:12.0pt'><span
+ style='mso-spacerun:yes'> </span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'>&nbsp;</p>
+ <h1 style='margin:0in;font-family:Calibri;font-size:15.0pt'>How the Components
+ Work and Interact with Each Other ?</h1>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>SHORT VERSION:</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>The control plane and the data plane
+ work together to orchestrate the running of your applications. The control
+ plane makes decisions about where to run your pods and how to manage their
+ resources. The data plane then executes those decisions by running the pods on
+ the nodes and providing them with the resources they need.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>For example, let's say you want to
+ deploy a web application to Kubernetes. You would first create a deployment
+ resource that specifies the number of pods you want to run and the image that
+ you want to use. The control plane would then create those pods and assign
+ them to nodes. The data plane would then start the pods on the nodes and
+ provide them with the resources they need.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>The control plane and the data plane
+ are constantly communicating with each other. The control plane monitors the
+ state of the cluster and makes changes as needed. The data plane reports the
+ status of the pods to the control plane.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>This communication allows the control
+ plane and the data plane to work together to ensure that your applications are
+ running smoothly.</span></p>
+ <p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+ 12.0pt'><span style='background:white'>The components of Kubernetes work
+ together to manage the cluster and provide services to the applications. The
+ following is a brief overview of how they work and interact with each other:</span></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The API server is the front-end for Kubernetes. It
+      provides a RESTful API that can be used to manage the cluster.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The scheduler is responsible for assigning pods to
+      nodes. It takes into account the resources available on each node and the
+      requirements of the pods when making its decisions.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The controllers are responsible for ensuring that the
+      desired state of the cluster is maintained. For example, the replication
+      controller is responsible for ensuring that a certain number of replicas
+      of each pod are running in the cluster.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The kubelet is a process that runs on each node in the
+      cluster. It is responsible for starting, stopping, and managing
+      containers on the node.</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:7pt'><span style='font-family:Calibri;font-size:12.0pt;
+      background:white'>The kube-proxy is a process that runs on each node in
+      the cluster. It is responsible for providing network services to the pods
+      on the node.</span></li>
+ </ul>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p><cite style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</cite></p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>LONG VERSION:</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kubernetes is an
+ open-source orchestration system designed for containerized applications. It
+ automates deployment, scaling, and management of containerized applications.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Kubernetes
+ architecture is divided into two main components: Control Plane (often
+ referred to as the &quot;Master node&quot;) and Data Plane (often referred to
+ as &quot;Worker node&quot;).</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Control Plane
+ includes etcd datastore, API server, Scheduler, Controller, Kubelet, CNI, CRI,
+ CSI, OCI, and kube-proxy. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The etcd datastore
+ is a distributed key-value store that stores the configuration data and state
+ of the entire Kubernetes cluster. The API server is responsible for validating
+ and processing RESTful requests and updating the etcd datastore with cluster state
+ changes. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Scheduler
+ schedules the placement of containers on worker nodes based on the available
+ resources. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Controller is
+ responsible for monitoring the state of the cluster and making the necessary
+ changes to maintain the desired state. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Kubelet is
+ responsible for managing individual worker nodes and ensuring that the
+ containers on each node are running as expected. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Container
+ Network Interface (CNI) provides network connectivity for containers in a
+ Kubernetes cluster, while the Container Runtime Interface (CRI) provides the
+ interface for managing containers. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Container
+ Storage Interface (CSI) provides storage for containers, while the Open
+ Container Initiative (OCI) provides a standard for container image formats.
+ The kube-proxy is a network proxy that manages the network traffic between
+ services.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Data Plane
+ includes the nodes where the containers are deployed. Each worker node
+ comprises the pod, Kubelet, CNI, CRI, CSI, OCI, and kube-proxy. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The pod is the
+ smallest and simplest unit of deployment in Kubernetes. It contains one or
+ more containers that share the same network namespace and storage volumes. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Kubelet runs on
+ each worker node and is responsible for managing the state of the containers
+ on that node. The CNI, CRI, CSI, and OCI are responsible for providing
+ network, storage, and container runtime interfaces. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The kube-proxy runs
+ on each worker node and forwards network traffic to the correct container.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Kubernetes
+ Services Layer provides different types of load balancing mechanism for
+ Kubernetes services: NodePort, ClusterIP, and Load Balancer. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NodePort exposes
+ the service on a static port on each worker node. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>ClusterIP exposes
+ the service on a cluster-internal IP address. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Load Balancer
+ exposes the service outside the cluster and transfers traffic to the worker
+ nodes.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The Ingress is
+ responsible for routing external traffic to the appropriate Service in the
+ cluster. It provides different routing rules based on the HTTP/HTTPS requests
+ received by the service, including Single Service, Simple Fanout, Name-Based
+ and TLS.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The API Server
+ performs Identity Provider (IdP) authentication and Role-Based Access (RBA)
+ control. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Mutation Admission
+ Controllers validate and add/update/delete resources in the API server, while
+ Object Schema Validation checks if the object schema is correct before it is
+ created or updated. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Validation
+ Admission Controllers validate objects against its schema before it is created
+ in the API server.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The container
+ runtime is responsible for running containers. It includes Dockerfile for
+ hardening and multigate, registry for storing container images such as gcr.io
+ and docker.io, kubelet that directly interacts with containers, dockershim
+ that acts as a bridge between the kubelet and the Docker engine, and
+ containerd that provides a runtime and a set of low-level APIs for managing
+ containers. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Runc and Runsc run
+ containers in a sandboxed environment while AppArmor and Seccomp provide
+ security measures for containing containers. </p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Gvisor kernel,
+ Syscall, and Host Linux Kernel provide the interface between the container
+ runtime and the host operating system.</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In summary,
+ Kubernetes architecture is designed to provide a scalable and reliable
+ platform for deploying, managing, and scaling containerized applications. The
+ components work together to ensure that the applications are running
+ efficiently and securely.</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+# Fix k8s issue
+FailedCreatePodSandBox    pod/devsecops-85bb45b9b-vrgbc     Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for sandbox "b8864ba1349f93f1f6fd148dff6e0a5b2b175c2fb924440ebcccee13d8e4ff46": plugin type="flannel" failed (add): loadFlannelSubnetEnv failed: open /run/flannel/subnet.env: no such file or directory  
+  
+  
+
+```
+kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml  
+  
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml  
+  
+kubectl run \<container name&gt; --image=\<docker image&gt;:latest
+``` 
+  
+  
+Taint issue:  
+**  
+  
+
+```
+kubectl describe node master-node \| grep Taint  
+  
+kubectl taint nodes --all  node-role.kubernetes.io/control-plane:NoSchedule  
+  
+kubectl taint nodes --all  node-role.kubernetes.io/control-plane-  
+  
+  
+Or  
+  
+kubectl get pods --all-namespaces  
+  
+kubectl get pods -o wide -A  
+  
+kubectl describe node master-node  
+  
+tolerations:  
+      - key: "node-role.kubernetes.io/master"  
+        effect: "NoSchedule"  
+        operator: "Exists"  
+  
+  
+rm /root/.kube/config  
+kubectl -n kube-system get cm kubeadm-config -o yaml  
+Rm -rf /etc/cni/net.d  
+  
+kubeadm reset -f  
+  
+  
+kubectl delete --all all  
+  
+  
+ kubeadm init --kubernetes-version=1.26.3 --skip-token-print  
+ mkdir -p $HOME/.kube  
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  
+  sudo chown $id -u:$id -g $HOME/.kube/config  
+  
+export KUBECONFIG=/etc/kubernetes/admin.conf  
+journalctl -xeu kubelet  
+kubectl get all  
+  
+ kubeadm init --apiserver-advertise-address=192.168.207.129  --cert-dir /etc/kubernetes/pki --pod-network-cidr=10.244.0.0/16  --cert-dir /etc/kubernetes/pki
+``` 
+  
+  
+  
+FIX error  
+
+```
+kubelet-check The HTTP call equal to 'curl -sSL http://localhost:10248/healthz failed with error: Get " <a href="http://localhost:10248/healthz">http://localhost:10248/healthz</a>": dial tcp 127.0.0.1:10248: connect: connection refused.  
+kubelet-check It seems like the kubelet isn't running or healthy.  
+kubelet-check The HTTP call equal to 'curl -sSL http://localhost:10248/healthz failed with error: Get " <a href="http://localhost:10248/healthz">http://localhost:10248/healthz</a>": dial tcp 127.0.0.1:10248: connect: connection refused.  
+kubelet-check It seems like the kubelet isn't running or healthy.  
+kubelet-check The HTTP call equal to 'curl -sSL http://localhost:10248/healthz failed with error: Get " <a href="http://localhost:10248/healthz">http://localhost:10248/healthz</a>": dial tcp 127.0.0.1:10248: connect: connection refused.  
+  
+curl -sSL http://localhost:10248/healthz  
+curl: (7) Failed to connect to localhost port 10248 after 0 ms: Connection refused
+``` 
+  
+  
+  
+Run swapoff  
+  
+
+```
+sudo swapoff -a  
+ sudo sed -i '/ swap / s/^/#/' /etc/fstab  
+ journalctl -xeu kubelet  
+systemctl status kubelet  
+  
+cd /etc/apt  
+sudo cp trusted.gpg trusted.gpg.d
+``` 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+

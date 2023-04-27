@@ -1,0 +1,135 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Fix%20error%20swap%20vmware.htm">
+<link rel=File-List href="Fix%20error%20swap%20vmware_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.6131in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt;color:#0C0C0C'>Fix
+error swap vmware</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo swapoff
+  -a<span style='mso-spacerun:yes'>           </span># turn off swap<br>
+    sudo rm -i /swapfile<span style='mso-spacerun:yes'>      </span># remove
+  old /swapfile</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo dd
+  if=/dev/zero of=/swapfile bs=1M count=4096</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo chmod 600
+  /swapfile<span style='mso-spacerun:yes'>  </span># set proper file
+  protections<br>
+    sudo mkswap /swapfile<span style='mso-spacerun:yes'>     </span># init
+  /swapfile<br>
+    sudo swapon /swapfile<span style='mso-spacerun:yes'>     </span># turn on
+  swap<br>
+    free -h<span style='mso-spacerun:yes'>                   </span># confirm
+  32G RAM and 4G swap</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p><cite style='margin:0in;font-family:Calibri;font-size:10.0pt;color:#524F4C'>&nbsp;</cite></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#2E2E2F'><span
+style='background:white'>Add to /etc/sysctl.conf below lines and reboot the
+system.</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'># Controls interval
+between generating an NMI perf monitoring interrupt that kernel uses to check
+for soft-lockup errors.<br>
+watchdog_thresh=120</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='font-weight:bold;color:black'>&quot;NMI watchdog: BUG: soft lockup - CPU
+# stuck for #s! [X:3005]&quot; in message log file after a Flame application
+crash<br>
+</span><span style='font-weight:bold;color:#212121'>Causes:</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#212121'>Current
+time for CPU is greater than Watchdog threshold causing a soft lockup.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#212121'><span
+style='font-weight:bold'>Solution:</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#212121'>To
+resolve this behavior, perform the following steps as root user:</p>
+
+<ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+ 0in;font-family:Calibri;font-size:12.0pt;font-weight:normal;font-style:normal'>
+ <li value=1 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+     color:#212121'><span style='font-family:Calibri;font-size:12.0pt;
+     font-weight:normal;font-style:normal;font-family:Calibri;font-size:12.0pt'>Edit
+     the file '/etc/sysctl.conf' and add the following line at the end</span></li>
+</ol>
+
+<p style='margin:0in;margin-left:.75in;font-family:Calibri;font-size:12.0pt;
+color:#212121'>&quot;kernel.watchdog_thresh=30&quot;</p>
+
+<ol type=1 style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:
+ 0in;font-family:Calibri;font-size:12.0pt;font-weight:normal;font-style:normal'>
+ <li value=2 style='margin-top:0;margin-bottom:0;vertical-align:middle;
+     color:#212121'><span style='font-family:Calibri;font-size:12.0pt;
+     font-weight:normal;font-style:normal;font-family:Calibri;font-size:12.0pt'>Save
+     and Exit.</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#212121'><span
+     style='font-family:Calibri;font-size:12.0pt'>Reboot machine.</span></li>
+</ol>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p><cite style='margin:0in;font-family:Calibri;font-size:10.0pt'><span
+style='color:#524F4C'>From &lt; </span><a
+href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/NMI-watchdog-BUG-soft-lockup-CPU-stuck-for-s-X-3005-in-message-log-file-after-a-Flame-application-crash.html"><span
+style='color:#595959'>https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/NMI-watchdog-BUG-soft-lockup-CPU-stuck-for-s-X-3005-in-message-log-file-after-a-Flame-application-crash.html</span></a><span
+style='color:#524F4C'>&gt; </span></cite></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

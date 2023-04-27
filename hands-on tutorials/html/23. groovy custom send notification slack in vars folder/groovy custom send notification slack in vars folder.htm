@@ -1,0 +1,142 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File
+href="groovy%20custom%20send%20notification%20slack%20in%20vars%20folder.htm">
+<link rel=File-List
+href="groovy%20custom%20send%20notification%20slack%20in%20vars%20folder_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:7.6041in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:6.3326in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt'>groovy custom send
+notification slack in vars folder</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.4875in;margin-left:0in;width:7.6041in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can use the
+**Slack Notification Plugin** in Jenkins to send notifications to a Slack
+channel after a build is completed. You can also use **Groovy Postbuild
+Plugin** to send notifications when a build fails¹³. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Here's an example of
+how you can send a notification to Slack using Groovy:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>```groovy</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def
+notifySlack(String buildStatus = 'STARTED') {</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>// Build status of null means success</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>def color = buildStatus == 'STARTED' ?
+'good' : 'danger'</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>def message = buildStatus == 'STARTED' ?
+&quot;Build started: Job ${env.JOB_NAME}
+[${env.BUILD_NUMBER}](${env.BUILD_URL})&quot; : &quot;Build failed: Job
+${env.JOB_NAME} [${env.BUILD_NUMBER}](${env.BUILD_URL})&quot;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>slackSend (color: color, message: message)</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>```</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can modify this
+code to change the color of the message. For example, you can set it to red for
+success and blue for failure:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>```groovy</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>def
+notifySlack(String buildStatus = 'STARTED') {</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>// Build status of null means success</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>def color = buildStatus == 'STARTED' ?
+'#FF0000' : '#0000FF'</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>def message = buildStatus == 'STARTED' ?
+&quot;Build started: Job ${env.JOB_NAME}
+[${env.BUILD_NUMBER}](${env.BUILD_URL})&quot; : &quot;Build failed: Job
+${env.JOB_NAME} [${env.BUILD_NUMBER}](${env.BUILD_URL})&quot;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'>    </span>slackSend (color: color, message: message)</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>}</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>```</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>groovy - How to send
+Slack notification after a Jenkins pipeline build .... <a
+href="https://stackoverflow.com/questions/39140191/how-to-send-slack-notification-after-a-jenkins-pipeline-build-failed">https://stackoverflow.com/questions/39140191/how-to-send-slack-notification-after-a-jenkins-pipeline-build-failed</a>
+Accessed 4/8/2023.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(2) Jenkins - Unable
+to send slack notifications using Groovy postbuild .... <a
+href="https://stackoverflow.com/questions/53572838/jenkins-unable-to-send-slack-notifications-using-groovy-postbuild-plugin">https://stackoverflow.com/questions/53572838/jenkins-unable-to-send-slack-notifications-using-groovy-postbuild-plugin</a>
+Accessed 4/8/2023.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(3) Slack
+Notification Plugin. <a href="https://www.jenkins.io/doc/pipeline/steps/slack/">https://www.jenkins.io/doc/pipeline/steps/slack/</a>
+Accessed 4/8/2023.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>(4) groovy - Notify
+slack user from Jenkins pipeline when build fails .... <a
+href="https://stackoverflow.com/questions/62127056/notify-slack-user-from-jenkins-pipeline-when-build-fails">https://stackoverflow.com/questions/62127056/notify-slack-user-from-jenkins-pipeline-when-build-fails</a>
+Accessed 4/8/2023.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

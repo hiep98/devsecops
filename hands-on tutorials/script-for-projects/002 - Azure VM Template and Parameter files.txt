@@ -1,0 +1,5 @@
+## Azure VM Template and Parameter files
+
+Find and use the files under "setup >> azure-vm-template" directory
+
+https://github.com/sidd-harth/kubernetes-devops-security/tree/main/setup/azure-vm-template

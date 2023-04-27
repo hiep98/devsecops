@@ -1,0 +1,389 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Create%20file%20shell%20autorun.htm">
+<link rel=File-List href="Create%20file%20shell%20autorun_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.7236in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt;color:#1E4E79'>Create
+file shell autorun</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create file shell
+autorun after restart</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>nano /etc/rc.local</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo chmod +x
+  /etc/rc.local</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>#!/bin/bash</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>/usr/local/bin/startup_script.sh
+  &amp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>exit 0</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>nano
+  /usr/local/bin/startup_script.sh</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo chmod +x
+  startup_script.sh</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'><span
+style='background:white'>Verify everything works fine:</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  background-color:white;vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#2E2E2F'><span
+  style='background:white'>sudo /etc/init.d/rc.local start</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: <a
+href="https://askubuntu.com/questions/9853/how-can-i-make-etc-rc-local-run-on-startup">https://askubuntu.com/questions/9853/how-can-i-make-etc-rc-local-run-on-startup</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:17.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Read log</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo tail -f
+  /var/log/syslog</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#0C0C0C'><span
+style='background:white'>Ensure /etc/rc.local is executable:</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  background-color:white;vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#2E2E2F'><span
+  style='background:white'>sudo chown root /etc/rc.local<br>
+    sudo chmod 755 /etc/rc.local</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Fix kubelet error</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt;
+  color:#2E2E2F'><span style='background:white'><span
+  style='mso-spacerun:yes'> </span>sudo -i</span></p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt;
+  color:#2E2E2F'><span style='background:white'><span
+  style='mso-spacerun:yes'> </span>swapoff -a</span></p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt;
+  color:#2E2E2F'><span style='background:white'><span
+  style='mso-spacerun:yes'> </span>exit</span></p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt;
+  color:#2E2E2F'><span style='background:white'><span
+  style='mso-spacerun:yes'> </span>strace -eopenat kubectl version</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#2E2E2F'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#2E2E2F'><span
+  style='background:white'>sudo swapoff -a &amp;&amp; sudo sed -i '/swap/d'
+  /etc/fstab</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>K8s init</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>kubectl
+  delete --all all</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubeadm alpha
+  phase kubeconfig user --client-name=kubeadmin
+  --apiserver-advertise-address=192.168.207.129
+  --kubeconfig-dir=/etc/kubernetes/</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubeadm init phase
+  config --apiserver-advertise-address 192.168.207.129 --cert-dir
+  /etc/kubernetes/pki</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span>kubeadm init
+  --apiserver-advertise-address=192.168.207.129<span style='mso-spacerun:yes'> 
+  </span>--cert-dir /etc/kubernetes/pki --pod-network-cidr=10.244.0.0/16<span
+  style='mso-spacerun:yes'>  </span>--cert-dir /etc/kubernetes/pki<span
+  style='mso-spacerun:yes'>   </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>kubectl
+  get pods -o wide</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p><cite style='margin:0in;font-family:Calibri;font-size:10.0pt;color:#524F4C'>&nbsp;</cite></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Remove k8s taint</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl describe
+  node master-node | grep Taint</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>kubectl
+  taint nodes --all<span style='mso-spacerun:yes'> 
+  </span>node-role.kubernetes.io/control-plane:NoSchedule</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>kubectl
+  taint nodes --all<span style='mso-spacerun:yes'> 
+  </span>node-role.kubernetes.io/control-plane-</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>Apply
+deployment</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>find /
+  -name k8s_deployment_service.yaml</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  kubectl apply -f
+  /var/lib/jenkins/workspace/devsecops-app-num/k8s_deployment_service.yaml</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>Run ngrok</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>ngrok
+  http 8080</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>Docker
+logs</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>docker
+  logs sonarqube -f</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>nano
+/usr/local/bin/startup_script.sh</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>#!/bin/bash</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  swapoff -a</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  kubectl version</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  kubectl get pods -o wide</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  kubectl taint nodes --all node-role.kubernetes.io/control-plane</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  kubectl apply -f k8s_deployment_service.yaml</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>#sudo
+  docker stop $(docker ps -a -q)</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>#sudo
+  docker rm $(docker ps -a -q)</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  docker start $(docker ps -a -q)</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>#sudo
+  docker rm $(docker ps -a -q)</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>#sudo
+  docker run --name sonarqube -d -p 9000:9000 sonarqube:lts</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>sudo
+  ngrok http 8080</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:"Times New Roman";font-size:12.0pt'>docker
+  run -d --name sonarqube<span style='mso-spacerun:yes'>     </span>-p
+  9000:9000<span style='mso-spacerun:yes'>     </span>-v
+  sonarqube_data:/opt/sonarqube/data<span style='mso-spacerun:yes'>    
+  </span>sonarqube:lts</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>relay login -k
+  62a27a59-9d2e-4932-b306-ff42b1ca0089 -s TxZSqnk4yFYC</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>export
+  RELAY_KEY=62a27a59-9d2e-4932-b306-ff42b1ca0089 export
+  RELAY_SECRET=TxZSqnk4yFYC</p>
+  <p><cite style='margin:0in;font-size:10.0pt'><span style='font-family:Calibri;
+  color:#0C0C0C'><span style='mso-spacerun:yes'> </span><br>
+    relay forward --bucket github-jenkins </span><a
+  href="http://192.168.207.129:8080/github-webhook/"><span style='font-family:
+  "Times New Roman";color:#595959'>http://192.168.207.129:8080/github-webhook/</span></a></cite></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

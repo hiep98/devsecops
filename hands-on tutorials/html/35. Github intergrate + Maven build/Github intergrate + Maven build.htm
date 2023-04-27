@@ -1,0 +1,183 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File
+href="Github%20intergrate%20+%20Maven%20build.htm">
+<link rel=File-List
+href="Github%20intergrate%20+%20Maven%20build_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.8437in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:3.4604in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:16.0pt;color:#0C0C0C'>Github
+intergrate + Maven build</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.718in;margin-left:0in;width:8.8437in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Go to repo setting -
+webhooks:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://github.com/%3caccount%3e/%3crepo%3e/settings/hooks">https://github.com/&lt;account&gt;/&lt;repo&gt;/settings/hooks</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>choose setting
+below:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin-top:0pt;margin-bottom:4pt;font-family:Calibri;font-size:
+  11.5pt;color:#24292F'><span style='background:white'>payload url: your url</span></p>
+  <p style='margin-top:0pt;margin-bottom:4pt;font-family:Calibri;font-size:
+  11.5pt;color:#24292F'><span style='background:white'>Content type:
+  application/json</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>if your url is
+  https, choose enable ssl</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add webhook</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img
+src="Github%20intergrate%20+%20Maven%20build_files/image001.png" width=509
+height=501
+alt="@ Actions &#10;Projects &#10;Wiki &#10;C) Security &#10;I.:Y Insights &#10;Settings &#10;General &#10;Access &#10;RX Collaborators &#10;Moderation options &#10;Code and automation &#10;Branches &#10;Tags &#10;@ Actions &#10;I Webhooks &#10;Environments &#10;Codespaces &#10;t Pages &#10;Security &#10;@ Code security and analysis &#10;p Deploy keys &#10;@ Secrets and variables &#10;Integrations &#10;88 GitHub apps &#10;Email notifications &#10;Webhooks / Add webhook &#10;We'll send a POST request to the URL below with details of any subscribed events. &#10;format you'd like to receive (JSON, x-we&quot;-forn-urlencoded, etc). More information &#10;documentation. &#10;Payload URL * &#10;https://&lt;your url&gt; &#10;Content type &#10;application/json &#10;Secret &#10;SSL verification &#10;By default, we verify SSL certificates when delivering payloads. &#10;@ Enable SSL verification &#10;C) Disable (not recommended) &#10;Which events vwuld you like to trigger this webhook? &#10;@ Just the push event. &#10;C) Send me everything. &#10;C) Let me select individual events. &#10;Active &#10;We will deliver event details when this hook is triggered. &#10;Add webhook "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create new pipeline
+and check &quot;GitHub hook trigger for GITScm polling&quot; it will<span
+style='mso-spacerun:yes'>  </span>trigger git and automate build and trigger
+jenkins .</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img
+src="Github%20intergrate%20+%20Maven%20build_files/image002.png" width=785
+height=390
+alt="Dashboard &#10;devsecops-app-num &#10;Configure &#10;General &#10;Advanced Project Options &#10;Pipeline &#10;Configuration &#10;General &#10;Description &#10;[Plain text] Preview &#10;Discard old builds ? &#10;Do not allow concurrent builds &#10;o &#10;Do not allow the pipeline to resume if the controller restarts &#10;o &#10;GitHub project &#10;o &#10;Pipeline speed/durability override ? &#10;o &#10;Preserve stashes from completed builds &#10;o &#10;This project is parameterized ? &#10;Throttle bu ilds ? &#10;Build Triggers &#10;o &#10;Build after other projects are built &#10;o &#10;Build periodically ? &#10;GitHub hook trigger for GITScm polling &#10;Enabled "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Scrolldown and type
+your repo and branch. apply and build</p>
+
+<p style='margin:0in'><img
+src="Github%20intergrate%20+%20Maven%20build_files/image003.png" width=839
+height=573
+alt="Definition &#10;Pipeline script from SCM &#10;SCM &#10;Repositories ? &#10;Repository URL ? &#10;https://github.com/hiep98/devsecops &#10;Credentials &#10;none - &#10;+ Add &#10;Advanced.„ &#10;Add Repository &#10;Branches to build &#10;Branch Specifier (blank for •any') &#10;'/main &#10;Add Branch &#10;Apply "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>When you update code
+in git, git will call jenkins whenever a push event has been done.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We have file source
+code below:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>pipeline
+  {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  agent any</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  stages {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; </span><span style='color:#5EA9E7'>stage</span><span
+  style='color:#9298A3'>(</span><span style='color:#7DA064'>'Build Artifact'</span><span
+  style='color:#9298A3'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; steps {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sh </span><span
+  style='color:#7DA064'>&quot;mvn clean package -DskipTests=true&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  archive </span><span style='color:#7DA064'>'target/*.jar' </span><span
+  style='font-style:italic;color:#7F848E'>//so that they can be downloaded
+  later</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; &nbsp; &nbsp; } &nbsp; </p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>&nbsp;
+  &nbsp; }</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9298A3'>}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The Jenkins pipeline
+above is designed to create an artifact, or executable, in this case a *.jar
+file. First, it will run a command to execute the <span style='font-weight:
+bold'>`mvn clean package -DskipTests=true`</span> command, which cleans and
+packages the code. Then, it will store the built *.jar files in the <span
+style='font-weight:bold'>`target`</span> directory and archive them using the <span
+style='font-weight:bold'>`archive 'target/*.jar'`</span> command. This makes
+the files easier to share with other users and keeps them safe from accidental
+changes.</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

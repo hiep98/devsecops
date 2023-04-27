@@ -1,0 +1,85 @@
+Create a FREE Slack Workspace
+
+################## Add a directory vars in the repo and create a file sendNotification.groovy ################## 
+######## vars/sendNotification.groovy ######## 
+
+def call(String buildStatus = 'STARTED') {
+ buildStatus = buildStatus ?: 'SUCCESS'
+
+ def color
+
+ if (buildStatus == 'SUCCESS') {
+  color = '#47ec05'
+ } else if (buildStatus == 'UNSTABLE') {
+  color = '#d5ee0d'
+ } else {
+  color = '#ec2805'
+ }
+
+ def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+
+ slackSend(color: color, message: msg)
+}
+
+################## Add a directory vars in the repo and create a file sendNotification.groovy ################## 
+
+
+
+Add the library in Jenkins as shown in video
+
+
+
+################# Jenkinsfile - comment out all the stages to test Slack notificaitons ################# 
+
+##### Try with exit 0 and exit 1 ##### 
+
+@Library('slack') _
+
+pipeline {
+  agent any
+
+  environment {
+    deploymentName = "devsecops"
+    containerName = "devsecops-container"
+    serviceName = "devsecops-svc"
+    imageName = "siddharth67/numeric-app:${GIT_COMMIT}"
+    applicationURL = "http://devsecops-demo.eastus.cloudapp.azure.com"
+    applicationURI = "/increment/99"
+  }
+
+  stages {
+    stage('Testing Slack') {
+      steps {
+        sh 'exit 1'
+      }
+    }
+
+  }
+
+  post {
+    always {
+      // junit 'target/surefire-reports/*.xml'
+      // jacoco execPattern: 'target/jacoco.exec'
+      // pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+      // dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+      // publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
+
+      
+
+      // Use sendNotifications.groovy from shared library and provide current build result as parameter    
+      sendNotification currentBuild.result
+    }
+
+    // success {
+
+    // }
+
+    // failure {
+
+    // }
+  }
+
+}
+
+
+################# Jenkinsfile - comment out all the stages to test Slack notificaitons ################# 

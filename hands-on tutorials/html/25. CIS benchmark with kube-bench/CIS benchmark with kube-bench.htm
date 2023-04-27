@@ -1,0 +1,800 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="CIS%20benchmark%20with%20kube-bench.htm">
+<link rel=File-List
+href="CIS%20benchmark%20with%20kube-bench_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.5354in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:4.1944in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:#1E4E79'>CIS
+benchmark with kube-bench</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.1493in;margin-left:0in;width:8.5354in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kube-bench is an
+open-source tool that helps you assess the security of your Kubernetes cluster
+by running checks against the Center for Internet Security (CIS) Kubernetes
+benchmark. The CIS Kubernetes benchmark is a set of security best practices
+that can help you harden your Kubernetes cluster.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Overview kube-bench:
+</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://devopscube.com/kube-bench-guide/">Kube-Bench: Kubernetes CIS
+Benchmarking Tool [Guide] (devopscube.com)</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Overview cis
+benchmark:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://www.cisecurity.org/benchmark/kubernetes">https://www.cisecurity.org/benchmark/kubernetes</a></p>
+
+<p style='margin-top:18pt;margin-bottom:12pt;font-family:Calibri;font-size:
+13.0pt;color:#1F2328'><span style='font-weight:bold;background:white'>Specifying
+the benchmark or Kubernetes version</span></p>
+
+<p style='margin-top:18pt;margin-bottom:12pt;font-family:Calibri;font-size:
+13.0pt;color:#1F2328'><span style='background:white'>kube-bench uses the
+Kubernetes API, or access to the kubectl or kubelet executables to try to
+determine the Kubernetes version, and hence which benchmark to run. If you wish
+to override this, or if none of these methods are available, you can specify
+either the Kubernetes version or CIS Benchmark as a command line parameter.</span></p>
+
+<p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:13.0pt;
+color:#1F2328'><span style='background:white'>You can specify a particular
+version of Kubernetes by setting the --version flag or with the
+KUBE_BENCH_VERSION environment variable. The value of --version takes
+precedence over the value of KUBE_BENCH_VERSION.</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For example, run
+kube-bench using the tests for Kubernetes version 1.13: </p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kube-bench
+  --version 1.13</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can specify
+--benchmark to run a specific CIS Benchmark version: </p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kube-bench
+  --benchmark cis-1.5</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kube-bench uses the
+Kubernetes API, or access to the kubectl or kubelet executables to try to
+determine the Kubernetes version, and hence which benchmark to run. If you wish
+to override this, or if none of these methods are available, you can specify
+either the Kubernetes version or CIS Benchmark as a command line parameter.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can specify a
+particular version of Kubernetes by setting the --version flag or with the
+KUBE_BENCH_VERSION environment variable. The value of --version takes
+precedence over the value of KUBE_BENCH_VERSION.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For example, run
+kube-bench using the tests for Kubernetes version 1.17:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kube-bench
+  --version=1.17.0</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can get
+current<span style='mso-spacerun:yes'>  </span>kubernetes version with command:
+kubectl version </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And check Git
+Version value.</p>
+
+<p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:13.0pt;
+color:#1F2328'><span style='font-weight:bold;background:white'>Note:</span><span
+style='background:white'> It is an error to specify both --version and
+--benchmark flags together</span></p>
+
+<p style='margin-top:18pt;margin-bottom:12pt;font-family:Calibri;font-size:
+13.0pt;color:#1F2328'><span style='font-weight:bold;background:white'>Specifying
+Benchmark sections</span></p>
+
+<p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:13.0pt;
+color:#1F2328'><span style='background:white'>If you want to run specific CIS
+Benchmark sections (i.e master, node, etcd, etc...) you can use the run
+--targets subcommand.</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:
+  13.0pt;color:#1F2328'><span style='background:white'>kube-bench run --targets
+  master,node</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:13.0pt;
+color:#1F2328'><span style='background:white'>Or</span></p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:
+  13.0pt;color:#1F2328'><span style='background:white'>kube-bench run --targets
+  master,node,etcd,policies</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:13.0pt'><span
+style='color:#1F2328;background:white'>If no targets are specified, kube-bench
+will determine the appropriate targets based on the CIS Benchmark version and
+the components detected on the node. The detection is done by verifying which
+components are running, as defined in the config files (see </span><a
+href="https://github.com/aquasecurity/kube-bench/blob/main/docs/controls.md#configuration-and-variables"><span
+style='background:white'>Configuration</span></a><span style='color:#1F2328;
+background:white'>.</span></p>
+
+<p style='margin-top:0pt;margin-bottom:12pt;font-family:Calibri;font-size:13.0pt'><span
+style='color:#1F2328;background:white'>Reference: </span><a
+href="https://github.com/aquasecurity/kube-bench/blob/main/docs/flags-and-commands.md">https://github.com/aquasecurity/kube-bench/blob/main/docs/flags-and-commands.md</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Kube-bench will run
+a series of checks against your Kubernetes cluster and report any security
+issues that it finds. You can use this information to harden your Kubernetes
+cluster and improve its security posture.</p>
+
+<p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+13.0pt;color:#1F1F1F'><span style='background:white'>The mapping between
+kube-bench and CIS Benchmark versions is as follows:</span></p>
+
+<p style='margin-top:12pt;margin-bottom:12pt;font-family:Calibri;font-size:
+13.0pt'><a
+href="https://github.com/aquasecurity/kube-bench/blob/main/docs/platforms.md#cis-kubernetes-benchmark-support"><span
+style='background:white'>https://github.com/aquasecurity/kube-bench/blob/main/docs/platforms.md#cis-kubernetes-benchmark-support</span></a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If you are running a
+newer version of Kubernetes, you can use the latest version of kube-bench. If
+you are running an older version of Kubernetes, you can use the corresponding
+version of kube-bench.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:15.0pt;color:#1F1F1F'>what
+about --check flag, difference between --benchmark flag and --check flag ?</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:10.0pt;color:#524F4C'><span
+style='mso-spacerun:yes'> </span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The --benchmark flag
+specifies the CIS Kubernetes benchmark version that kube-bench should use. The
+--check flag specifies the individual checks that kube-bench should run.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For example, to run
+kube-bench against the CIS Kubernetes benchmark version 1.17.0 and only run the
+checks for authentication and authorization, you would use the following
+command:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kube-bench
+  --benchmark=1.17.0 --check=&quot;1.1,1.2&quot;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The --benchmark flag
+is required, but the --check flag is optional. If you do not specify the
+--check flag, kube-bench will run all of the checks in the CIS Kubernetes
+benchmark.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Here is a table that
+summarizes the difference between the --benchmark flag and the --check flag:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>| Flag | Description
+|</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--benchmark |
+Specifies the CIS Kubernetes benchmark version that kube-bench should use. |</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--check | Specifies
+the individual checks that kube-bench should run. |</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, I will try run
+kube-bench for our project with docker.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>docker run
+  --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v ~/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This script runs
+kube-bench in Docker and checks whether Kubernetes is deployed securely by
+running the checks documented in the CIS Kubernetes Benchmark¹. The script runs
+kube-bench with the following parameters:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- `--pid=host`: This
+flag allows kube-bench to access the host's PID namespace.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- `-v /etc:/etc:ro
+-v /var:/var:ro`: These flags mount the host's `/etc` and `/var` directories as
+read-only volumes inside the container.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- `-v $(which
+kubectl):/usr/local/mount-from-host/bin/kubectl`: This flag mounts the
+`kubectl` binary from the host into the container.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- `-v ~/.kube:/.kube
+-e KUBECONFIG=/.kube/config`: These flags mount the `~/.kube` directory from
+the host into the container and set the `KUBECONFIG` environment variable to
+`/root/.kube/config`.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>- `-t
+docker.io/aquasec/kube-bench:latest`: This specifies that kube-bench should be
+run using the latest version of the Docker image provided by Aqua Security.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And we have test
+results with each check list and Remediations</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>[INFO] </span><span style='color:#C49060'>1 </span><span
+  style='color:#B0935E'>Master Node Security Configuration</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>[INFO] </span><span style='color:#C49060'>1.1 </span><span
+  style='color:#B0935E'>Master Node Configuration Files</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>[PASS] </span><span style='color:#C49060'>1.1</span><span
+  style='color:#9298A3'>.1 </span><span style='color:#B0935E'>Ensure</span><span
+  style='color:#9298A3'> that the </span><span style='color:#B0935E'>API</span><span
+  style='color:#9298A3'> server pod specification file permissions are set to </span><span
+  style='color:#C49060'>644</span><span style='color:#9298A3'> or more </span><span
+  style='color:#5EA9E7'>restrictive</span><span style='color:#9298A3'>
+  (Automated)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>[PASS] </span><span style='color:#C49060'>1.1</span><span
+  style='color:#9298A3'>.2 </span><span style='color:#B0935E'>Ensure</span><span
+  style='color:#E06C75'> that the </span><span style='color:#B0935E'>API</span><span
+  style='color:#E06C75'> server pod specification file ownership is set to root</span><span
+  style='color:#C678DD'>:</span><span style='color:#5EA9E7'>root</span><span
+  style='color:#9298A3'> (Automated)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#9298A3'>[FAIL] </span><span style='color:#C49060'>1.1</span><span
+  style='color:#9298A3'>.12 </span><span style='color:#B0935E'>Ensure</span><span
+  style='color:#E06C75'> that the etcd data directory ownership is set to etcd</span><span
+  style='color:#C678DD'>:</span><span style='color:#5EA9E7'>etcd</span><span
+  style='color:#9298A3'> (Automated)</span></p>
+  <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>== Remediations</span><span style='color:#E06C75'>
+  master </span><span style='color:#C678DD'>==</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>1.1.12 On</span><span style='color:#5C626D'> the etcd
+  server node, get the etcd data directory, passed </span><span
+  style='color:#C678DD'>as</span><span style='color:#5C626D'> an argument </span><span
+  style='color:#C678DD'>--</span><span style='color:#5C626D'>data</span><span
+  style='color:#C678DD'>-</span><span style='color:#5C626D'>dir,</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>from the below </span><span style='color:#9F6B3B'>command</span><span
+  style='color:#5C626D'>:</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>ps </span><span style='color:#C678DD'>-</span><span
+  style='color:#5C626D'>ef | grep etcd</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>Run</span><span style='color:#5C626D'> the below </span><span
+  style='color:#1863A1'>command</span><span style='color:#5C626D'> (based on
+  the etcd data directory found above).</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>For</span><span style='color:#5C626D'> example, chown </span><span
+  style='color:#9F6B3B'>etcd</span><span style='color:#5C626D'>:etcd </span><span
+  style='color:#44A0AC'>/var/</span><span style='color:#5C626D'>lib</span><span
+  style='color:#C678DD'>/</span><span style='color:#5C626D'>etcd</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we will follow
+Remediations and run again to see the test results.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>Useradd
+  etcd</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>chown </span><span style='color:#9F6B3B'>etcd</span><span
+  style='color:#5C626D'>:etcd </span><span style='color:#44A0AC'>/var/</span><span
+  style='color:#5C626D'>lib</span><span style='color:#C678DD'>/</span><span
+  style='color:#5C626D'>etcd</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>docker run </span><span style='color:#C678DD'>--</span><span
+  style='color:#5C626D'>pid</span><span style='color:#C678DD'>=</span><span
+  style='color:#5C626D'>host </span><span style='color:#C678DD'>-</span><span
+  style='color:#5C626D'>v </span><span style='color:#44A0AC'>/etc:/</span><span
+  style='color:#9F6B3B'>etc</span><span style='color:#5C626D'>:ro </span><span
+  style='color:#C678DD'>-</span><span style='color:#5C626D'>v </span><span
+  style='color:#44A0AC'>/var:/</span><span style='color:#9F6B3B'>var</span><span
+  style='color:#5C626D'>:ro </span><span style='color:#C678DD'>-</span><span
+  style='color:#5C626D'>v $(which kubectl):</span><span style='color:#44A0AC'>/usr/</span><span
+  style='color:#5C626D'>local</span><span style='color:#44A0AC'>/mount-from-host/</span><span
+  style='color:#5C626D'>bin</span><span style='color:#44A0AC'>/kubectl -v ~/</span><span
+  style='color:#C678DD'>.</span><span style='color:#9F6B3B'>kube</span><span
+  style='color:#5C626D'>:</span><span style='color:#44A0AC'>/.kube -e
+  KUBECONFIG=/</span><span style='color:#C678DD'>.</span><span
+  style='color:#5C626D'>kube</span><span style='color:#44A0AC'>/config -t
+  docker.io/</span><span style='color:#5C626D'>aquasec</span><span
+  style='color:#C678DD'>/</span><span style='color:#5C626D'>kube</span><span
+  style='color:#C678DD'>-</span><span style='color:#9F6B3B'>bench</span><span
+  style='color:#5C626D'>:latest run etcd </span><span style='color:#C678DD'>--</span><span
+  style='color:#5C626D'>check </span><span style='color:#9F6B3B'>1.1.12</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#9F6B3B'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>[</span><span style='color:#9F6B3B'>INFO</span><span
+  style='color:#5C626D'>] </span><span style='color:#9F6B3B'>1 </span><span
+  style='color:#C678DD'>Master Node Security</span><span style='color:#E06C75'>
+  Configuration</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>[</span><span style='color:#9F6B3B'>INFO</span><span
+  style='color:#5C626D'>] </span><span style='color:#9F6B3B'>1.1 </span><span
+  style='color:#C678DD'>Master Node Configuration</span><span style='color:
+  #E06C75'> Files</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>[</span><span style='color:#9F6B3B'>PASS</span><span
+  style='color:#5C626D'>] </span><span style='color:#9F6B3B'>1.1.12 </span><span
+  style='color:#C678DD'>Ensure</span><span style='color:#5C626D'> that the etcd
+  data directory ownership is set to </span><span style='color:#9F6B3B'>etcd</span><span
+  style='color:#5C626D'>:etcd (</span><span style='color:#C678DD'>Automated</span><span
+  style='color:#5C626D'>)</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>and this time we
+passed. Now I will create custom script to test certain items for etcd, kubelet
+(node) and master. you can customize the checklists you want to test or simply
+use kube-bench run to run all the tests.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:black'>Create
+file cis-etcd.sh</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.5138in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#!/bin/bash</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#cis-etcd.sh</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#total_fail=$(kube-bench run --targets etcd<span
+  style='mso-spacerun:yes'>  </span>--version 1.15 --check 2.2 --json | jq
+  .[].total_fail)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>total_fail=</span><span style='color:#789B5F'>$(docker
+  run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v </span><span
+  style='color:#C678DD'>~</span><span style='color:#789B5F'>/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run ectd
+  --version 1.20 --check 2.2 --json </span><span style='color:#C678DD'>|</span><span
+  style='color:#789B5F'> jq '.Totals.total_fail')</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>fail_result=</span><span style='color:#789B5F'>$(docker
+  run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v </span><span
+  style='color:#C678DD'>~</span><span style='color:#789B5F'>/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run ectd
+  --version 1.20 --check 2.2)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+  style='color:#789B5F'>&quot;</span><span style='color:#E06C75'>$total_fail</span><span
+  style='color:#789B5F'>&quot; </span><span style='color:#C678DD'>-ne</span><span
+  style='color:#5C626D'> 0 ]]</span><span style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#C678DD'>then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;CIS
+  Benchmark Failed ETCD while testing for 2.2&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>exit</span><span style='color:#5C626D'> 1</span><span
+  style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#C678DD'>else</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;CIS
+  Benchmark Passed for ETCD - 2.2&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#E06C75'>$fail_result </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In this script the
+`--check` flag specifies which checks should be run. In this case, `--check
+2.2` is used to check for compliance with CIS Benchmark 2.2 The latest version
+of kube-bench is v0.6.6.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The specified
+--targets &quot;ectd&quot; are not configured for the CIS Benchmark cis-1.20,
+so you just need<span style='mso-spacerun:yes'>  </span>use <span
+style='font-style:italic;color:#5C6370'>kube-bench run ectd</span><span
+style='color:black'> without tag --target.</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Similarly, we
+continue to create file cis-kubelet.sh</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.5138in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#!/bin/bash</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#cis-kubelet.sh</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#total_fail=$(kube-bench run --targets node<span
+  style='mso-spacerun:yes'>  </span>--version 1.15 --check 4.2.1,4.2.2 --json |
+  jq .[].total_fail)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>total_fail=</span><span style='color:#789B5F'>$(docker
+  run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v </span><span
+  style='color:#C678DD'>~</span><span style='color:#789B5F'>/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run --targets
+  node --version 1.20 --check 4.2.1,4.2.2 --json </span><span style='color:
+  #C678DD'>|</span><span style='color:#789B5F'> jq '.Totals.total_fail')</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>fail_result=</span><span style='color:#789B5F'>$(docker
+  run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v </span><span
+  style='color:#C678DD'>~</span><span style='color:#789B5F'>/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run --targets
+  node --version 1.20 --check 4.2.1,4.2.2 )</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+  style='color:#789B5F'>&quot;</span><span style='color:#E06C75'>$total_fail</span><span
+  style='color:#789B5F'>&quot; </span><span style='color:#C678DD'>-ne</span><span
+  style='color:#5C626D'> 0 ]]</span><span style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#C678DD'>then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;CIS
+  Benchmark Failed Kubelet while testing for 4.2.1, 4.2.2&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>exit</span><span style='color:#5C626D'> 1</span><span
+  style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#C678DD'>else</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;CIS
+  Benchmark Passed Kubelet for 4.2.1, 4.2.2&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#E06C75'>$fail_result </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Create file
+cis-master.sh</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.5138in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#!/bin/bash</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#cis-master.sh</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C6370'><span
+  style='font-style:italic'>#total_fail=$(kube-bench master<span
+  style='mso-spacerun:yes'>  </span>--version 1.15 --check 1.2.7,1.2.8,1.2.9
+  --json | jq .[].total_fail)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>total_fail=</span><span style='color:#789B5F'>$(docker
+  run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v </span><span
+  style='color:#C678DD'>~</span><span style='color:#789B5F'>/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run --targets
+  master --version 1.20 --check 1.2.7,1.2.8,1.2.9 --json </span><span
+  style='color:#C678DD'>|</span><span style='color:#789B5F'> jq
+  '.Totals.total_fail')</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>fail_result=</span><span style='color:#789B5F'>$(docker
+  run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v $(which
+  kubectl):/usr/local/mount-from-host/bin/kubectl -v </span><span
+  style='color:#C678DD'>~</span><span style='color:#789B5F'>/.kube:/.kube -e
+  KUBECONFIG=/.kube/config -t docker.io/aquasec/kube-bench:latest run --targets
+  master --version 1.20 --check 1.2.7,1.2.8,1.2.9 )</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> [[ </span><span
+  style='color:#789B5F'>&quot;</span><span style='color:#E06C75'>$total_fail</span><span
+  style='color:#789B5F'>&quot; </span><span style='color:#C678DD'>-ne</span><span
+  style='color:#5C626D'> 0 ]]</span><span style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#C678DD'>then</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;CIS
+  Benchmark Failed MASTER while testing for 1.2.7, 1.2.8, 1.2.9&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>exit</span><span style='color:#5C626D'> 1</span><span
+  style='color:#C678DD'>;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span></span><span
+  style='color:#C678DD'>else</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#789B5F'>&quot;CIS
+  Benchmark Passed for MASTER - 1.2.7, 1.2.8, 1.2.9&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>                </span></span><span
+  style='color:#44A0AC'>echo </span><span style='color:#E06C75'>$fail_result </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#C678DD'>fi;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Add stage below into
+jenkins file</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>stage(</span><span style='color:#789B5F'>'K8S CIS
+  Benchmark'</span><span style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>      </span>steps {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>        </span>script {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>          </span>parallel(</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span></span><span
+  style='color:#789B5F'>&quot;Master&quot;</span><span style='color:#5C626D'>:
+  {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>              </span>sh </span><span
+  style='color:#789B5F'>&quot;bash cis-master.sh&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>            </span>},</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span></span><span
+  style='color:#789B5F'>&quot;Etcd&quot;</span><span style='color:#5C626D'>: {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>              </span>sh </span><span
+  style='color:#789B5F'>&quot;bash cis-etcd.sh&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>            </span>},</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>            </span></span><span
+  style='color:#789B5F'>&quot;Kubelet&quot;</span><span style='color:#5C626D'>:
+  {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>              </span>sh </span><span
+  style='color:#789B5F'>&quot;bash cis-kubelet.sh&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>            </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>          </span>)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>        </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>      </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run build pipeline.</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

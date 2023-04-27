@@ -1,0 +1,201 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File
+href="Receive%20GitHub%20webhooks%20on%20Jenkins%20without%20public%20IP.htm">
+<link rel=File-List
+href="Receive%20GitHub%20webhooks%20on%20Jenkins%20without%20public%20IP_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.7847in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.3243in;width:6.7104in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:#0C0C0C'>Receive
+GitHub webhooks on Jenkins without public IP</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.7847in'>
+
+<ul style='direction:ltr;unicode-bidi:embed;margin-top:0in;margin-bottom:0in'>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'><span style='font-weight:bold'>Step 1: Create GitHub repository</span></p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>First
+ things first, we need to get a repository! If you haven’t got GitHub account,
+ get one. You will need it later to login to Webhook Relay too. Once you have
+ logged into GitHub, look for a green “New Repository”button on the bottom
+ right corner and click it.</p>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'><span style='font-weight:bold'>Step 2: Jenkins Installation (if
+ you already have it - ignore this step)</span></p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>Jenkins
+ can easily be installed on Ubuntu by importing and adding the GPG keys to the
+ system. Enabling the Jenkins repository:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><span
+   style='mso-spacerun:yes'> </span>wget -p -O - <a
+   href="https://pkg.jenkins.io/debian/jenkins.io.key">https://pkg.jenkins.io/debian/jenkins.io.key</a>
+   | sudo apt-key add -</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>Now,
+ to configure the firewall for the Jenkins server using the UFW tool, we need
+ to enable the firewall and open port 8080 for remote access from anywhere.</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><span
+   style='mso-spacerun:yes'> </span>sudo ufw allow 8080</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><span
+   style='mso-spacerun:yes'> </span>sudo ufw enable</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><span
+   style='mso-spacerun:yes'> </span>sudo ufw reload</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><span
+   style='mso-spacerun:yes'> </span>sudo ufw status</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'><span style='font-weight:bold'>Step 3: Setting up Jenkins with
+ GitHub-Plugin</span></p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>The
+ easiest way to start receiving GitHub webhooks is by using this plugin <a
+ href="https://plugins.jenkins.io/github">https://plugins.jenkins.io/github</a></p>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Go to your Jenkins plugin
+      manager</span></li>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle'><span
+      style='font-family:Calibri;font-size:12.0pt'>Find and install ‘</span><span
+      style='font-weight:bold;font-family:Calibri;font-size:12.0pt'>’GitHub
+      plugin’’</span></li>
+ </ul>
+ <ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+  margin-bottom:0in'>
+  <li style='margin-top:0;margin-bottom:0;vertical-align:middle;margin-top:
+      0pt;margin-bottom:8pt'><span style='font-family:Calibri;font-size:12.0pt'>GitHub
+      API Plugin<span style='mso-spacerun:yes'>       </span>-<span
+      style='mso-spacerun:yes'>      </span>GitHub Integration Plugin</span></li>
+ </ul>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'><span style='font-weight:bold'>Step 4: Configuring Webhook
+ Relay</span></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>First, you will
+ have to register and download the agent. if you don’t have an account yet (you
+ can use GitHub OAuth option since you would already have an account with it).</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'><a
+ href="https://my.webhookrelay.com/login">https://my.webhookrelay.com/login</a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>Or install with
+ command below:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>curl <a
+   href="https://my.webhookrelay.com/webhookrelay/downloads/install-cli.sh">https://my.webhookrelay.com/webhookrelay/downloads/install-cli.sh</a>
+   | bash</p>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>sudo chmod +wx
+   /usr/local/bin/relay</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:11.0pt'>Reference:
+ <a
+ href="https://docs.webhookrelay.com/installation-options/installation-options/install-cli">https://docs.webhookrelay.com/installation-options/installation-options/install-cli</a></p>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'>&nbsp;</p>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'><span style='font-weight:bold'>Step 5: Setting up Webhook Relay
+ agent</span></p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>To
+ login with the CLI use token key/secret: <a
+ href="https://my.webhookrelay.com/tokens"><span style='background:#D9E2F3'>https://my.webhookrelay.com/tokens</span></a></p>
+ <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>Copy the relay
+ login and run on your machine:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>$ relay login -k
+   your-token-key -s your-token-secret</p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>Now,
+ you will then need to start forwarding webhooks to Jenkins:</p>
+ <div style='direction:ltr'>
+ <table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+  border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+  1pt' title="" summary="">
+  <tr>
+   <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+   vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+   <p style='margin:0in;font-family:Calibri;font-size:11.0pt'>$ relay forward
+   --bucket github-jenkins <a href="http://localhost:8080/github-webhook/">http://localhost:8080/github-webhook/</a></p>
+   </td>
+  </tr>
+ </table>
+ </div>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'>&nbsp;</p>
+ <p style='margin-top:2pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt;
+ color:#0C0C0C'><span style='font-weight:bold'>Step 6: Configuring Jenkins Job</span></p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>When
+ you want Jenkins to do something - create a job. In this case we will be using
+ <span style='font-weight:bold'>Freestyle project</span>.</p>
+ <p style='margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

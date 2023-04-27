@@ -1,0 +1,4 @@
+# Fix trivy
+sudo systemctl stop docker  
+sudo rm -rf /var/lib/docker  
+

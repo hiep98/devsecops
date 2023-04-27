@@ -1,0 +1,25 @@
+#################### HELM Install #################### 
+
+export VERIFY_CHECKSUM=false 
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+helm version
+
+#################### HELM Install #################### 
+
+
+
+#################### Falco #################### 
+
+kubectl create namespace falco
+
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm install falco falcosecurity/falco \
+--set falcosidekick.enabled=true \
+--set falcosidekick.webui.enabled=true \
+-n falco 
+
+#################### Falco #################### 
+
+
+Access UI - http://ext-ip:falco-svc-node-port/ui
+

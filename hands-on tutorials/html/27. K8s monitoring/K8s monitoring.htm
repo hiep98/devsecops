@@ -1,0 +1,597 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="K8s%20monitoring.htm">
+<link rel=File-List href="K8s%20monitoring_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:10.8569in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.2638in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:black'>K8s
+monitoring</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.1493in;margin-left:0in;width:10.8569in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:black'>PROMETHEUS
+- GRAFANA</h1>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>istio_requests_total
+is a COUNTER that aggregates request totals between Kubernetes workloads, and
+groups them by response codes, response flags and security policy. It is used
+to record the total number of requests handled by an Istio proxy. This metric
+is available only for HTTP, HTTP/2, and GRPC traffic. For TCP traffic there is
+no requests_total metric because it would be hard to say what to define as a
+request³.</p>
+
+<p style='margin:0in'><img src="K8s%20monitoring_files/image001.png"
+width=1033 height=512
+alt="0 &#10;Prometheus &#10;Alerts Graph Status • Help &#10;Enable query history Enable autocomplete &#10;Use local time &#10;Q istio_requests total &#10;Enab'e highlighting &#10;Enable linter &#10;Loed time: Sms &#10;instance: •10.32.0.18:15020&quot;, namespace: &quot;prod&quot;, &#10;Resolution: IAS &#10;Execute &#10;Result series: 8 &#10;Table &#10;Graph &#10;Res. (s) &#10;reporter: •destination&quot;, &#10;ingressgateway•, &#10;sou • ist io -syste m &#10;instance: •1032.0.1&amp;15020&quot;, namespace: &quot;prod&quot;, &#10;reporter: •destination&quot;, "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference: </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://istio.io/latest/zh/docs/reference/config/metrics/">https://istio.io/latest/zh/docs/reference/config/metrics/</a>.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://istio.io/latest/docs/tasks/observability/metrics/querying-metrics/">https://istio.io/latest/docs/tasks/observability/metrics/querying-metrics/</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In grafana, Go to
+istio - Istio Workload Dashboard.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run bash script
+below to test connection</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>while true; do
+  curl -s localhost:30886/increment/22;<span style='mso-spacerun:yes'> 
+  </span>sleep 1; done</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And you can see
+metric display in dashboard like below.</p>
+
+<p style='margin:0in'><img src="K8s%20monitoring_files/image002.png" width=813
+height=417
+alt="c &#10;A &#10;88 istio &#10;Khöng béo mgt &#10;/ Istio Workload Dashboard &#10;= 1 1m &#10;destination &#10;Q &#10;O &#10;datasource default &#10;v General &#10;v Inbound Workloads &#10;1 ops's &#10;0.750 ops's &#10;0.500 ops's &#10;0.250 ops's &#10;O ops's &#10;Namespace prod &#10;Workload &#10;devsecops &#10;Reporter &#10;Inbound Workload Namespace &#10;All &#10;Inbound Workload &#10;All &#10;Destination Service &#10;WORKLOAD: devsecops.prod &#10;Incoming Success Rate (non-5xx responses) &#10;100% &#10;INBOUND WORKLOADS &#10;100% &#10;75% &#10;25% &#10;— istio-ingressgateway.istio-system (&quot;mTLS) &#10;All &#10;19:34 &#10;@ Last 5 minutes &#10;Request Duration &#10;Incoming Request Volume &#10;ops/s &#10;19:35 &#10;19:36 &#10;19:37 &#10;19:38 &#10;TCP server Traffic &#10;N/A &#10;Incoming Requests By Source And Response Code &#10;TCP Client Traffic &#10;N/A &#10;Incoming Success Rate (non-5xx responses) By Source &#10;— istio-ingressgateway.istio-system : 200 ('mTLS) — &#10;istio-ingressgateway_istio-system : &#10;500 (d mTLS) "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:black'>FALCO</h1>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Falco is the open
+source standard for runtime security for hosts, containers, Kubernetes and the
+cloud. Get real-time visibility into unexpected behaviors, config changes,
+intrusions, and data theft.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Install falco:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://falco.org/docs/getting-started/installation/">https://falco.org/docs/getting-started/installation/</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run<span
+style='mso-spacerun:yes'>  </span>falco:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:1.7687in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>falco</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we create nginx
+and execute bash in nginx to test falco:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl run
+  nginx --image nginx</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>pod/nginx created</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl get
+  pod nginx</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>NAME<span
+  style='mso-spacerun:yes'>    </span>READY<span style='mso-spacerun:yes'>  
+  </span>STATUS<span style='mso-spacerun:yes'>    </span>RESTARTS<span
+  style='mso-spacerun:yes'>   </span>AGE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>nginx<span
+  style='mso-spacerun:yes'>   </span>1/1<span style='mso-spacerun:yes'>    
+  </span>Running<span style='mso-spacerun:yes'>   </span>0<span
+  style='mso-spacerun:yes'>          </span>13s</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo kubectl exec
+  -it nginx -- bash</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="K8s%20monitoring_files/image003.png" width=987
+height=357
+alt="root@dai : / home/ dai $ &#10;Thu &#10;Thu &#10;Thu &#10;Thu &#10;Thu &#10;Thu &#10;Thu &#10;Thu &#10;Apr &#10;Apr &#10;Apr &#10;Apr &#10;Apr &#10;Apr &#10;Apr &#10;Apr &#10;13 &#10;13 &#10;13 &#10;13 &#10;13 &#10;13 &#10;13 &#10;13 &#10;16 : 25 : 03 &#10;16 : 25 : 03 &#10;16:35: 10.331044274 : &#10;falco &#10;: Falco version: 8.34.1 (x86_64) &#10;2023 &#10;Falco initialized with configuration file: /etc/fatco/fatco.yamt &#10;2023 : &#10;: Loading rules from file /etc/fatco/fatco_rutes.yamt &#10;2023 &#10;: Loading rules from file /etc/fatco/fatco_rutes. local.yamt &#10;2023 &#10;: The chosen syscatt buffer dimension is: 8388608 bytes (8 MBs) &#10;2023 &#10;Starting health webserver with threadiness 8, listening on port 8765 &#10;2023 : &#10;Enabled event sources: syscatt &#10;2023 : &#10;Opening capture with Kernel module &#10;2023 : &#10;Error &#10;File below a monitored di rectory opened for writing (user=root command=nano / &#10;usr/tocat/bin/startup_script.sh pid=206288 file=/usr/tocat/bin/ .startup_script.sh.swp parent=sudo pcmdtine=sudo nano /usr/ &#10;local/bin/startup_script.sh gparent=sudo container_id=host image=&lt;NA&gt;) &#10;Notice A shell was spawned in a container with an attached terminal (user=root k8s_ng &#10;(id=aaeab9af4dbd) shen=bash parent=runc cmdtine=bash pid=210334 &#10;terninat=34816 container_id=aaeab9af4dbd image=nginx) "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Comeback falco and
+we see alert a shell was spawned. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>And we can see rule
+list in<span style='mso-spacerun:yes'>  </span>falco_rules.yaml</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.5041in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'>cat
+  /etc/falco/falco_rules.yaml | grep -i &quot;A shell was spawned in a
+  container with an attached terminal&quot; </p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>A shell was spawned in a container with
+  an attached terminal (user=%user.name user_loginuid=%user.loginuid
+  %container.info</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:black'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt;color:black'>&nbsp;</p>
+  <p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt;
+  color:black'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'>cat
+  /etc/falco/falco_rules.yaml | grep -i &quot;A shell was spawned in a
+  container with an attached terminal&quot; -A15 -B20</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'>-
+  rule: System user interactive</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>desc: an attempt to run interactive
+  commands by a system (i.e. non-login) user</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>condition: spawned_process and system_users
+  and interactive and not user_known_system_user_login</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>output: &quot;System user ran an
+  interactive command (user=%user.name user_loginuid=%user.loginuid
+  command=%proc.cmdline pid=%proc.pid container_id=%container.id
+  image=%container.image.repository)&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>priority: INFO</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>tags: [host, container, users,
+  mitre_execution, T1059]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='font-style:italic'># In some cases, a shell is expected to be run in a
+  container. For example, configuration</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='font-style:italic'># management software may do this, which is
+  expected.</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'>-
+  macro: user_expected_terminal_shell_in_container_conditions</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>condition: (never_true)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'>-
+  rule: Terminal shell in container</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>desc: A shell was used as the
+  entrypoint/exec point into a container with an attached terminal.</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>condition: &gt;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>spawned_process and container</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>and shell_procs and proc.tty != 0</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>and container_entrypoint</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>and not
+  user_expected_terminal_shell_in_container_conditions</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>output: &gt;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>A shell was spawned in a container with
+  an attached terminal (user=%user.name user_loginuid=%user.loginuid
+  %container.info</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>shell=%proc.name parent=%proc.pname
+  cmdline=%proc.cmdline pid=%proc.pid terminal=%proc.tty
+  container_id=%container.id image=%container.image.repository)</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>priority: NOTICE</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>tags: [container, shell, mitre_execution,
+  T1059]</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='font-style:italic'># For some container types (mesos), there isn't a
+  container image to</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='font-style:italic'># work with, and the container name is
+  autogenerated, so there isn't</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='font-style:italic'># any stable aspect of the software to work with.
+  In this case, we</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='font-style:italic'># fall back to allowing certain command lines.</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'>-
+  list: known_shell_spawn_cmdlines</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>  </span>items: [</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>'&quot;sh -c uname -p 2&gt;
+  /dev/null&quot;',</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>'&quot;sh -c uname -s 2&gt;&amp;1&quot;',</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>'&quot;sh -c uname -r 2&gt;&amp;1&quot;',</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:black'><span
+  style='mso-spacerun:yes'>    </span>'&quot;sh -c uname -v 2&gt;&amp;1&quot;',</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>This command
+displays the same lines as the first command but also includes the 15 lines
+after and 20 lines before the line containing the text. This is useful for
+understanding the context of the rule, as it also shows the related rules and
+conditions, such as the
+&quot;user_expected_terminal_shell_in_container_conditions&quot; macro, which
+defines the conditions when a shell in a container is expected and should not
+trigger the rule. The command also includes the list of known command lines
+that are allowed for some container types.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The falco rules
+listed<span style='mso-spacerun:yes'>  </span>are used to monitor and alert on
+certain events happening within a containerized environment.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The first rule,
+&quot;System user interactive&quot;, is triggered when a non-login system user
+attempts to run interactive commands. The condition for this rule to trigger is
+when a process is spawned, the user is a system user, the command is interactive,
+and the user is not a known system user login. The output of this rule includes
+information such as the user name, login UID, command, process ID, container
+ID, and container image repository. The priority for this rule is set to INFO
+and the associated tags include host, container, users, mitre_execution, and
+T1059.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>The second rule,
+&quot;Terminal shell in container&quot;, is triggered when a shell is used as
+the entry point or execution point within a container that has an attached
+terminal. The conditions for this rule include the spawning of a process within
+a container, the process is a shell process, the process has a TTY attached,
+the container has an entry point, and the user did not expect a terminal shell
+in the container. The output of this rule includes information such as the user
+name, login UID, container information, shell process name, parent process
+name, command line, process ID, terminal, container ID, and container image
+repository. The priority for this rule is set to NOTICE and the associated tags
+include container, shell, mitre_execution, and T1059.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:11.5pt'>Lastly, the rule
+defines a list of known shell spawn command lines that are allowed for certain
+container types where there is no container image to work with or where the
+container name is autogenerated.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference:</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://falco.org/docs/rules/">https://falco.org/docs/rules/</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:black'>HELM -
+FALCO</h1>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:17.0pt;color:#1E4E79'>Install
+helm:</h1>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>curl <a
+  href="https://baltocdn.com/helm/signing.asc">https://baltocdn.com/helm/signing.asc</a>
+  | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg &gt; /dev/null</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo apt-get
+  install apt-transport-https --yes</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>echo &quot;deb
+  [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] <a
+  href="https://baltocdn.com/helm/stable/debian/">https://baltocdn.com/helm/stable/debian/</a>
+  all main&quot; | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo apt-get
+  update</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>sudo apt-get
+  install helm</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Install
+falco-falcosidekick:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl create
+  namespace falco</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>helm repo add
+  falcosecurity <a href="https://falcosecurity.github.io/charts">https://falcosecurity.github.io/charts</a></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>helm repo update</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>helm install falco
+  falcosecurity/falco \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--set
+  falcosidekick.enabled=true \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>--set
+  falcosidekick.webui.enabled=true \</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>-n falco </p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Or</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>helm install falco
+  falcosecurity/falco --set ebpf.enabled=true<span style='mso-spacerun:yes'> 
+  </span>--set falcosidekick.enabled=true<span style='mso-spacerun:yes'> 
+  </span>--set falcosidekick.webui.enabled=true</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If you see falco UI
+error, you can create PV, PVC file.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4604in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>PersistentVolume.yaml</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>apiVersion: v1</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kind:
+  PersistentVolume</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>metadata:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>name: falcosidekick-ui-redis-data-pv</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>capacity:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>storage: 1Gi</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>accessModes:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>- ReadWriteOnce</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>persistentVolumeReclaimPolicy: Retain</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>storageClassName: manual</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>hostPath:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>path: &quot;/mnt/data&quot;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'> </span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>PersistentVolumeClaim.yaml</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>apiVersion: v1</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kind:
+  PersistentVolumeClaim</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>metadata:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>name:
+  falco-falcosidekick-ui-redis-data-falco-falcosidekick-ui-redis-0</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>spec:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>accessModes:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>- ReadWriteOnce</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>resources:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>    </span>requests:</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>      </span>storage: 1Gi</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+  style='mso-spacerun:yes'>  </span>storageClassName: manual</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl apply -f
+  persistentVolume.yaml -n falco</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl apply -f
+  persistentVolumeClaim.yaml -n falco</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>or</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl create pv
+  -- falco-falcosidekick-ui-redis-data --capacity 1Gi --storage-class standard</p>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl create pvc
+  --name falco-falcosidekick-ui-redis-data-falco-falcosidekick-ui-redis-0
+  --claim-name falco-falcosidekick-ui-redis-data-falco-falcosidekick-ui-redis-0
+  --storage-class standard</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>If pv and pvc not
+bound, update pvc spec</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl patch pvc
+  falco-falcosidekick-ui-redis-data-falco-falcosidekick-ui-redis-0 -p
+  '{&quot;spec&quot;: {&quot;volumeName&quot;:
+  &quot;falcosidekick-ui-redis-data-pv&quot;}}' -n falco</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Check bound status</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n falco
+  describe pvc falco-falcosidekick-ui-redis-data-falco-falcosidekick-ui-redis-0</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Port-forwarding:</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:12.0pt'>kubectl -n falco
+  port-forward deploy/falco-falcosidekick-ui 2802:2802 --address
+  192.168.207.129</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Login falco-UI with
+user,password: admin</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="K8s%20monitoring_files/image004.png" width=738
+height=361
+alt="C A Khång bSo mgt &#10;Falcosidekick UI &#10;192.168.207.129:2802/dashboard &#10;INFO &#10;Priorities &#10;syscall &#10;Hostnames &#10;Priorities &#10;Rules &#10;Notice &#10;8 &#10;Tags &#10;Tags &#10;Error &#10;140 &#10;Informational &#10;container host &#10;22 &#10;Notice 3069 &#10;DASHBOARD &#10;Sources &#10;Search &#10;Sources &#10;Rules &#10;EVENTS &#10;refresh &#10;24h &#10;IOS &#10;Tota &#10;629 &#10;Notice &#10;221 &#10;629 &#10;mitre_privilege_escalation users "></p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>

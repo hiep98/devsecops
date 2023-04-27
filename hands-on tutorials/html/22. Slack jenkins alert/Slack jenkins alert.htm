@@ -1,0 +1,535 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=OneNote.File>
+<meta name=Generator content="Microsoft OneNote 15">
+<link id=Main-File rel=Main-File href="Slack%20jenkins%20alert.htm">
+<link rel=File-List href="Slack%20jenkins%20alert_files/filelist.xml">
+</head>
+
+<body lang=en-US style='font-family:Calibri;font-size:11.0pt'>
+
+<div style='direction:ltr;border-width:100%'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:0in;width:8.7312in'>
+
+<div style='direction:ltr;margin-top:0in;margin-left:.075in;width:2.5659in'>
+
+<h1 style='margin:0in;font-family:Calibri;font-size:20.0pt;color:#1E4E79'>Slack
+jenkins alert</h1>
+
+</div>
+
+<div style='direction:ltr;margin-top:.65in;margin-left:0in;width:8.7312in'>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we will create a
+notification to slack after building the project.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In slack workspace,
+go to Settings &amp; administration - manage apps</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image001.png"
+width=635 height=569
+alt="devsecops v &#10;# devsecops v &#10;devsecops-rcm2595.slack.com &#10;90 days left to view full history &#10;On the free version of Slack, messages and &#10;files sent more than 90 days aw will be &#10;hidden. See upgrade options &#10;Invite people to devsecops &#10;Create a channel &#10;Preferences &#10;Settings &amp; administration &#10;Tools &#10;Add workspaces &#10;Open the desktop app &#10;Sign in to devsecops on mobile &#10;Sign out of devsecops &#10;a bookmark &#10;This is the very beginning of the devsecops &#10;This channel is for everything #devsecops. Hold &#10;2+ Add people &#10;Workspace settings &#10;Customize devsecops &#10;Edit workspace details &#10;o &#10;Manage members &#10;kil "></p>
+
+<p style='margin-top:0pt;margin-bottom:6pt;font-family:Calibri;font-size:17.0pt;
+color:#2F2F2F'>&nbsp;</p>
+
+<p style='margin-top:0pt;margin-bottom:6pt;font-family:Calibri;font-size:13.0pt'><span
+style='background:white'>Search Jenkins CI and add to slack. </span></p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image002.png"
+width=591 height=266
+alt="&lt; Browse Apps &#10;Add to Slack &#10;Jenkins CI &#10;Description &#10;Configuration Security &amp; Compliance &#10;Jenkins CI is a customizable continuous integration serverwith over 600 &#10;to meet your needs. &#10;This integration will post build notifications to a channel in Slack. "></p>
+
+<p style='margin-top:0pt;margin-bottom:6pt;font-family:Calibri;font-size:17.0pt;
+color:#2F2F2F'>&nbsp;</p>
+
+<p style='margin-top:0pt;margin-bottom:6pt;font-family:Calibri;font-size:17.0pt;
+color:#2F2F2F'><span style='font-weight:bold;background:white'>Setup
+Instructions</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Step 1</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'>In
+your Jenkins dashboard, click on <span style='font-weight:bold'>Manage Jenkins</span>
+from the left navigation.</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image003.png"
+width=235 height=300
+alt="e Jenkin &#10;Jenkins &#10;New Item &#10;People &#10;Build History &#10;Manage Jenkins "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p><cite style='margin:0in;font-family:Calibri;font-size:12.0pt;color:#524F4C'>&nbsp;</cite></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Step 2</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'>Click
+on <span style='font-weight:bold'>Manage Plugins</span> and search for <span
+style='font-weight:bold'>Slack Notification</span> in the <span
+style='font-weight:bold'>Available</span> tab. Click the checkbox and install
+the plugin.</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image004.png"
+width=657 height=118
+alt="Filter: &#10;Updates &#10;Install &#10;Available &#10;Installed &#10;Advanced &#10;Name &#10;Slack Notification &#10;This plugin is a Slack notifier that can publish build status to Slack channels. &#10;C). slack notificationl &#10;Version &#10;2.8 "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p><cite style='margin:0in;font-family:Calibri;font-size:10.0pt;color:#524F4C'><span
+style='mso-spacerun:yes'> </span></cite></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Step 3</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'>After
+it's installed, click on <span style='font-weight:bold'>Manage Jenkins</span>
+again in the left navigation, and then go to <span style='font-weight:bold'>Configure
+System</span>. Find the <span style='font-weight:bold'>Global Slack Notifier
+Settings</span> section and add the following values:</p>
+
+<ul type=disc style='direction:ltr;unicode-bidi:embed;margin-top:0in;
+ margin-bottom:0in'>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#1D1C1D'><span
+     style='font-weight:bold;font-family:Calibri;font-size:13.0pt'>Team
+     Subdomain: </span><span style='font-family:Calibri;font-size:13.0pt'>devsecops-rcm2595</span></li>
+ <li style='margin-top:0;margin-bottom:0;vertical-align:middle;color:#1D1C1D'><span
+     style='font-weight:bold;font-family:Calibri;font-size:13.0pt'>Integration
+     Token Credential ID:</span><span style='font-family:Calibri;font-size:
+     13.0pt'> Create a secret text credential using BX2nTsWQSqRz4cu37UiVxzLj as
+     the value</span></li>
+</ul>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'>The
+other fields are optional. You can click on the question mark icons next to
+them for more information. Press <span style='font-weight:bold'>Save</span>
+when you're done.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Note:</span> Please remember to replace the
+Integration Token in the screenshot below with your own. </p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>We will create an
+entry in the workspace field as devsecops-rcm2595 this is the Team Subdomain
+provided after installing the jenkins app</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next we create a
+credential named slack-token with the secret text BX2nTsWQSqRz4cu37UiVxzLj
+which has been provided.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>default channel is
+the channel to receive notifications on slack</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image005.png"
+width=642 height=509
+alt="Slack &#10;Workspace &#10;devsecops-rcm2595 &#10;Credential ? &#10;slack-token &#10;+ Add &#10;Default channel / member id &#10;#devsecops &#10;o &#10;Custom slack app bot user &#10;Advanced v &#10;Apply "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Run test and we can
+have this message in slack</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image006.png"
+width=534 height=61
+alt="jenkins APP 1:38 PM &#10;Slack/Jenkins plugin: you're all set on http://192.168.126.132:8080/ "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Step 4</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>For each Project
+that you would like receive notifications for, choose <span style='font-weight:
+bold'>Configure</span> from the project's menu.</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image007.png"
+width=237 height=292 alt="aun6uuOO &#10;Ρθ!0Ι8 &#10;se6ue•l.10 "></p>
+
+<p style='margin-top:12pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Step 5</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Then you'll need to
+add <span style='font-weight:bold'>Slack Notifications</span> to the <span
+style='font-weight:bold'>Post-build Actions</span> for this project.</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image008.png"
+width=237 height=211 alt="Build &#10;Add build Step &#10;Post-build Actions "></p>
+
+<p style='margin-top:12pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:13.0pt;color:#1D1C1D'><span
+style='font-weight:bold'>Step 6</span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>In the <span
+style='font-weight:bold'>Slack Notifications</span> section, choose the events
+you'd like to be notified about.</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image009.png"
+width=480 height=314
+alt="Post-build Actions &#10;Slack Notifications &#10;Notify Build Start &#10;Notify Aborted &#10;Notify Failure &#10;Notify Not Built &#10;Notify Success &#10;Notify Unstable &#10;Notify Regression &#10;Notify Back To Normal &#10;Add post-build action &#10;Advanced... "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, we will create
+Shared Libraries to customize the message to send to slack.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>1. Go to your
+Jenkins dashboard and click on &quot;Manage Jenkins&quot;.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>2. Click on
+&quot;Configure System&quot;.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>3. Scroll down to
+the &quot;Global Pipeline Libraries&quot; section and click on the
+&quot;Add&quot; button.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>4. In the
+&quot;Name&quot; field, enter a name for your library (for example,
+&quot;slack-library&quot;).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>5. In the
+&quot;Default Version&quot; field, enter the default version of your library
+(for example, &quot;main&quot;).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>6. In the
+&quot;Modern SCM&quot; section, select the source code management system you
+are using for your library (for example, &quot;Git&quot;).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>7. Enter the
+repository URL for your library in the &quot;Project Repository&quot; field
+(for example, &quot; <a
+href="https://github.com/myusername/my-slack-library.git">https://github.com/myusername/my-slack-library.git</a>&quot;).</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>8. Click on
+&quot;Save&quot; to save your changes.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image010.png"
+width=653 height=681
+alt="Dashboard &#10;Manage Jenkins &#10;System &#10;Global Pipeline Libraries &#10;Sharable libraries available to any Pipeline jobs running on this system. These libraries will be trusted, meaning they run without &quot;sandbox&quot; &#10;Library &#10;Name ? &#10;slack &#10;Default version &#10;ma In &#10;Cannot validate default version until after saving and reconfiguring. &#10;Load implicitly ? &#10;Allow default version to be overridden &#10;Include @Library changes in job recent changes ? &#10;Cache fetched versions on controller for quick retrieval &#10;Retrieval method &#10;Modern SCM &#10;Loads a library from an SCM plugin using newer interfaces optimized for this purpose. The recommended option when available. &#10;Source Code Management &#10;Git &#10;Project Repository ? &#10;https://github.com/hiep98/devsecops &#10;Credentials ? &#10;Apply "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now, you can use
+your new global pipeline library in your Jenkins pipelines to send custom
+messages to Slack.<span style='mso-spacerun:yes'>  </span>You need add<span
+style='mso-spacerun:yes'>  </span><span style='color:#C678DD'>@Library</span><span
+style='color:#5C626D'>(</span><span style='color:#789B5F'>'slack'</span><span
+style='color:#5C626D'>) _ </span>on the top of jenkins pipeline and here is
+script.</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>@Library</span><span style='color:#5C626D'>(</span><span
+  style='color:#789B5F'>'slack'</span><span style='color:#5C626D'>) _</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>  </span>always {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>     
+  </span>sendNotification currentBuild</span><span style='color:#C678DD'>.</span><span
+  style='color:#5C626D'>result</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>  </span>}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is a
+Jenkinsfile that uses a shared library called ‘slack’ and sends a notification
+with the current build result.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>The
+‘@Library’ annotation is used to specify the name of the shared library to use.
+The underscore character (‘_’) specifies the default version of the library to
+use.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>The
+‘always’ block is a pipeline step that will always be executed regardless of
+whether the previous steps have failed or succeeded. It sends a notification
+with the current build result using the ‘sendNotification’ function.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The
+'currentBuild.result' variable is used to access the result of the current
+build in Jenkins. It can be used to determine if there were any test failures
+or if the build was successful.</p>
+
+<p style='margin-top:7pt;margin-bottom:0pt;font-family:Calibri;font-size:12.0pt'>For
+example, in your Jenkinsfile, you are using the ‘sendNotification’ function to
+send a notification with the current build result. The ‘currentBuild.result’
+variable is used to get the result of the current build and pass it as an
+argument to the ‘sendNotification’ function.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now we create file
+sendNotification.groovy in vars folder to custom slack notification. </p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#C678DD'>def </span><span style='color:#1863A1'>call</span><span
+  style='color:#5C626D'>(</span><span style='color:#C678DD'>String</span><span
+  style='color:#5C626D'> buildStatus </span><span style='color:#C678DD'>= </span><span
+  style='color:#789B5F'>'STARTED'</span><span style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span>buildStatus </span><span
+  style='color:#C678DD'>=</span><span style='color:#5C626D'> buildStatus </span><span
+  style='color:#C678DD'>?: </span><span style='color:#789B5F'>'SUCCESS'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span></span><span
+  style='color:#C678DD'>def</span><span style='color:#5C626D'> color</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span></span><span
+  style='color:#C678DD'>if</span><span style='color:#5C626D'> (buildStatus </span><span
+  style='color:#C678DD'>== </span><span style='color:#789B5F'>'SUCCESS'</span><span
+  style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>color </span><span
+  style='color:#C678DD'>= </span><span style='color:#789B5F'>'#47ec05'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span>} </span><span
+  style='color:#C678DD'>else if</span><span style='color:#5C626D'> (buildStatus
+  </span><span style='color:#C678DD'>== </span><span style='color:#789B5F'>'UNSTABLE'</span><span
+  style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>color </span><span
+  style='color:#C678DD'>= </span><span style='color:#789B5F'>'#d5ee0d'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span>} </span><span
+  style='color:#C678DD'>else</span><span style='color:#5C626D'> {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>  </span>color </span><span
+  style='color:#C678DD'>= </span><span style='color:#789B5F'>'#ec2805'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'> </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span></span><span
+  style='color:#C678DD'>def</span><span style='color:#5C626D'> msg </span><span
+  style='color:#C678DD'>= </span><span style='color:#789B5F'>&quot;</span><span
+  style='color:#BE5046'>${</span><span style='color:#789B5F'>buildStatus</span><span
+  style='color:#BE5046'>}</span><span style='color:#789B5F'>: `</span><span
+  style='color:#BE5046'>${</span><span style='color:#789B5F'>env.JOB_NAME</span><span
+  style='color:#BE5046'>}</span><span style='color:#789B5F'>` #</span><span
+  style='color:#BE5046'>${</span><span style='color:#789B5F'>env.BUILD_NUMBER</span><span
+  style='color:#BE5046'>}</span><span style='color:#789B5F'>:</span><span
+  style='color:#44A0AC'>\n</span><span style='color:#BE5046'>${</span><span
+  style='color:#789B5F'>env.BUILD_URL</span><span style='color:#BE5046'>}</span><span
+  style='color:#789B5F'>&quot;</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'> </span>slackSend(</span><span
+  style='color:#9F6B3B'>color</span><span style='color:#5C626D'>: color, </span><span
+  style='color:#9F6B3B'>message</span><span style='color:#5C626D'>: msg)</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'>}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This is a Groovy
+script file that includes a function called &quot;call&quot;. The function
+takes a string argument called &quot;buildstatus&quot; and if no value is
+specified, it defaults to &quot;started&quot;.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The function then
+checks the value of &quot;buildstatus&quot; and assigns a color based on its
+value. If &quot;buildstatus&quot; is equal to &quot;success&quot;, then the
+color &quot;#47ec05&quot; is assigned. If &quot;buildstatus&quot; is equal to &quot;unstable&quot;,
+then the color &quot;#d5ee0d&quot; is assigned. Otherwise, the color
+&quot;#ec2805&quot; is assigned.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>The function then
+creates a message string that contains the value of `buildStatus`, the name of
+the job (`env.JOB_NAME`), the build number (`env.BUILD_NUMBER`) and the build
+URL (`env.BUILD_URL`) using Groovy's string interpolation feature¹. Finally, it
+calls another function named `slackSend` with two parameters: `color` and
+`message`. The function sends a notification message to Slack with the
+specified color and message.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><span
+style='mso-spacerun:yes'> </span></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can see result
+below</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image011.png"
+width=450 height=165
+alt="jenkins APP 10:00 PM &#10;FAILURE: devsecops-app-num #45: &#10;http://192.168.126.132:8080/job/devsecops-app-num/45/ &#10;jenkins APP 10:12 PM &#10;SUCCESS: devsecops-app-nm #46: &#10;http://192.168.126.132:8080/job/devsecops-app-num/46/ "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Reference:<span
+style='mso-spacerun:yes'>  </span><a
+href="https://www.jenkins.io/doc/book/pipeline/shared-libraries/">Extending
+with Shared Libraries (jenkins.io)</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://e.printstacktrace.blog/jenkins-pipeline-environment-variables-the-definitive-guide/">https://e.printstacktrace.blog/jenkins-pipeline-environment-variables-the-definitive-guide/</a></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'><a
+href="https://stackoverflow.com/questions/39140191/how-to-send-slack-notification-after-a-jenkins-pipeline-build-failed">https://stackoverflow.com/questions/39140191/how-to-send-slack-notification-after-a-jenkins-pipeline-build-failed</a>
+</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;line-height:14pt;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Next, we go to with
+manual approve the Deployment to Production</p>
+
+<div style='direction:ltr'>
+
+<table border=1 cellpadding=0 cellspacing=0 valign=top style='direction:ltr;
+ border-collapse:collapse;border-style:solid;border-color:#A3A3A3;border-width:
+ 1pt' title="" summary="">
+ <tr>
+  <td style='border-style:solid;border-color:#A3A3A3;border-width:1pt;
+  vertical-align:top;width:8.4562in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'>stage(</span><span style='color:#789B5F'>'Prompte to
+  PROD?'</span><span style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>      </span>steps {</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>        </span>timeout(</span><span
+  style='color:#9F6B3B'>time</span><span style='color:#5C626D'>: </span><span
+  style='color:#9F6B3B'>2</span><span style='color:#5C626D'>, </span><span
+  style='color:#9F6B3B'>unit</span><span style='color:#5C626D'>: </span><span
+  style='color:#789B5F'>'DAYS'</span><span style='color:#5C626D'>) {</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt'><span
+  style='color:#5C626D'><span style='mso-spacerun:yes'>          </span>input </span><span
+  style='color:#789B5F'>'Do you want to Approve the Deployment to Production
+  Environment/Namespace?'</span></p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>        </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>      </span>}</p>
+  <p style='margin:0in;font-family:Calibri;font-size:11.5pt;color:#5C626D'><span
+  style='mso-spacerun:yes'>    </span>}</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>This stage is a
+timeout step that waits for 2 days for a user input. The user input is asking
+for approval to deploy the code to the production environment or namespace. If
+the user approves the deployment within the timeout period, the pipeline
+continues to the next stage, which is likely a stage that triggers the actual
+deployment to production. If the user does not approve the deployment within
+the timeout period, the pipeline will fail because the deployment was not
+approved. This stage adds an important layer of safety to the pipeline to
+ensure that code changes are not accidentally or haphazardly deployed to
+production without proper review and approval.</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>Now run build and
+you can you notification like below</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image012.png"
+width=828 height=313
+alt="I I &lt; 48 &#10;Branch: — &#10;Commit: &#10;Start Build Artifact &#10;Prompte to PROD? - 4m 35s &#10;@ 12m 44s &#10;Unit Tests &#10;Mutation Tests - &#10;Changes by nthiep1998 &#10;Started by GitHub push by hiep98 &#10;Docker Build and &#10;SonarQube - &#10;SAST &#10;Pipeline &#10;Integration Tests - &#10;DEV &#10;Changes &#10;Tests &#10;OWASP ZAP - &#10;DAST &#10;Logout &#10;Vulnerability Scan &#10;Dependency Scan &#10;OPA Conftest &#10;Tri&quot; scan &#10;Push &#10;Vulnerability Scan &#10;- Kubernetes &#10;Kubesec Scan &#10;OPA scan &#10;Tri&quot; scan &#10;K8S Deployment &#10;- DEV &#10;Deployment &#10;Rollout Status &#10;Prompte to &#10;PROD? &#10;End &#10;x &#10;4m 35s &#10;v Do you want to Approve the Deployment to Production Environment/Namespace? — Wait for interactive input &#10;Do you want to Approve the &#10;Deployment to Production &#10;Environment/Namespace? &#10;Proceed &#10;Abort "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>You can select
+proceed and have slack notification like below</p>
+
+<p style='margin:0in'><img src="Slack%20jenkins%20alert_files/image013.png"
+width=519 height=90
+alt="jenkins APP 3:46 PM &#10;SUCCESS: devsecops-app-nm #48: &#10;http://192.168.126.132:8080/job/devsecops-app-num/48/ "></p>
+
+<p style='margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<p style='margin:0in'>&nbsp;</p>
+
+<p style='text-align:left;margin:0in;font-family:Arial;font-size:9pt;
+color:#969696;direction:ltr'>Created with OneNote.</p>
+
+</div>
+
+</body>
+
+</html>
