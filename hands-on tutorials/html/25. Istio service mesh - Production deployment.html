@@ -1,0 +1,694 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>25. Istio service mesh - Production deployment</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Istio service mesh - Production deployment</h1>
+
+<h1>Istio architecture</h1>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_1.png" /></p>
+<p>Overview:</p>
+<p>Istio is an open-source service mesh platform that provides a unified control plane for managing microservices. Istio enables developers to add advanced traffic management, security, and observability to their microservices without requiring changes to the application code.</p>
+<p>Reference:</p>
+<p><a href="https://devopsvn.tech/service-mesh-on-kubernetes/gioi-thieu-istio-istio-la-gi">Gi</a></p>
+<p>Application architecture:</p>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_2.png" /></p>
+<h1>Istio Installation</h1>
+<pre><code>curl -Ls https://istio.io/downloadIstio | ISTIO_VERSION=1.17.2 sh -
+cd istio-1.17.2
+export PATH=$PWD/bin:$PATH
+istioctl install --set profile=demo -y &amp;&amp; kubectl apply -f samples/addons
+</code></pre>
+<p>Check all node,pod,svc in istio namespace:</p>
+<pre><code>kubectl -n istio-system get all
+</code></pre>
+<p>You can access services inside istio using a web browser by modifying the svc in istio from clusterIP to nodeport with command below.</p>
+<pre><code>kubectl -n istio-system edit svc kiali
+</code></pre>
+<p>However, this approach is not recommended in a practical environment.</p>
+<p>Another way is using port-forwarding. You can create script like below.</p>
+<p>port-forwarding.sh</p>
+<pre><code>kubectl -n istio-system port-forward deploy/kiali 20001:20001 --address 192.168.207.129 &amp;
+kubectl -n istio-system port-forward deploy/grafana 3000:3000 --address 192.168.207.129 &amp;
+kubectl -n istio-system port-forward deploy/prometheus 9090:9090 --address 192.168.207.129 &amp;
+kubectl -n istio-system port-forward deploy/jaeger   16686:16686  --address 192.168.207.129 &amp;
+</code></pre>
+<p>Now, we create bash shell file to setup production enviroment</p>
+<pre><code>#!/bin/bash
+# Set the namespace name
+namespace=&quot;prod&quot;
+# Check if the namespace exists
+if kubectl get namespace &quot;${namespace}&quot; &gt; /dev/null 2&gt;&amp;1; then
+  # Check if the namespace has the istio-injection label
+  if ! kubectl get namespace &quot;${namespace}&quot; -o jsonpath='{.metadata.labels.istio-injection}' | grep -q enabled; then
+    # Add the istio-injection label to the namespace
+    kubectl label namespace &quot;${namespace}&quot; istio-injection=enabled
+    # Restart all deployments in the namespace to apply the label
+    kubectl rollout restart deployment -n &quot;${namespace}&quot;
+  else
+    echo &quot;namespace ${namespace} already has istio-injection label&quot;
+  fi
+else
+  # Create the namespace and add the istio-injection label
+  kubectl create namespace &quot;${namespace}&quot;
+  kubectl label namespace &quot;${namespace}&quot; istio-injection=enabled
+fi
+# Get the name and tag of the Docker image
+image_info=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -i node-service)
+if [ -n &quot;${image_info}&quot; ]; then
+  image_name=$(echo &quot;${image_info}&quot; | cut -d ':' -f 1)
+  image_tag=$(echo &quot;${image_info}&quot; | cut -d ':' -f 2)
+  # Check if the deployment already exists
+  if ! kubectl get deployment node-app -n &quot;${namespace}&quot; &gt; /dev/null 2&gt;&amp;1; then
+    # Create the deployment with 2 replicas and the specified image
+    kubectl create deployment node-app --image &quot;${image_name}:${image_tag}&quot; --replicas 2 -n &quot;${namespace}&quot;
+  else
+    echo &quot;deployment node-app already exists&quot;
+  fi
+  # Check if the service already exists
+  if ! kubectl get service node-service -n &quot;${namespace}&quot; &gt; /dev/null 2&gt;&amp;1; then
+    # Create a service for the deployment on port 5000
+    kubectl expose deployment node-app --name node-service --port 5000 -n &quot;${namespace}&quot;
+  else
+    echo &quot;service node-service already exists&quot;
+  fi
+else
+  echo &quot;Docker image for node-service does not exist&quot;
+fi
+</code></pre>
+<p>The source code below is a shell script that performs the following tasks:</p>
+<ul>
+<li>
+<p>It checks if the namespace prod exists in the Kubernetes cluster using the kubectl command. A namespace is a way to group and isolate resources within a cluster.</p>
+</li>
+<li>
+<p>If the namespace prod exists, it checks if the label istio-injection=enabled exists in the namespace. A label is a key-value pair that can be attached to any resource for identification and selection. Istio is a service mesh that provides traffic management, security and observability for microservices. The label istio-injection=enabled enables automatic sidecar injection for the pods in the namespace. A sidecar is a container that runs alongside the main application container and provides additional functionality such as proxying, logging and monitoring.</p>
+</li>
+<li>
+<p>If the label istio-injection=enabled does not exist in the namespace prod, it adds the label using the kubectl command.</p>
+</li>
+<li>
+<p>If the namespace prod does not exist, it creates the namespace using the kubectl command and adds the label istio-injection=enabled to it.</p>
+</li>
+<li>
+<p>It gets the name of the Docker image node-service using the docker command. A Docker image is a packaged version of an application and its dependencies that can run on any platform that supports Docker. Node-service is an example of a Node.js application that serves HTTP requests on port 5000.</p>
+</li>
+<li>
+<p>It checks if the Docker image node-service exists by checking if the image name is not empty.</p>
+</li>
+<li>
+<p>If the image exists, it gets the image tag using the docker command. A tag is a way to identify a specific version of an image.</p>
+</li>
+<li>
+<p>It creates a deployment and a service for the image using the kubectl command. A deployment is a resource that manages a set of pods that run the same image and can be scaled up or down. A service is a resource that exposes a set of pods to other pods or external clients using a stable IP address and port number.</p>
+</li>
+<li>
+<p>It specifies the namespace prod, the image name and tag, and the number of replicas (2) for the deployment. It also specifies the name (node-service), the port (5000) and the type (ClusterIP) for the service. ClusterIP means that the service is only accessible within the cluster.</p>
+</li>
+<li>
+<p>If the image does not exist, it prints an message.</p>
+</li>
+</ul>
+<p>You can manual check and apply istio-injection following below command:</p>
+<pre><code>sudo kubectl get all -n prod
+sudo kubectl label ns prod istio-injection=enabled
+sudo kubectl get ns --show-labels
+kubectl rollout restart deployment node-app -n prod
+</code></pre>
+<p>Next. We create file  k8s_PROD-deployment_service.yaml to deploy application to production enviroment.</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devsecops
+  name: devsecops
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devsecops
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: devsecops
+    spec:
+      serviceAccountName: default
+      volumes:
+      - name: vol
+        emptyDir: {}
+      containers:
+      - image: replace
+        name: devsecops-container
+        volumeMounts:
+          - mountPath: /tmp
+            name: vol
+        securityContext:
+          capabilities:
+            drop:
+             - NET_RAW
+          runAsUser: 100
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+        resources:
+         requests:
+          memory: &quot;256Mi&quot;
+          cpu: &quot;200m&quot;
+         limits:
+          memory: &quot;512Mi&quot;
+          cpu: &quot;500m&quot;
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: devsecops
+  name: devsecops-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: devsecops
+  type: ClusterIP
+</code></pre>
+<p>The resources section in the YAML file specifies the resource requirements and limits for the container. In this case, the container has a request of 256Mi memory and 200m CPU. This means that Kubernetes will try to schedule the container on a node that has at least 256Mi memory and 200m CPU available. If there are no nodes with enough resources available, the container will remain in a pending state.</p>
+<p>The container also has a limit of 512Mi memory and 500m CPU. This means that the container will not be allowed to use more than 512Mi memory and 500m CPU even if more resources are available on the node.</p>
+<p>Setting requests and limits is important for a number of reasons. First, it helps to ensure that your containers don't over-consume resources and cause other containers to fail. Second, it can help to improve the performance of your applications by ensuring that they have the resources they need to run efficiently. Third, it can help to prevent your applications from being killed by Kubernetes if they try to use too many resources.</p>
+<p>A securityContext that takes away the NET_RAW capability from our application can help us avoid dns spoofing.</p>
+<p>Reference: <a href="https://blog.aquasec.com/dns-spoofing-kubernetes-clusters">https://blog.aquasec.com/dns-spoofing-kubernetes-clusters</a></p>
+<p>Next, Create file k8s-PROD-deployment-rollout-status.sh like</p>
+<pre><code>#!/bin/bash
+sleep 60s
+if [[ $(kubectl -n prod rollout status deploy ${deploymentName} --timeout 5s) != *&quot;successfully rolled out&quot;* ]]; 
+then     
+    echo &quot;Deployment ${deploymentName} Rollout has Failed&quot;
+    kubectl -n prod rollout undo deploy ${deploymentName}
+    exit 1;
+else
+    echo &quot;Deployment ${deploymentName} Rollout is Success&quot;
+fi
+</code></pre>
+<p>Add k8s deployment production stage into Jenkins file</p>
+<pre><code>stage('K8S Deployment - PROD') {
+      steps {
+        parallel(
+          &quot;Deployment&quot;: {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh &quot;sed -i 's#replace#${imageName}#g' k8s_PROD-deployment_service.yaml&quot;
+              sh &quot;kubectl -n prod apply -f k8s_PROD-deployment_service.yaml&quot;
+            }
+          },
+          &quot;Rollout Status&quot;: {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh &quot;bash k8s-PROD-deployment-rollout-status.sh&quot;
+            }
+          }
+        )
+      }
+    }
+</code></pre>
+<p>Run build. After build successful you can check connection like below.</p>
+<h1>Istio PeerAuthentication</h1>
+<p>Next, we create PeerAuthentication  istio-system with yaml file below.</p>
+<p>peer-auth.yaml</p>
+<pre><code>apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  mtls:
+    mode: DISABLE
+</code></pre>
+<p>This YAML file is a configuration file for Istio's PeerAuthentication resource, which is used to configure mutual TLS (mTLS) authentication between services in an Istio service mesh. The file specifies the following:</p>
+<ul>
+<li>
+<p>apiVersion: The version of the Istio security API being used.</p>
+</li>
+<li>
+<p>kind: The type of Istio resource being defined, which is PeerAuthentication in this case.</p>
+</li>
+<li>
+<p>metadata: The metadata for the PeerAuthentication resource, which includes the name of the resource (default) and the namespace in which it is defined (istio-system).</p>
+</li>
+<li>
+<p>spec: The specification for the PeerAuthentication resource, which includes the mtls field that specifies the mTLS mode.</p>
+</li>
+</ul>
+<p>The mtls field specifies the mTLS mode for the PeerAuthentication resource, which is set to DISABLE in this case. This means that mTLS authentication is disabled for all services in the Istio service mesh.</p>
+<p>In general, there are three mTLS modes that can be set for a PeerAuthentication resource:</p>
+<ul>
+<li>
+<p>STRICT: All requests between services must use mTLS authentication.</p>
+</li>
+<li>
+<p>PERMISSIVE: Requests between services can use either mTLS authentication or plaintext (non-encrypted) communication.</p>
+</li>
+<li>
+<p>DISABLE: mTLS authentication is disabled for all services in the Istio service mesh.</p>
+</li>
+</ul>
+<p>The PeerAuthentication resource can be used to configure mTLS authentication for specific services or for all services in the Istio service mesh.</p>
+<p>Run kubectl apply:</p>
+<pre><code>kubectl apply -f peer-auth.yaml -n istio-system
+</code></pre>
+<p>Check mtls mode:</p>
+<pre><code>sudo kubectl get pa -n istio-system
+NAME      MODE      AGE
+default   DISABLE   9s
+</code></pre>
+<p>You can change mtls mode with command below:</p>
+<pre><code> kubectl edit pa -n istio-system
+spec:
+  mtls:
+    mode: STRICT # write mode you want
+</code></pre>
+<p>Reference: <a href="https://istio.io/latest/docs/reference/config/security/peer_authentication/">https://istio.io/latest/docs/reference/config/security/peer_authentication/</a></p>
+<p>We will run command below to test connection</p>
+<pre><code>sudo kubectl -n prod get svc 
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+devsecops-svc   ClusterIP   10.103.98.41     &lt;none&gt;        8080/TCP   148m
+node-service    ClusterIP   10.110.155.212   &lt;none&gt;        5000/TCP   148m
+ 
+while true; do curl -s 10.103.98.41:8080/increment/99; echo; sleep 1; done
+</code></pre>
+<p>You can go to kiali dashboard, select graph to know how connection inside out application work.</p>
+<p>PERMISSIVE MODE -we can see at the top there is a partially enabled TLS text</p>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_3.png" /></p>
+<p>DISABLE MODE -when we change the mode to disabled, traffic including mtls will drop until all traffic is no longer encrypted</p>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_4.png" /></p>
+<p>STRICT MODE: all traffic is encrypted, authenticated and does not allow outside traffic to go inside</p>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_5.png" /></p>
+<p>And you can explore some more features of kiali like checking metrics, traffic, logs of each deployment in the namespace of your choice.</p>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_6.png" /></p>
+<h1>ISTIO INGRESS</h1>
+<p>In Istio, an Ingress is a component that enables external traffic to access services within the mesh. Istio Ingress provides traffic management features such as load balancing, TLS termination, and routing. It allows you to define rules for routing traffic to specific services based on various criteria such as URL path, headers, and source IP address.</p>
+<p>A VirtualService, on the other hand, is a Kubernetes custom resource that is used to define rules for how traffic should be routed to a specific service within the Istio service mesh. It provides more advanced traffic management features than Ingress, such as traffic splitting, fault injection, and retries. With VirtualServices, you can define rules to send traffic to different versions of a service or to specific instances of a service based on various criteria such as HTTP headers or source IP addresses.</p>
+<p>In summary, Istio Ingress provides a way for external traffic to enter the service mesh and provides basic routing capabilities, while VirtualService provides more advanced traffic management features for routing traffic within the mesh.</p>
+<p>Reference: <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/</a></p>
+<p><a href="https://istio.io/latest/docs/reference/config/networking/virtual-service/">https://istio.io/latest/docs/reference/config/networking/virtual-service/</a></p>
+<p>Now we go to create istio ingress and virtualService according to the yaml file below.</p>
+<pre><code>apiVersion: networking.istio.io/v1alpha3 # The API version for Istio resources
+kind: Gateway # The kind of resource
+metadata: # The metadata for the resource
+  name: devsecopsgateway # The name of the Gateway
+  namespace: prod # The namespace where the Gateway is deployed
+spec: # The specification for the Gateway
+  selector: # The selector for the Gateway
+    istio: ingressgateway # The label of the Istio ingress gateway pod
+  servers: # The list of servers for the Gateway
+    - port: # The port configuration for the server
+      number: 80 # The port number
+      name: http # The port name
+      protocol: HTTP # The port protocol
+    hosts: # The list of hosts for the server
+    -  &quot;*&quot; # A wildcard host that matches any domain
+---  # The separator for the next document
+apiVersion: networking.istio.io/v1alpha3 
+kind: VirtualService 
+metadata:
+  name: devsecopsnumeric # The name of the VirtualService
+  namespace: prod
+spec:  # The specification for the VirtualService
+  hosts: 
+  - '*'
+  gateways:  # The list of gateways for the VirtualService
+  - devsecopsgateway  # The name of the Gateway from the first document
+  http: # The list of HTTP routes for the VirtualService
+  - match: # The list of match conditions for the route
+    - uri: # The URI match condition
+        prefix: /increment # The URI prefix to match
+    - uri:
+        exact: /  # The exact URI to match
+    route: # The list of destinations for the route
+    - destination: # The destination configuration
+        host: devsecopssvc # The host name of the destination service
+        port:
+          number: 8080
+</code></pre>
+<p>This is a YAML file that contains two Kubernetes resources: a Gateway and a VirtualService.</p>
+<p>The Gateway resource is named devsecops-gateway and is of type networking.istio.io/v1alpha3. It has a selector that specifies the Istio ingress gateway as the default controller. It also has one server that listens on port 80 and accepts HTTP traffic from any host.</p>
+<p>The VirtualService resource is named devsecops-numeric and is also of type networking.istio.io/v1alpha3. It specifies that all hosts should be matched and that the gateway touse is devsecops-gateway. It also specifies an HTTP route that matches URIs with prefix /increment or exact URI / and sends traffic to a destination service named devsecops-svc listening on port 8080.</p>
+<p>URI prefix and exact URI are two different concepts in web development. A URI is a string of characters that identifies a name or a resource on the internet. A URI prefix is a matching method based on the prefix of the URL path separated by the slash character. The matching is case-sensitive and performed on each segment of the path. On the other hand, an exact URI is a matching method that matches the entire URL path, including the query parameters and the fragment identifier. In web development, these concepts are used in routing and URL mapping to direct incoming requests to the appropriate controller or handler. The difference between URI prefix and exact URI is that URI prefix matches the URL path based on the prefix of the path, while exact URI matches the entire URL path, including the query parametersand the fragment identifier.</p>
+<pre><code>kubectl get vs,gateway -n prod
+NAME                                                   GATEWAYS                HOSTS   AGE
+virtualservice.networking.istio.io/devsecops-numeric   [&quot;devsecops-gateway&quot;]   [&quot;*&quot;]   6d23h
+NAME                                            AGE
+gateway.networking.istio.io/devsecops-gateway   6d23h
+ 
+kubectl -n istio-system get svc istio-ingressgateway
+NAME                            TYPE                   CLUSTER-IP        EXTERNAL-IP   PORT(S)                                                                      
+istio-ingressgateway   LoadBalancer   10.99.213.128    &lt;pending&gt;     15021:30561/TCP,80:30886/TCP,443:32190/TCP,31400:32600/TCP,15443:30266/TCP   
+</code></pre>
+<p>Now we try curl to test connection</p>
+<pre><code>curl localhost:30886/increment/22
+23
+ 
+curl localhost:30886/
+Kubernetes DevSecOps
+</code></pre>
+<p>We can use bash below and open kiali to see connection inside</p>
+<pre><code> while true; do curl -s localhost:30886/increment/22; echo; sleep 1; done
+</code></pre>
+<p><img alt="" src="../media/25.%20Istio%20service%20mesh%20-%20Production%20deployment_7.png" /></p>
+<p>If we remove url  extract in virtualService</p>
+<pre><code>- uri:
+        exact: /
+</code></pre>
+<p>By using kubectl edit vs -n prod  In  file and run curl localhost:30886/ to test connection again, we cannot receive response.</p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

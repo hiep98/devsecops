@@ -1,0 +1,678 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>31. Vault</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Vault</h1>
+
+<p><strong>Install vault</strong>****</p>
+<pre><code>kubectl create ns vault
+kubectl config set-context --current --namespace vault
+kubectl get all
+ 
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm install vault --set='ui.enabled=true' --set='ui.serviceType=NodePort' --set='server.dataStorage.enabled=false'   hashicorp/vault --version 0.24.0
+NAME: vault
+LAST DEPLOYED: Tue Apr 18 14:40:08 2023
+NAMESPACE: vault
+STATUS: deployed
+REVISION: 1
+NOTES:
+Your release is named vault. To learn more about the release, try:
+  $ helm status vault
+  $ helm get manifest vault
+</code></pre>
+<p><strong>Vault Initialization</strong></p>
+<pre><code>kubectl get pod
+kubectl exec -it vault-0 -- vault status
+kubectl exec -it vault-0 -- /bin/sh
+ 
+vault operator init
+Unseal Key 1: 9yKQv2wqbE8eFDV2lXf6pQDlqxRwe625A2nemYHUIrKE
+Unseal Key 2: k1AyFsjiqb4DGeBlviYWAyKiSdvamAppmUiV/lNoiMn+
+Unseal Key 3: LQnEmWY/Ao6q7tB3MQppiYMDhkXfWNtF/gyVNSBggMZw
+Unseal Key 4: sfioFbDoOLxF6lsUvosNIEL3lA7Y7TtfAbVkUjfMz1KM
+Unseal Key 5: wG/MfmU+ZvjI8yMHO49K75VrwbN9OrtmMsTPWiTAC1yr
+Initial Root Token: s.VF5xrdAHb04InF4ov91SUGif
+Vault initialized with 5 key shares and a key threshold of 3. Please securely
+distribute the key shares printed above. When the Vault is re-sealed,
+restarted, or stopped, you must supply at least 3 of these keys to unseal it
+before it can start servicing requests.
+Vault does not store the generated master key. Without at least 3 keys to
+reconstruct the master key, Vault will remain permanently sealed!
+It is possible to generate new unseal keys, provided you have a quorum of
+existing unseal keys shares. See &quot;vault operator rekey&quot; for more information.
+</code></pre>
+<p>The vault operator init command is used toinitialize a new Vault server instance. It is part of the vault operator command group, which is used to manage and operate a Vault server.</p>
+<p>When you run the vault operator init command, Vault generates and outputs a set of five unseal keys and a root token. These are critical pieces of information that are needed to manage and access the Vault server.</p>
+<p>Here is a brief overview of what happens when you run vault operator init:</p>
+<ol>
+<li>
+<p>Vault generates a new encryption key that is used to protect sensitive data stored in the Vault server.</p>
+</li>
+<li>
+<p>Vault generates five unseal keys, which are used to unlock the encryption key and decrypt the sensitive data. Each unseal key is a 26-character string that is randomly generated by Vault.</p>
+</li>
+<li>
+<p>Vault generates a root token, which is a privileged access token that can be used to perform administrative tasks on the Vault server.</p>
+</li>
+<li>
+<p>Vault outputs the five unseal keys and root token to the console.</p>
+</li>
+</ol>
+<p>It's important to keep the unseal keys and root token safe and secure, asthey provide access to sensitive data stored in the Vault server. Typically, the unseal keys are distributed among multiple trusted parties to prevent a single point of failure. The root token should be stored securely and used only when necessary.</p>
+<pre><code>vault operator unseal wG/MfmU+ZvjI8yMHO49K75VrwbN9OrtmMsTPWiTAC1yr
+Unseal Key (will be hidden): 
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        true
+Sealed             true
+Total Shares       5
+Threshold          3
+Unseal Progress    1/3
+Unseal Nonce       cccf48d6-b7e9-5014-36b4-66894e0f3b0f
+Version            1.8.3
+Storage Type       file
+HA Enabled         false
+</code></pre>
+<p>This command is used to unseal a Vault server that has been initialized but is not yet active. When a Vault server is initialized, it is sealed to protect its sensitive data. To start using the Vault server, you must unseal it by providing a certain number of unseal keys (as determined by the initialization process). Each time the vault operator unseal command is executed with an unseal key, the Vault server is moved one step closer to being fully unsealed.</p>
+<pre><code>vault login s.VF5xrdAHb04InF4ov91SUGif
+Success! You are now authenticated. The token information displayed below
+is already stored in the token helper. You do NOT need to run &quot;vault login&quot;
+again. Future Vault requests will automatically use this token.
+Key                  Value
+---                  -----
+token                s.VF5xrdAHb04InF4ov91SUGif
+token_accessor       KI5fSY50wm2U3DEkyGBfEPKZ
+token_duration       ∞
+token_renewable      false
+token_policies       [&quot;root&quot;]
+identity_policies    []
+policies             [&quot;root&quot;]
+</code></pre>
+<p>This command is used to authenticate with the Vault server using a specified method, such as using a username and password or a client token. Once authenticated, the user is granted an access token, which is used to access Vault resources.</p>
+<p><strong>Vault Secrets Engine</strong></p>
+<hr />
+<pre><code>vault secrets enable -path=crds kv-v2
+</code></pre>
+<p>This command is used to enable the KV (key-value) version 2 secrets engine on a Vault server. The -path option specifies the path at which to mount the secrets engine.</p>
+<p>In Vault, a secrets engine is a component that is responsible for generating, storing, and managing secrets. A secret is any piece of sensitive data that needs to be kept secure, such as passwords, API keys, and certificates.</p>
+<p>Vault supports multiple types of secrets engines, each of which is designed to handle a specific type of secret. Some of the commonly used secrets engines in Vault include:</p>
+<ol>
+<li>
+<p>KV (Key-Value) secrets engine: Used to store and retrieve arbitrary key-value pairs.</p>
+</li>
+<li>
+<p>Database secrets engine: Used to dynamically generate database credentials on behalf of users and applications.</p>
+</li>
+<li>
+<p>AWS secrets engine: Used to generate and manage AWS access keys and secret access keys.</p>
+</li>
+<li>
+<p>PKI (Public Key Infrastructure) secrets engine: Used to issue and manage X.509 certificates.</p>
+</li>
+</ol>
+<p>Each secrets engine in Vault is mounted at a specific path in the Vault hierarchy, and can be enabled and configured using Vault commands. Once a secrets engine is enabled, applications and users can use Vault APIs or CLI commands to generate and retrieve secrets from that engine.</p>
+<p>Overall, the secrets engines in Vault make it easy for developers and operators to manage sensitive data securely, while also providing a centralized location for managing all of their secrets.</p>
+<pre><code>vault policy list
+</code></pre>
+<p>This command is used to list all of the policies that have been defined on the Vault server. Policies are used to define access control rules for Vault resources.</p>
+<pre><code>vault  kv get crds/mysql
+</code></pre>
+<p>This command is used to read a key-value pair from a Vault server. The key-value pair is specified using a path, such as secret/foo.</p>
+<pre><code>vault  kv put crds/mysql username=root password=09132 
+</code></pre>
+<p>This command is used to write a key-value pair to a Vault server. The key-value pair is specified using a path, such as secret/foo, and a set of key-value pairs, such as key=value.</p>
+<pre><code>vault  kv metadata get crds/mysql
+</code></pre>
+<p>This command is used to retrieve the metadata for a key-value pair in a Vault server. The metadata includes information such as the time the key-value pair was created and last updated, and the version number of the pair.</p>
+<p><strong>Vault Authorization</strong></p>
+<pre><code>cat &lt;&lt;EOF &gt; /home/vault/app-policy.hcl
+path &quot;crds/data/mongodb&quot; {
+  capabilities = [&quot;create&quot;, &quot;read&quot;, &quot;update&quot;, &quot;patch&quot;, &quot;delete&quot;, &quot;list&quot;]
+}
+path &quot;crds/data/mysql&quot; {
+  capabilities = [&quot;read&quot;]
+}
+EOF
+</code></pre>
+<p>In Vault, a policy is a set of rules that define what actions a user or application can perform on a given set of paths within the Vault hierarchy. Policies are written in the HCL (HashiCorp Configuration Language) syntax and can be defined using a text editor or using Vault CLI commands.</p>
+<p>In the example policy you provided, there are two paths specified with different capabilities assigned to them:</p>
+<p>"crds/data/mongodb": This path specifies that the policy allows the capabilities to create, read, update, patch, delete and list key-value pairs located in the "mongodb" path under the "crds/data" path in Vault.</p>
+<p>"crds/data/mysql": This path specifies that the policy allows the capability to read key-value pairs located in the "mysql" path under the "crds/data" path in Vault.</p>
+<p>The capabilities defined in the policy specify what actions the user or application is authorized to perform on the given path(s). In this case, the policy allows a user or application to perform a range of actions on MongoDB data, but only to read MySQL data.</p>
+<p>Once the policy is written, it can be applied to a user or application in Vault, allowing them to perform the actions defined in the policy on the paths specified.</p>
+<p>Overall, policies in Vault provide a powerful tool for managing access to sensitive data, allowing administrators to define granular access controls based on the specific needs of their users and applications.</p>
+<pre><code>vault policy write app /home/vault/app-policy.hcl
+</code></pre>
+<p>This command is used to create or update the policy named "app" on the Vault server. The policy specifies access control rules for Vault resources that are used by a particular application.</p>
+<pre><code>vault policy read app
+</code></pre>
+<p>This command is used to read the policy named "app" from the Vault server. The "app" policy specifies access control rules for Vault resources that are used by a particular application.</p>
+<p><strong>Authentication</strong></p>
+<pre><code>vault token create
+</code></pre>
+<p>This command is used to create a new token in HashiCorp Vault. Tokens are used to authenticate and authorize clients to interact with Vault. When you run this command, Vault will generate a new token with a specified set of permissions and a TTL (time to live) that determines how long the token will be valid.</p>
+<pre><code>vault token revoke
+</code></pre>
+<p>This command is used to revoke a token in HashiCorp Vault. When you run this command, Vault will immediately invalidate the specified token, meaning that it can no longer be used to authenticate or authorize clients.</p>
+<pre><code>vault auth enable kubernetes
+</code></pre>
+<p>This command is used to enable the Kubernetes authentication method in HashiCorp Vault. When you run this command, you are telling Vault to configure itself to accept authentication requests from Kubernetes.</p>
+<pre><code>vault write auth/kubernetes/config \
+    token_reviewer_jwt=&quot;$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)&quot; \
+    kubernetes_host=https://${KUBERNETES_PORT_443_TCP_ADDR}:443 \
+    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt 
+</code></pre>
+<p>This command is used to configure the Kubernetes authentication method in HashiCorp Vault. Specifically, it sets the configuration parameters for the method, such as the location of the Kubernetes API server and the location of the Kubernetes CA certificate.</p>
+<pre><code>SET ROLE
+vault write auth/kubernetes/role/phpapp \
+bound_service_account_names=app \
+bound_service_account_namespaces=vault \
+policies=app \
+ttl=1h
+</code></pre>
+<p>This command is used to configure a role in the Kubernetes authentication method in HashiCorp Vault. When you run this command, you are specifying which Kubernetes service account (in this case, app) can be used to authenticate with Vault, which namespace the service account belongs to (in this case, vault), which policies the role should have access to (in this case, app), and how long the token issued by this role will be valid (in this case, 1h).</p>
+<pre><code>exit
+kubectl describe clusterrolebinding vault-server-binding
+</code></pre>
+<p>This command is used to describe a ClusterRoleBinding in Kubernetes. A ClusterRoleBinding is a way to bind a ClusterRole (a set of permissions in Kubernetes) to a specific Kubernetes service account. When you run this command, you are getting information about the ClusterRoleBinding named vault-server-binding.</p>
+<p><strong>PHP APPLICATION DEMO</strong></p>
+<pre><code>git clone https://github.com/sidd-harth/php-vault-example.git
+cd php-vault-example/
+docker build -t php:vault .
+kubectl apply -f php-app-k8s-deploy.yaml
+</code></pre>
+<p>In php-app-k8s-deploy.yaml, we have code below:</p>
+<pre><code>apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app
+  labels:
+    app: php
+</code></pre>
+<p>It is will be interactive with command:</p>
+<pre><code>SET ROLE vault write auth/kubernetes/role/phpapp \ bound_service_account_names=app \ bound_service_account_namespaces=vault \ policies=app \ ttl=1h
+</code></pre>
+<p>After run apply, The Kubernetes ServiceAccount named "app" in your deployment file is connected to the Vault command vault write auth/kubernetes/role/phpapp through the bound_service_account_names parameter.</p>
+<p>When you run the Vault command with bound_service_account_names=app, it tells Vault that any authentication requests coming from the Kubernetes ServiceAccount named "app" should be authorized by this Vault role (phpapp).</p>
+<p>Additionally, the bound_service_account_namespaces parameter specifies the Kubernetes namespace where the ServiceAccount is located (vault in this case).</p>
+<p>Finally, the policies parameter specifies the Vault policies that should be granted to any tokens issued by this role. In this case, the app policy is being granted.</p>
+<p>The ttl parameter specifies the time-to-live for any tokens issued by this role. In this case, the token will expire and be revoked after 1hour.</p>
+<pre><code>kubectl get svc
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+php                        NodePort    10.106.55.59    &lt;none&gt;        80:30323/TCP        57s
+</code></pre>
+<p>We try to access the app and now the app has a red background and displays secret information</p>
+<p><img alt="" src="../media/31.%20Vault_1.png" /></p>
+<pre><code>cat patch-annotations.yaml
+spec:
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: &quot;true&quot;
+        vault.hashicorp.com/agent-inject-secret-username: &quot;crds/data/mysql&quot;
+        vault.hashicorp.com/role: &quot;phpapp&quot;
+</code></pre>
+<p>Annotations in Vault HashiCorp are a way to specify metadata about Kubernetes objects that indicate how Vault should interact with them. Annotations are key-value pairs that are added to Kubernetes objects such as pods, deployments, and services to instruct Vault on how to inject secrets or otherwise interact with the objects.</p>
+<p>Some common annotations used in Vault include:</p>
+<ol>
+<li>
+<p>vault.hashicorp.com/agent-inject: "true": This annotation enables the Vault Agent sidecar injector to inject secrets into a pod.</p>
+</li>
+<li>
+<p>vault.hashicorp.com/agent-inject-secret-<key>: "<path>": This annotation specifies the path to a secret in Vault and the key in the secret that should be injected into the pod.</p>
+</li>
+<li>
+<p>vault.hashicorp.com/role: "<name>": This annotation specifies the name of a Vault role that should be used to authenticate requests from the Kubernetes object.</p>
+</li>
+</ol>
+<p>Annotations can be specified in a Kubernetes manifest file or added to an existing object using the kubectl annotate command. Annotations provide a flexible way to integrate Vault with Kubernetes applications and manage secrets securely.</p>
+<pre><code>kubectl patch deploy php -p &quot;$(cat patch-annotations.yaml)&quot;
+</code></pre>
+<p>This command applies the annotations defined in the patch-annotations.yaml file to the Kubernetes Deployment named php. Specifically, it adds the annotations vault.hashicorp.com/agent-inject: "true", vault.hashicorp.com/agent-inject-secret-username: "crds/data/mysql", and vault.hashicorp.com/role: "phpapp"to the metadata of the pod template.</p>
+<pre><code>kubectl describe pod php-7744998f8f-lcwx8
+ Args:
+      echo ${VAULT_CONFIG?} | base64 -d &gt; /home/vault/config.json &amp;&amp; vault agent -config=/home/vault/config.json    State:          Terminated
+</code></pre>
+<p>This command provides a detailed description of the Kubernetes pod named php-7744998f8f-lcwx8.</p>
+<p>kubectl exec -it pod/php-7744998f8f-lcwx8 -n vault -c php -- cat /vault/secrets/username</p>
+<p>data: map[apikey:813290vjlkad password:09132 username:root]</p>
+<p>metadata: map[created_time:2023-04-19T02:07:39.660745457Z deletion_time: destroyed:false version:1]</p>
+<p>This command executes a command inside the container named phpin the php-7744998f8f-lcwx8pod, and prints the contents of the /vault/secrets/usernamefile. Specifically, it decodes the value of the VAULT_CONFIGenvironment variable, writes it to a file at /home/vault/config.json, and starts the Vault agent process with that configuration file. The agent then retrieves the secret named usernamefrom Vault and writes it to the /vault/secrets/usernamefile.</p>
+<pre><code>cat patch-annotations-template.yaml 
+spec:
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: &quot;true&quot;
+        vault.hashicorp.com/agent-inject-status: &quot;update&quot;
+        vault.hashicorp.com/agent-inject-secret-username: &quot;crds/data/mysql&quot;
+        vault.hashicorp.com/agent-inject-template-username: |
+          {{- with secret &quot;crds/data/mysql&quot; -}}
+                     {{ .Data.data.username }}
+          {{- end }}
+        vault.hashicorp.com/agent-inject-secret-password: &quot;crds/data/mysql&quot;
+        vault.hashicorp.com/agent-inject-template-password: |
+          {{- with secret &quot;crds/data/mysql&quot; -}}
+                     {{ .Data.data.password }}
+          {{- end }}
+        vault.hashicorp.com/agent-inject-secret-apikey: &quot;crds/data/mysql&quot;
+        vault.hashicorp.com/agent-inject-template-apikey: |
+          {{- with secret &quot;crds/data/mysql&quot; -}}
+                     {{ .Data.data.apikey }}
+          {{- end }}
+        vault.hashicorp.com/role: &quot;phpapp&quot;
+</code></pre>
+<p>It  using the Vault Agent Sidecar Injector.</p>
+<p>The annotations are divided into two sections: agent and vault. The agent annotations change the Vault Agent containers templating configuration, such as what secrets they want, how to render them, etc. The vault annotations change the Vault Agent containers authentication configuration, such as what role they use, what certificates they need, etc.</p>
+<p>Here is a brief explanation of each annotation in the template:</p>
+<ul>
+<li>
+<p><code>vault.hashicorp.com/agent-inject: "true"</code>: This enables injection for the pod¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-status: "update"</code>: This blocks further mutations by adding the value <code>injected</code> to the pod after a successful mutation¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-secret-username: "crds/data/mysql"</code>: This tells the Vault Agent to retrieve the secret <code>username</code> from the path <code>crds/data/mysql</code> in Vault¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-template-username: | ...</code>: This tells the Vault Agent how to render the secret <code>username</code> using a Go template¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-secret-password: "crds/data/mysql"</code>: This tells the Vault Agent to retrieve the secret <code>password</code> from the same path as <code>username</code>¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-template-password: | ...</code>: This tells the Vault Agenthow to render the secret <code>password</code> using a Go template¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-secret-apikey: "crds/data/mysql"</code>: This tells the Vault Agent to retrieve the secret <code>apikey</code> from the same path as <code>username</code> and <code>password</code>¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/agent-inject-template-apikey: | ...</code>: This tells the Vault Agent how to render the secret <code>apikey</code> using a Go template¹.</p>
+</li>
+<li>
+<p><code>vault.hashicorp.com/role: "phpapp"</code>: This tells the Vault Agent what role to use for authenticating with Vault using the Kubernetes auth method¹.</p>
+</li>
+</ul>
+<p>Reference:</p>
+<p>(1) Agent Sidecar Injector Annotations | Vault | HashiCorp Developer. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations</a>.</p>
+<p>(2) Running Vault with Kubernetes - HashiCorp. <a href="https://www.hashicorp.com/products/vault/kubernetes">https://www.hashicorp.com/products/vault/kubernetes</a>.</p>
+<p>(3) » Vault Agent Injector Examples - Vault by HashiCorp. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples</a></p>
+<p><a href="https://testdriven.io/blog/managing-secrets-with-vault-and-consul">https://testdriven.io/blog/managing-secrets-with-vault-and-consul</a></p>
+<p><a href="https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/">https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/</a></p>
+<pre><code>kubectl patch deploy php -p &quot;$(cat patch-annotations-template.yaml)&quot;
+kubectl exec -it pod/php-697475985f-n58bq -n vault -c php -- cat /vault/secrets/username
+Root
+</code></pre>
+<ol>
+<li>
+<p>kubectl: This is the command-line tool used to interact with Kubernetes clusters.</p>
+</li>
+<li>
+<p>patch: This sub-command is used to update or modify resources in a Kubernetes cluster.</p>
+</li>
+<li>
+<p>deploy: This specifies the type of resource to be patched, which in this case is a deployment.</p>
+</li>
+<li>
+<p>php: This is the name of the deployment that we want to patch.</p>
+</li>
+<li>
+<p>-p "$(cat patch-annotations-template.yaml)": This is an option that specifies the patch to be applied to the deployment. The patch is specified using a YAML or JSON file that contains the updated metadata for the deployment. The $(cat patch-annotations-template.yaml) command substitution is used to read the contents of the file patch-annotations-template.yaml and pass it as a string to the -p option.</p>
+</li>
+</ol>
+<p>Overall, the command kubectl patch deploy php -p "$(cat patch-annotations-template.yaml)" is used to update the metadata for the deployment named "php" by applying a patch contained in the YAML file patch-annotations-template.yaml. The specific changes made to the metadata will depend on the contents of the patch file.</p>
+<p>Now, we refresh the app and we see that the app has get the secrets</p>
+<p><img alt="" src="../media/31.%20Vault_2.png" /></p>
+<p><strong>How it works Internally</strong></p>
+<p><img alt="" src="../media/31.%20Vault_3.png" /></p>
+<p>Now, we'll try to see how Vault works internally.</p>
+<p>The recommended installation method is through the latest Vault helm site, which supports the Vault-k8s injection functionality. It launches two pods, Vault-0 and the Vault-agent-injector. An admin or Vault user can exit into the Vault-0 pod to initialize the Vault, add secrets, define policies, configure authentication and roles.</p>
+<p>The vault-agent-injector pod is a Kubernetes mutation webhook controller. The controller intercepts pod events and applies mutation to the pod if annotation exist within the request. When we deploy our application to Kubernetes, it generally goes through the kube-apiserver.</p>
+<p>It goes through the authentication, authorization, mutation, admission controller if any, does a round of schema validation after mutation, and it alsodoes a validation admission controller before getting persisted in the etcd data store. Then a scheduler will deploy the pod, mount the required service accounts on one of the available notes. If we execute into this pod and search for /vault/secretsdirectory, it would return not found because the secrets are not yet mounted from Vault.</p>
+<p><strong>How does this container get the secrets from the Vault server?</strong></p>
+<p>We can use the kubectl patch command to apply the annotations to an existing pod object. This will be intercepted by the Vault-agent-injector webhook service which will invoke the mutation admission controller and then inject the correct init and the sidecar containers. The init container will pre-populate the shared memory volume with the requested secretsprior to the other container starting. The sidecar container, which is the Vault agent container, will continue to authenticate and render secrets to the same location as the pod runs.</p>
+<p>How do these containers fetch secrets from the Vault server?</p>
+<p>Checking the logs of the Vault init connector, initially, it tries to authenticate with the Vault server. The primary method of authentication with Vault when using the Vault-agent-injector is the service account attached to the pod. It is going to send the JSON Web Token to Vault for authentication. Vault now has to validate the pod service account JSON Web Token.</p>
+<p>For Kubernetes authentication, the service account must be bond to a Vault role and a policy granting access to the secrets desire. For accessing the Kubernetes TokenReview API to validate the provided part service account token is still valid or not, the Vault service account used in this auth method will need to have access to the TokenReview API. The service account should be granted system auth delegator permission.</p>
+<p>Once the TokenReview API request has been sent, the TokenReview API in the queue, API server, it will respond back the status authenticated through as a payload along with the details of the service account like the namespace and the service account name. This is how the curl command generally looks like. It's a post command to the TokenReview API.</p>
+<p>Within the headers, you pass in the Vault-agent-injector's service account token. Within the payload, you send in the pod service account token to check if it is still valid or not. All this is sent to the TokenReview API which will try to validate it.</p>
+<p>If the pod app service account token is valid, it's going to respond back with a payload of status authenticated as true. Within the payload, it also sends back the service account name and to which namespace it belongs to. The service account name and namespace will be matched with the policy to authorize access to the secrets. Once authorized, Vault is going to create auth token and return it to the init connectors.</p>
+<p>The token is stored in the /home/vault/.vault-token directory. Once the authentication is successful, it is stored in this directory. Next, the init container will request the Vault for the secrets and passing the auth token which it received in the previous call. Vault will match the auth token with policy for specific secrets, and secrets are returned to the init connectors. The init container will store the secret in empty directory volume which is shared by all the three containers within the pod.</p>
+<p>Now, when we execute into the pod and search for /vault/secrets directory, it would displayall the rendered secrets. This is a pretty straightforward workflow pattern for injecting a secret into a running application that has no native vault logic built in. The application only needs to concern themselves with finding a secret at a specific file path. That's it for now. Thank you.</p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

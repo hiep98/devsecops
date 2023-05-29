@@ -1,0 +1,482 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>7. Kubernetes Architecture</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p>Kubernetes Architecture</p>
+<h1>Kubernetes Architecture</h1>
+<p><img alt="" src="../media/7.%20Kubernetes%20Architecture_1.png" /></p>
+<p>Kubernetes is a container orchestration systemthat automates the deployment, scaling, and management of containerized applications. It is designed to be scalable and reliable, and to make it easy to deploy and manage containerized applications at scale.</p>
+<p>Kubernetes is a distributed system that consists of two main components: the control plane and the data plane.</p>
+<p>•  The control plane is responsible for managing the cluster and ensuring that the desired state of the cluster is maintained. It consists of a number of components, including the API server, the scheduler, and the controllers.</p>
+<p>•  The data plane is responsible for running the containers and providing the services that the applications need. It consists of a number of nodes, each of which runs a kubelet and a kube-proxy.</p>
+<p>The Control Plane</p>
+<p>The control plane is responsible for managing the cluster and ensuring that the desired state of the cluster is maintained. It consists of the following components:</p>
+<p>•  API Server: This is the front-end of the control plane. It exposes the Kubernetes API, which is used by users, administrators, and other components to communicate with the cluster. The API server validates and processes requests and updates the cluster state in etcd.</p>
+<p>•  etcd: This is a distributed key-value store that stores the cluster state and configuration data. It is the source of truth for the cluster and provides a consistent and reliable way to store data across multiple nodes.</p>
+<p>•  Scheduler: This is responsible for assigning pods to nodes based on resource availability, constraints, policies, and other factors. It watches for new pods that have no node assigned and selects a suitable node for them.</p>
+<p>•  Controller Manager: This runs several controllers that regulate the cluster state and handle routine tasks. For example, there are controllers for nodes, pods, endpoints, services, replication, etc. Each controller watches for changes in its domain and tries to reconcile the current state with the desired state.</p>
+<p>The Data Plane</p>
+<p>•  Data Plane: This is composed of all the nodes in the cluster. A node is a physical or virtual machine that runs one or more pods. A pod is the smallest unit of deployment in Kubernetes and consists of one or more containers that share resources and network. The data plane components are:</p>
+<p>•  Kubelet: This is an agent that runs on each node and communicates with the API server. It ensures that the pods assigned to its node are running and healthy. It also reports the node status and metrics to the API server.</p>
+<p>•  Kube-proxy: This is a network proxy that runs on each node and maintains network rules for pods. It enables pod-to-pod, pod-to-service, and external-to-service communication by forwarding packets according to iptables rules.</p>
+<p>•  Container Runtime Interface (CRI): This is an interface that defines how kubelet interacts with different container runtimes such as Docker, containerd, CRI-O, etc. It allows kubelet to manage container lifecycle operations such as pulling images, creating containers, starting/stopping containers, etc.</p>
+<p>•  Container Network Interface (CNI): This is an interface that defines how different network plugins provide network connectivity for pods. It allows kubelet to configure network interfaces and routes for pods using various network plugins such as Calico, Flannel, Weave Net, etc.</p>
+<p>•  Container Storage Interface (CSI): This is an interface that defines how different storage plugins provide persistent storage for pods. It allows kubelet to attach/detach, mount/unmount, and format volumes for pods using various storage plugins such as AWS EBS, GCE PD, Ceph RBD, etc.</p>
+<p>•  Open Container Initiative (OCI): This is a set of specifications that define how containers should be packaged, run, and distributed. It includes two specifications: OCI Image Specification and OCI Runtime Specification. The former defines how container images should be stored and transferred, while the latter defines how container runtimes should execute containers.</p>
+<p>Above the nodes, there is the kubelet, which is responsible for managing pods (the smallest deployable units in Kubernetes) on the nodes. The kube-proxy is a network proxy that routes traffic to the appropriate pods and services. The CNI (Container Network Interface) provides an interface for networking plugins to integrate with Kubernetes.</p>
+<p>At the cluster level, the API server acts as the gateway for all API requests and provides a REST API for clients to interact with the cluster. The etcd data store stores the configuration data of the cluster. The scheduler assigns pods to nodes based on resource availability and other factors. The controller manager runs controllers that manage various aspects of the cluster, such as scaling and self-healing.</p>
+<p>The following diagram shows a simplified overview of the Kubernetes architecture and its components:</p>
+<p>+-----------------++-----------------+</p>
+<p>|                 |      |                 |</p>
+<p>|  Control Plane  |      |   Data Plane    |</p>
+<p>|                 |      |                 |</p>
+<p>+-----------------+      +-----------------+</p>
+<p>|                 |      |                 |</p>
+<p>|  etcd datastore |&lt;----&gt;| kubelet         |</p>
+<p>|  api server     |&lt;----&gt;| CNI                |</p>
+<p>|  scheduler      |      | CRI                  |</p>
+<p>|  controller     |      | CSI                    |</p>
+<p>|  manager        |      | OCI              |</p>
+<p>|                 |      |kube-proxy       |</p>
+<p>+-----------------+      +-----------------+</p>
+<p>^                         ^</p>
+<p>|                           |</p>
+<p>v                         v</p>
+<p>+-----------------+      +--------------------+</p>
+<p>|                 |        | |                            |</p>
+<p>|   Master Node   |      |   Worker Node   |</p>
+<p>|                 |        |       |                            |</p>
+<p>+-----------------+      +--------------------+</p>
+<p>^                         ^</p>
+<p>| |</p>
+<p>v                         v</p>
+<p>+-----------------+      +-----------------+</p>
+<p>|                 |      |                 |</p>
+<p>|    Pod          |&lt;----&gt;|    Pod          |</p>
+<p>|                 |      |                 |</p>
+<p>+-----------------+      +-----------------+</p>
+<p>^                         ^</p>
+<p>|                         |</p>
+<p>v                         v</p>
+<p>+-----------------+      +-----------------+</p>
+<p>|                 |      |                 |</p>
+<p>|  Container      |&lt;----&gt;|  Container      |</p>
+<p>| |      |                 |</p>
+<p>+-----------------+      +-----------------+</p>
+<p>A Pod is the smallest and most basic unit of a Kubernetes application. It consists of one or more containers that share the same network namespace and storage volumes. A Pod can also have various add-on components, such as:</p>
+<p>•  Init Containers: Containers that run before the main containers in a Pod and perform initialization tasks.</p>
+<p>•  Ephemeral Containers: Containers that run temporarily in a Pod for debugging or troubleshooting purposes.</p>
+<p>•  Sidecar Containers: Containers that run alongside the main containers in a Pod and provide additional functionality or services.</p>
+<p>Kubernetes also provides various services and resources to expose and manage Pods and their communication, such as:</p>
+<p>•  Service: An abstraction that defines a logical set of Pods and a policy to access them. It can have different types, such as ClusterIP, NodePort, LoadBalancer, ExternalName, etc.</p>
+<p>•  Ingress: An API object that defines rules to route external traffic to Services within the cluster. It can support features such as single service routing, simple fanout routing, name-based routing, TLS termination, etc.</p>
+<p>•  EndpointSlices: An API object that stores information about the network endpoints of a Service. It improves scalability and performance of network communication within the cluster.</p>
+<p>•  DNS for Services and Pods: A built-in service that provides DNS resolution for Services and Pods within the cluster.</p>
+<p><strong>Kubernetes Services Layer</strong>: This is a layer of abstraction that provides a stable and consistent way to access pods. A service is a logical grouping of pods that perform a common function. A service has a unique name and IP address within the clusterand acts as a load balancer for its pods.</p>
+<p>The Kubernetes cluster addon components include nodeport, clusterip, load balancer, and external name, which provide different ways of exposing services to users outside the cluster. The ingress controller provides a way to route external traffic to the appropriate services within the cluster.</p>
+<p>•  ClusterIP: This is the default type of service. It assigns a virtual IP address to the service within the cluster and allows internal communication between pods or between services.</p>
+<p>•  NodePort: This type of service exposes a port on each node that forwards</p>
+<p>•  ClusterIP: A clusterIP service exposes the service on a unique IP address in the cluster.</p>
+<p>•  LoadBalancer: A load balancer service exposes the service to the internet using a load balancer.</p>
+<p>•  ExternalName: An externalName service resolves to a hostname or IP address outside of the cluster.</p>
+<p>Kubernetes provides a number of cluster add-on components that can be used to extend the functionality of the cluster. These components include:</p>
+<p>•  Dashboard: The dashboard is a web-based UI that can be used to manage the cluster.</p>
+<p>•  Logging: The logging component provides a way to collect and store logs from the pods in the cluster.</p>
+<p>•  Monitoring: The monitoring component provides a way to collect and store metrics from the pods in the cluster.</p>
+<p>Authentication</p>
+<p>•  IdP (Identity Provider): This is a component that authenticates users and issues tokens for accessing the Kubernetes API. Kubernetes supports various IdPs, such as OIDC, LDAP, Webhook, etc.</p>
+<p>•  RBAC (Role-Based Access Control): This is a mechanism that controls what actions users and service accounts can perform on Kubernetes resources based on their roles and permissions.</p>
+<p>•  Admission Controllers: These are plugins that intercept requests to the Kubernetes API and perform validation or mutation before they are processed by the kube-apiserver. Kubernetes has several built-in admission controllers, such as PodSecurityPolicy, ResourceQuota, LimitRanger, etc.</p>
+<p>•  Object Schema Validation: This is a feature that ensures that the objects created or updated via the Kubernetes API conform to their specifications and schemas. It uses OpenAPI validation rules to check for errors or inconsistencies.</p>
+<p>Dockerfile</p>
+<p>A Dockerfile is a text file that contains instructions for building a Docker image. A Docker image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries, and settings.</p>
+<p>Registry</p>
+<p>A registry is a repository for storing Docker images. The most popular registries are Docker Hub and Quay.io.</p>
+<p>Containerd component</p>
+<p>At the bottom of the hierarchy, there is the host kernel and the Docker engine, which are responsible for running containers on the nodes. The containerd component (which includes runsc, runc, apparmor, seccomp, and gvisor) manages containers and container images in a secure and efficient manner.</p>
+<p>Runc: It is a lightweight container runtime that provides a minimal namespace and isolation for each container.</p>
+<p>Runsc: It is an experimental container runtime that uses gVisor to provide a virtualized environment for each container.</p>
+<p>AppArmor and Seccomp: They are used to configure the security profile for each container.</p>
+<p>Gvisor: It is a user-space kernel that provides a sandboxed environment for each container.</p>
+<p>Kernel Syscall and Host Linux Kernel: They provide the underlying system call support and resource management for each container.</p>
+<p>Dockershim and Docker Engine: These are container runtimes that exist in Kubernetes for backward compatibility with Docker-based applications.</p>
+<p>Kubernetes architecture reference:</p>
+<p><a href="https://devopscube.com/kubernetes-architecture-explained/">https://devopscube.com/kubernetes-architecture-explained/</a></p>
+<p><a href="https://www.clickittech.com/devops/kubernetes-architecture-diagram/">https://www.clickittech.com/devops/kubernetes-architecture-diagram/</a></p>
+<p><a href="https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/">https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/</a></p>
+<p><a href="https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams">https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams</a></p>
+<p><a href="https://kubernetes.io/docs/contribute/style/diagram-guide/">Diagram Guide | Kubernetes</a></p>
+<p><a href="https://www.redhat.com/sysadmin/kubernetes-components">A sysadmin's guide to basic Kubernetes components | Enable Sysadmin (redhat.com)</a></p>
+<p><a href="https://kubernetes.io/docs/concepts/overview/components/">Kubernetes Components | Kubernetes</a></p>
+<h1>How the Components Work and Interact with Each Other ?</h1>
+<p>SHORT VERSION:</p>
+<p>The control plane and the data plane work together to orchestrate the running of your applications. The control plane makes decisions about where to run your pods and how to manage their resources. The data plane then executes those decisions by running the pods on the nodes and providing them with the resources they need.</p>
+<p>For example, let's say you want to deploy a web application to Kubernetes. You would first create a deployment resource that specifies the number of pods you want to run and the image that you want to use. The control plane would then create those pods and assign them to nodes. The data plane would then start the pods on the nodes and provide them with the resources they need.</p>
+<p>The control plane and the data plane are constantly communicating with each other. The control plane monitors the state of the cluster and makes changes as needed. The data plane reports the status of the pods to the control plane.</p>
+<p>This communication allowsthe control plane and the data plane to work together to ensure that your applications are running smoothly.</p>
+<p>The components of Kubernetes work together to manage the cluster and provide services to the applications. The following is a brief overview of how they work and interact with each other:</p>
+<p>•  The API server is the front-end for Kubernetes. It provides a RESTful API that can be used to manage the cluster.</p>
+<p>•  The scheduler is responsible for assigning pods to nodes. It takes into account the resources available on each node and the requirements of the pods when making its decisions.</p>
+<p>•  The controllers are responsible for ensuring that the desired state of the cluster is maintained. For example, the replication controller is responsible for ensuring that a certain number of replicas of each pod are running in the cluster.</p>
+<p>•  The kubelet is a process that runs on each node in the cluster. It is responsible for starting, stopping, and managing containers on the node.</p>
+<p>•  The kube-proxy is a process that runs on each node in the cluster. It is responsible for providing network services to the pods on the node.</p>
+<p>LONG VERSION:</p>
+<p>Kubernetes is an open-source orchestration system designed for containerized applications. It automates deployment, scaling, and management of containerized applications.</p>
+<p>The Kubernetes architecture is divided into two main components: Control Plane (often referred to as the "Master node") and Data Plane (often referred to as "Worker node").</p>
+<p>The Control Plane includes etcd datastore, API server, Scheduler, Controller, Kubelet, CNI, CRI, CSI, OCI, and kube-proxy.</p>
+<p>The etcd datastore is a distributed key-value store that stores the configuration data and state of the entire Kubernetes cluster. The API server is responsible for validating and processing RESTful requests and updating the etcd datastore with cluster state changes.</p>
+<p>The Scheduler schedules the placement of containers on worker nodes based on the available resources.</p>
+<p>The Controller is responsible for monitoring the state of the cluster and making the necessary changes to maintain the desired state.</p>
+<p>The Kubelet is responsible for managing individual worker nodes and ensuring that the containers on each node are running as expected.</p>
+<p>The Container Network Interface (CNI) provides network connectivity for containers in a Kubernetes cluster, while the Container Runtime Interface (CRI) provides the interface for managing containers.</p>
+<p>The Container Storage Interface (CSI) provides storage for containers, while the Open Container Initiative (OCI) provides a standard for container image formats. The kube-proxy is a network proxy that manages the network traffic between services.</p>
+<p>The Data Plane includes the nodes where the containers are deployed. Each worker node comprises the pod, Kubelet, CNI, CRI, CSI, OCI, and kube-proxy.</p>
+<p>The pod is the smallest and simplest unit of deployment in Kubernetes. It contains one or more containers that share the same network namespace and storage volumes.</p>
+<p>The Kubelet runs on each worker node and is responsible for managing the state of the containers on that node. The CNI, CRI, CSI, and OCI are responsible for providing network, storage, and container runtime interfaces.</p>
+<p>The kube-proxy runs on each worker node and forwards network traffic to the correct container.</p>
+<p>The Kubernetes Services Layer provides different types of load balancing mechanism for Kubernetes services: NodePort, ClusterIP, and Load Balancer.</p>
+<p>NodePort exposes the service on a static port on each worker node.</p>
+<p>ClusterIP exposes the service on a cluster-internal IP address.</p>
+<p>Load Balancer exposes the service outside the cluster and transfers traffic to the worker nodes.</p>
+<p>The Ingress is responsible for routing external traffic to the appropriate Service in the cluster. It provides different routing rules based on the HTTP/HTTPS requests received by the service, including Single Service, Simple Fanout, Name-Based and TLS.</p>
+<p>The API Server performs Identity Provider (IdP) authentication and Role-Based Access (RBA) control.</p>
+<p>Mutation Admission Controllers validate and add/update/delete resources in the API server, while Object Schema Validation checks if the object schema is correct before it is created or updated.</p>
+<p>Validation Admission Controllers validate objects against its schema before it is created in the API server.</p>
+<p>The container runtime is responsible for running containers. It includes Dockerfile for hardening and multigate, registry for storing container images such as gcr.io and docker.io, kubelet that directly interacts with containers, dockershim that acts as a bridge between the kubelet and the Docker engine, and containerd that provides a runtime and a set of low-levelAPIs for managing containers.</p>
+<p>Runc and Runsc run containers in a sandboxed environment while AppArmor and Seccomp provide security measures for containing containers.</p>
+<p>Gvisor kernel, Syscall, and Host Linux Kernel provide the interface between the container runtime and the host operating system.</p>
+<p>In summary, Kubernetes architecture is designed to provide a scalable and reliable platform for deploying, managing, and scaling containerized applications. The components work together to ensure that the applications are running efficiently and securely.</p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

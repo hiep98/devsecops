@@ -1,0 +1,823 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>23. Custom jenkins alert</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Custom jenkins alert</h1>
+
+<h1>Create jenkins bot</h1>
+<ul>
+<li>
+<p>Go to  <a href="https://api.slack.com/apps">https://api.slack.com/apps</a> and click "Create New App".</p>
+</li>
+<li>
+<p>Pick an app name, i.e. "Jenkins" and a workspace that you'll be installing it to.</p>
+</li>
+<li>
+<p>Click "Create App". This will leave you on the "Basic Information" screen for your new app.</p>
+</li>
+<li>
+<p>Scroll down to "Display Information" and fill it out. You can get the Jenkins logo from:  <a href="https://jenkins.io/artwork/">https://jenkins.io/artwork/</a>.</p>
+</li>
+<li>
+<p>Scroll back up to "Add features and functionality".</p>
+</li>
+<li>
+<p>Click "Permissions" to navigate to the "OAuth &amp; Permissions" page.</p>
+</li>
+<li>
+<p>Scroll down to "Scopes". Under "Bot Token Scopes"</p>
+<ol>
+<li>
+<p>Add chat:write Scope.</p>
+</li>
+<li>
+<p>(optional) Add files:write Scope if you will be uploading files.</p>
+</li>
+<li>
+<p>(optional) Add chat:write.customize Scope if you will be sending messages with a custom username and/or avatar.</p>
+</li>
+<li>
+<p>(optional) Add reactions:write Scope if you will be adding reactions.</p>
+</li>
+<li>
+<p>(optional) Add users:read and users:read.email Scope if you will be looking users up by email.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>(optional) Click "App Home" in the sidebar</p>
+<ol>
+<li>
+<p>(optional) Edit the slack display name for the bot.</p>
+</li>
+<li>
+<p>Return to the "OAuth &amp; Permissions" page.</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img alt="" src="../media/23.%20Custom%20jenkins%20alert_1.png" /></p>
+<p><img alt="" src="../media/23.%20Custom%20jenkins%20alert_2.png" /></p>
+<p><img alt="" src="../media/23.%20Custom%20jenkins%20alert_3.png" /></p>
+<ul>
+<li>
+<p>At the top of the page, click "Install App to Workspace". This will generate a "Bot User OAuth Access Token".</p>
+</li>
+<li>
+<p>Copy the "Bot User OAuth Access Token".</p>
+</li>
+</ul>
+<p>•  <img alt="" src="../media/23.%20Custom%20jenkins%20alert_4.png" /></p>
+<ul>
+<li>
+<p>On Jenkins: Find the Slack configuration in "Manage Jenkins → Configure System".</p>
+<ol>
+<li>
+<p>On Jenkins: Click "Add" to create a new "Secret text" Credential with thattoken.</p>
+</li>
+<li>
+<p>On Jenkins: Select the new "Secret text" in the dropdown.</p>
+</li>
+<li>
+<p>On Jenkins: Make note of the "Default channel / member id".</p>
+</li>
+<li>
+<p>On Jenkins: Tick the "Custom slack app bot user" option.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Invite the Jenkins bot user into the Slack channel(s) you wish to be notified in.</p>
+</li>
+</ul>
+<p><img alt="" src="../media/23.%20Custom%20jenkins%20alert_5.png" /></p>
+<p>On Jenkins: Click test connection. A message will be sent to the default channel / default member.</p>
+<p><img alt="" src="../media/23.%20Custom%20jenkins%20alert_6.png" /></p>
+<p>We will receive this notification if test connection sucess.</p>
+<p>Read more: <a href="https://plugins.jenkins.io/slack/">https://plugins.jenkins.io/slack/</a></p>
+<h1>Custom alert with Block Kit Builder</h1>
+<p>Block Kit is a framework for building Slack messages that allows developers to create modular and flexible message layouts. Block Kit Builder provides a visual interface for creating and customizing Block Kit messages, making it easier for non-developers to create messages without writing any code.</p>
+<p><a href="https://app.slack.com/block-kit-builder">https://app.slack.com/block-kit-builder</a></p>
+<h1>Update vars/sendNotification.groovy</h1>
+<pre><code>def call(String buildStatus = 'STARTED') {
+ buildStatus = buildStatus ?: 'SUCCESS'
+ 
+ def color
+ 
+ if (buildStatus == 'SUCCESS') {
+  color = '#47ec05'
+  emoji = ':ww:'
+ } else if (buildStatus == 'UNSTABLE') {
+  color = '#d5ee0d'
+  emoji = ':deadpool:'
+ } else {
+  color = '#ec2805'
+  emoji = ':hulk:'
+ }
+ 
+// def msg = &quot;${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}&quot;
+ 
+// slackSend(color: color, message: msg)
+ 
+ attachments = [
+    [
+      &quot;color&quot;: color,
+      &quot;blocks&quot;: [
+        [
+          &quot;type&quot;: &quot;header&quot;,
+          &quot;text&quot;: [
+            &quot;type&quot;: &quot;plain_text&quot;,
+            &quot;text&quot;: &quot;K8S Deployment - ${deploymentName} Pipeline  ${env.emoji}&quot;,
+            &quot;emoji&quot;: true
+          ]
+        ],
+        [
+          &quot;type&quot;: &quot;section&quot;,
+          &quot;fields&quot;: [
+            [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Job Name:*\n${env.JOB_NAME}&quot;
+            ],
+            [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Build Number:*\n${env.BUILD_NUMBER}&quot;
+            ]
+          ],
+          &quot;accessory&quot;: [
+            &quot;type&quot;: &quot;image&quot;,
+            &quot;image_url&quot;: &quot; https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/jenkins.png&quot;,
+            &quot;alt_text&quot;: &quot;Slack Icon&quot;
+          ]
+        ],
+        [
+          &quot;type&quot;: &quot;section&quot;,
+          &quot;text&quot;: [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Failed Stage Name: * `${env.failedStage}`&quot;
+            ],
+          &quot;accessory&quot;: [
+            &quot;type&quot;: &quot;button&quot;,
+            &quot;text&quot;: [
+              &quot;type&quot;: &quot;plain_text&quot;,
+              &quot;text&quot;: &quot;Jenkins Build URL&quot;,
+              &quot;emoji&quot;: true
+            ],
+            &quot;value&quot;: &quot;click_me_123&quot;,
+            &quot;url&quot;: &quot;${env.BUILD_URL}&quot;,
+            &quot;action_id&quot;: &quot;button-action&quot;
+          ]
+        ],
+        [
+          &quot;type&quot;: &quot;divider&quot;
+        ],
+        [
+          &quot;type&quot;: &quot;section&quot;,
+          &quot;fields&quot;: [
+            [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Kubernetes Deployment Name:*\n${deploymentName}&quot;
+            ],
+            [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Node Port*\n32564&quot;
+            ]
+          ], 
+          &quot;accessory&quot;: [
+            &quot;type&quot;: &quot;image&quot;,
+            &quot;image_url&quot;: &quot; https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/k8s.png&quot;,
+            &quot;alt_text&quot;: &quot;Kubernetes Icon&quot;
+          ],
+        ],
+ 
+        [
+          &quot;type&quot;: &quot;section&quot;,
+          &quot;text&quot;: [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Kubernetes Node: * `controlplane`&quot;
+            ],
+          &quot;accessory&quot;: [
+            &quot;type&quot;: &quot;button&quot;,
+            &quot;text&quot;: [
+              &quot;type&quot;: &quot;plain_text&quot;,
+              &quot;text&quot;: &quot;Application URL&quot;,
+              &quot;emoji&quot;: true
+            ],
+            &quot;value&quot;: &quot;click_me_123&quot;,
+            &quot;url&quot;: &quot;${applicationURL}:32564&quot;,
+            &quot;action_id&quot;: &quot;button-action&quot;
+          ]
+        ],
+        [
+          &quot;type&quot;: &quot;divider&quot;
+        ],
+        [
+          &quot;type&quot;: &quot;section&quot;,
+          &quot;fields&quot;: [
+            [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Git Commit:*\n${GIT_COMMIT}&quot;
+            ],
+            [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*GIT Previous Success Commit:*\n${GIT_PREVIOUS_SUCCESSFUL_COMMIT}&quot;
+            ]
+          ], 
+          &quot;accessory&quot;: [
+            &quot;type&quot;: &quot;image&quot;,
+            &quot;image_url&quot;: &quot; https://raw.githubusercontent.com/sidd-harth/kubernetes-devops-security/main/slack-emojis/github.png&quot;,
+            &quot;alt_text&quot;: &quot;Github Icon&quot;
+          ]
+        ],
+        [
+          &quot;type&quot;: &quot;section&quot;,
+          &quot;text&quot;: [
+              &quot;type&quot;: &quot;mrkdwn&quot;,
+              &quot;text&quot;: &quot;*Git Branch: * `${GIT_BRANCH}`&quot;
+            ],
+          &quot;accessory&quot;: [
+            &quot;type&quot;: &quot;button&quot;,
+            &quot;text&quot;: [
+              &quot;type&quot;: &quot;plain_text&quot;,
+              &quot;text&quot;: &quot;Github Repo URL&quot;,
+              &quot;emoji&quot;: true
+            ],
+            &quot;value&quot;: &quot;click_me_123&quot;,
+            &quot;url&quot;: &quot;${env.GIT_URL}&quot;,
+            &quot;action_id&quot;: &quot;button-action&quot;
+          ]
+        ]
+      ]
+    ]
+  ]
+ 
+ slackSend(iconEmoji: emoji, attachments: attachments)
+ 
+}
+</code></pre>
+<p>This is a Groovy script designed to send a notification to a Slack channel based on the outcome of a Jenkins build. The alert uses the Jenkins Slack plugin to post messages to the Slack channel.</p>
+<p>The script defines a function called call that takes an optional buildStatus parameter, which defaults to 'STARTED'. The function first sets buildStatus to 'SUCCESS' if it is not already defined.</p>
+<p>Next, the function sets the color and emoji for the Slack message based on the buildStatus value.</p>
+<p>If buildStatus is 'SUCCESS', the color is set to green ('#47ec05') and the emoji is set to ':ww:'.</p>
+<p>If buildStatus is 'UNSTABLE', the color is set to yellow ('#d5ee0d') and the emoji is set to ':deadpool:'. Otherwise, the color is set to red ('#ec2805') and the emoji is set to ':hulk:'.</p>
+<p>TheSlack message is defined using an attachments array. The attachments array contains a single attachment object that specifies the color and content of the Slack message. The attachment contains several sections that provide information about the build, including the job name, build number, failed stage name, Kubernetes deployment name, node port, application URL, Git commit,</p>
+<p>Git branch, and GitHub repo URL.</p>
+<p>The message is sent using the slackSend function with the iconEmoji and attachments parameters. The iconEmoji parameter specifies the emoji to use as the icon for the Slack message. The attachments parameter specifies the attachments array containing the message content.</p>
+<h1>Jenkinsfile - Add Slack Notification in Post Success</h1>
+<pre><code>@Library('slack') _
+ 
+/////// ******************************* Code for fectching Failed Stage Name ******************************* ///////
+import io.jenkins.blueocean.rest.impl.pipeline.PipelineNodeGraphVisitor
+import io.jenkins.blueocean.rest.impl.pipeline.FlowNodeWrapper
+import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
+import org.jenkinsci.plugins.workflow.actions.ErrorAction
+ 
+// Get information about all stages, including the failure cases
+// Returns a list of maps: [[id, failedStageName, result, errors]]
+@NonCPS
+List &lt; Map &gt; getStageResults(RunWrapper build) {
+ 
+  // Get all pipeline nodes that represent stages
+  def visitor = new PipelineNodeGraphVisitor(build.rawBuild)
+  def stages = visitor.pipelineNodes.findAll {
+    it.type == FlowNodeWrapper.NodeType.STAGE
+  }
+ 
+  return stages.collect {
+    stage -&gt;
+ 
+      // Get all the errors from the stage
+      def errorActions = stage.getPipelineActions(ErrorAction)
+    def errors = errorActions?.collect {
+      it.error
+    }.unique()
+ 
+    return [
+      id: stage.id,
+      failedStageName: stage.displayName,
+      result: &quot;${stage.status.result}&quot;,
+      errors: errors
+    ]
+  }
+}
+ 
+// Get information of all failed stages
+@NonCPS
+List &lt; Map &gt; getFailedStages(RunWrapper build) {
+  return getStageResults(build).findAll {
+    it.result == 'FAILURE'
+  }
+}
+ 
+/////// ******************************* Code for fectching Failed Stage Name ******************************* ///////
+ 
+pipeline {
+  agent any
+ 
+  environment {
+    deploymentName = &quot;devsecops&quot;
+    containerName = &quot;devsecops-container&quot;
+    serviceName = &quot;devsecops-svc&quot;
+    imageName = &quot;siddharth67/numeric-app:${GIT_COMMIT}&quot;
+    applicationURL = &quot; http://devsecops-demo.eastus.cloudapp.azure.com&quot;
+    applicationURI = &quot;/increment/99&quot;
+  }
+ 
+  stages {
+ 
+    stage('Testing Slack - 1') {
+      steps {
+        sh 'exit 0'
+      }
+    }
+ 
+    stage('Testing Slack - Error Stage') {
+      steps {
+        sh 'exit 0'
+      }
+    }
+ 
+  }
+ 
+  post {
+    //    always { 
+    //      junit 'target/surefire-reports/*.xml'
+    //      jacoco execPattern: 'target/jacoco.exec'
+    //      pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+    //      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+    //      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
+ 
+    // //Use sendNotifications.groovy from shared library and provide current build result as parameter 
+    //      //sendNotification currentBuild.result
+    //    }
+ 
+    success {
+      script {
+        /* Use slackNotifier.groovy from shared library and provide current build result as parameter */
+        env.failedStage = &quot;none&quot;
+        env.emoji = &quot;:white_check_mark: :tada: :thumbsup_all:&quot;
+        sendNotification currentBuild.result
+      }
+    }
+ 
+    failure {
+      script {
+        //Fetch information about  failed stage
+        def failedStages = getFailedStages(currentBuild)
+        env.failedStage = failedStages.failedStageName
+        env.emoji = &quot;:x: :red_circle: :sos:&quot;
+        sendNotification currentBuild.result
+      }
+    }
+  }
+ 
+}
+</code></pre>
+<p>This is a Jenkins pipeline script that defines two functions for fetching information about failed stages in a Jenkins pipeline build.</p>
+<p>The first function, getStageResults(RunWrapper build), fetches information about all stages in the pipeline, including the failure cases. It does this by using the PipelineNodeGraphVisitor class to traverse the pipeline graph and find all nodes that represent stages. For each stage node, it collects information such as the stage ID, display name, status result, and any errors associated with the stage. The function returns a list of maps, where each map contains this information for a single stage.</p>
+<p>The second function, getFailedStages(RunWrapper build), uses the getStageResults function to fetch information about all stages and then filters this list to only include the stages that have a status result of 'FAILURE'. This function returns a list of maps, where each map contains information about a single failed stage, including the stage ID, display name, and any errors associated with the stage.</p>
+<p>The script also includes an import statement for a Jenkins shared library called 'slack', and it uses the @NonCPS annotation to indicate that the two functions should not be checkpointed and should be executed entirely in memory. Additionally, the script includes some import statements for various Jenkins and pipeline classes that are needed for the getStageResults function.</p>
+<p>Within the post block, there is a failure section, which is executed only if the pipeline build has failed.</p>
+<p>Within the failure section, there is a script block, which contains some code for sending a notification about the failed build.</p>
+<p>The code first calls the getFailedStages function, which was defined in a previous part of the pipeline script, to fetch information about the failed stages in the pipeline build. It then sets two environment variables: failedStage, which is set to the name of the first failed stage, and emoji, which is set to a string of emojis to be included in the notification message.</p>
+<p>Finally, the sendNotification function is called with the currentBuild.result as its argument, which sends a notification message with the result of the pipeline build (i.e., "FAILURE") and includes the failedStage and emoji variables in the message.</p>
+<p>Overall, this post block and the getFailedStages function are part of a larger pipeline script that is designed to send notifications when a pipeline build fails, and to include information about the failed stages in the notification message.</p>
+<p>BING:</p>
+<p>The code has two main parts:</p>
+<ul>
+<li>
+<p>A @Library annotation that imports a shared library called 'slack', which presumably contains some functions or variables related to sending notifications to Slack.</p>
+</li>
+<li>
+<p>A custom function called getFailedStages that takes a RunWrapper object as an argument and returns a list of maps containing information about all the failed stages in the pipeline run. The function uses some classes and methods from the io.jenkins.blueocean.rest.impl.pipeline package, which provides an API for accessing pipeline data. The function iterates over all the pipeline nodes that represent stages, and collects their id, name, result, and errors into a list.</p>
+</li>
+</ul>
+<p>The purpose of this function is probably to report the failed stages to Slack or some other channel, using the imported library. The function is annotated with @NonCPS, which means it is not subject to the CPS (Continuation Passing Style) transformation that Jenkins applies to pipeline scripts. This allows the function to use some Groovy features that are not compatible with CPS, such as closures and collections.</p>
+<p>I hope this helps you understand the code better. If you want to learn more about Jenkins pipeline code, you can check out these resources:</p>
+<ul>
+<li>
+<p>Pipeline as Code: <a href="https://www.jenkins.io/doc/book/pipeline-as-code/">https://www.jenkins.io/doc/book/pipeline-as-code/</a></p>
+</li>
+<li>
+<p>Pipeline: <a href="https://www.jenkins.io/doc/book/pipeline/">https://www.jenkins.io/doc/book/pipeline/</a></p>
+</li>
+<li>
+<p>Scripted Pipeline Syntax: <a href="https://www.jenkins.io/doc/book/pipeline/syntax/">https://www.jenkins.io/doc/book/pipeline/syntax/</a></p>
+</li>
+<li>
+<p>Blue Ocean Pipeline REST API: <a href="https://github.com/jenkinsci/blueocean-plugin/tree/master/blueocean-rest">https://github.com/jenkinsci/blueocean-plugin/tree/master/blueocean-rest</a></p>
+</li>
+</ul>
+<p>Source: Conversation with Bing, 4/20/2023</p>
+<p>(1) Pipeline as Code. <a href="https://www.jenkins.io/doc/book/pipeline-as-code/">https://www.jenkins.io/doc/book/pipeline-as-code/</a>.</p>
+<p>(2) Pipeline. <a href="https://www.jenkins.io/doc/book/pipeline/">https://www.jenkins.io/doc/book/pipeline/</a>.</p>
+<hr />
+<p>BING</p>
+<p>The code starts with a @Library annotation, which imports a shared library called 'slack'. This library provides some functions for sending notifications to Slack channels. Then it defines a function called getStageResults, which takes a RunWrapper object as an argument and returns a list of maps containing information about all the stages in the pipeline, such as their ids, names, results, and errors. This function uses some classes from the io.jenkins.blueocean package, which are part of the Blue Ocean plugin that provides a modern user interface for Jenkins pipelines³.</p>
+<p>Next, the code defines another function called getFailedStages, which takes a RunWrapper object as an argument and returns a list of maps containing information about only the failed stages in the pipeline. This function calls the getStageResults function and filters out the stages that have a result of 'FAILURE'.</p>
+<p>Then the code begins the declarative pipeline block with the keyword pipeline. Inside this block, there are several sections and directives that define the behavior and structure of the pipeline. The first section is agent, which specifies where the entire pipeline or a specific stage will execute in the Jenkins environment. In this case, the agent is set to any, which means thatany available agent can run the pipeline.</p>
+<p>The next section is post, which defines some actions to take after the pipeline or a stage has completed. In this case, there are two post conditions: success and failure. The success condition executes when thepipeline or stage has completed successfully, and the failure condition executes when the pipeline or stage has failed. Inside each condition, there is a script block that contains some Groovy code to execute. The code uses some environment variables suchas currentBuild and env to access information about the current build and its environment.</p>
+<p>The code inside the success condition sets the env.failedStage variable to "none" and the env.emoji variable to some emoji symbols that indicate success. Then it calls the sendNotification function from the slack library and passes the currentBuild.result as an argument. This function sends a notification to a Slack channel with some information about the build result and status.</p>
+<p>The code inside the failure condition calls the getFailedStages function and assigns its return value to a variable called failedStages. Then it sets the env.failedStage variable to the name of the failed stage and the env.emoji variable to some emoji symbols that indicate failure. Then it calls the sendNotification function from the slack library and passes the currentBuild.result as an argument. This function sends a notification to a Slack channel with some information about the build result and status.</p>
+<p>The code does not have any stages section, which is where normally one would define the stages of the pipeline and their steps. This means that this code is meant to be used as a shared library or a template for other pipelines that define their own stages.</p>
+<p>Source: Conversation withBing, 4/20/2023</p>
+<p>(3) Getting Started with Pipelines. <a href="https://www.jenkins.io/pipeline/getting-started-pipelines/">https://www.jenkins.io/pipeline/getting-started-pipelines/</a>.</p>
+<hr />
+<p>GOOGLE BARD</p>
+<p>The code you provided is a Jenkins pipeline that can be used to notify Slack when a build fails. The pipeline first imports the following libraries:</p>
+<pre><code>  - slack: This library is used to send notifications to Slack.
+
+  - io.jenkins.blueocean.rest.impl.pipeline.PipelineNodeGraphVisitor: This library is used to get information about the stages of a pipeline.
+
+  - io.jenkins.blueocean.rest.impl.pipeline.FlowNodeWrapper: This library is used to represent a stage in a pipeline.
+
+  - org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper: This library is used to represent a build in Jenkins.
+
+  - org.jenkinsci.plugins.workflow.actions.ErrorAction: This library is used to represent an error action in a pipeline.
+</code></pre>
+<p>The pipeline then defines a function called getStageResults(). This function takes one argument, build, which is a RunWrapper object that represents the build. The function returns a list of maps. Each map in the list represents a stage in the build. The maps have the following properties:</p>
+<pre><code>  - id: The ID of the stage.
+
+  - failedStageName: The name of the failed stage.
+
+  - result: The result of the stage.
+
+  - errors: A list of errors that occurred in the stage.
+</code></pre>
+<p>The pipeline then defines a function called getFailedStages(). This function takes one argument, build, which is a RunWrapper object that represents the build. The function returns a list of maps. Each map in the list represents a failed stage in the build. The maps have the same properties as the maps returned by the getStageResults() function.</p>
+<p>The script then defines a function called getFailedStages(). This function takes one argument, build, which is a RunWrapper object.</p>
+<p>The function simply calls the getStageResults() function and passes it the build argument. The function then filters the results to only include stages with a result of FAILURE.</p>
+<p>The script finally calls the slackSend() function to send a notification to Slack. The function passes the following arguments to the slackSend() function:</p>
+<pre><code>  - color: The color of the notification
+
+  - title: The title of the notification
+
+  - text: The text of the notification
+
+  - attachments: The attachments for the notification
+</code></pre>
+<p>The slackSend() function is a Groovy function that is defined in the slack library. The function sends a notification to Slack. The notification can have a color, title, text, and attachments.</p>
+<p>The pipeline then defines a post section. This section is executed when the build is finished. The post section has two branches: a success branch and a failure branch.</p>
+<p>The success branch is executed when the build succeeds. The success branch does the following:</p>
+<pre><code>  - Sets the environment variable failedStage to the empty string.
+
+  - Sets the environment variable emoji to a list of emojis that indicate success.
+
+  - Calls the sendNotification() function with the current build's result as the argument.
+</code></pre>
+<p>The failure branch is executed when the build fails. The failure branch does the following:</p>
+<pre><code>  - Gets a list of failed stages from the getFailedStages() function.
+
+  - Sets the environment variable failedStage to the name of the first failed stage.
+
+  - Sets the environment variable emoji to a list of emojis that indicate failure.
+
+  - Calls the sendNotification() function with the current build's result as the argument.
+</code></pre>
+<p>The sendNotification() function is a function that is defined in the slack library. This function takes one argument, result, which is the result of the build. The function sends a notification to Slack that contains the following information:</p>
+<pre><code>  - The name of the build.
+
+  - The result of the build.
+
+  - The name of the failed stage, if the build failed.
+
+  - A list of emojis that indicate the result of the build.
+</code></pre>
+<p>The following is an example of a notification that is sent to Slack when a build succeeds:</p>
+<p>Build <code>my-build</code> has succeeded!</p>
+<p>The following is an example of a notification that is sent to Slack when a build fails:</p>
+<p>Build <code>my-build</code> has failed!</p>
+<p>The failed stage is <code>deploy</code>.</p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

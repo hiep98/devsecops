@@ -1,0 +1,488 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>19. Fix X-Content-Type-Options Header Missing</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Fix X-Content-Type-Options Header Missing</h1>
+
+<p>Now we go to fix X-Content-Type-Options Header Missing. I was found this article have instruction to fix this issue.</p>
+<p><a href="https://stackoverflow.com/questions/52034082/how-to-set-header-x-content-type-options-nosniff-in-springboot-application">https://stackoverflow.com/questions/52034082/how-to-set-header-x-content-type-options-nosniff-in-springboot-application</a></p>
+<p>First, we need and dependency below into pom.xml</p>
+<pre><code>
+&lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+            &lt;!-- &lt;version&gt;2.3.12.RELEASE&lt;/version&gt; --&gt;
+&lt;/dependency&gt;
+ 
+</code></pre>
+<p>Second, we create a new class, this class need inside source code folder.</p>
+<p>This is my directory "devsecops/WebSecurityConfig.java". So package will be the same with project name.</p>
+<pre><code>package com.devsecops;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+    }
+} 
+</code></pre>
+<p>According to this code, You will disable csrf protection. So you can remove http.csrf().disable(); out of code for secure measurement.</p>
+<p>Another way if you have false positive alerts like below and you want to ignore the warnings then you can do the following, we can also add our own rules to ignore it. Now, you run command below.</p>
+<pre><code>docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t $applicationURL:$PORT/v3/api-docs -f openapi -g zap-rules 
+</code></pre>
+<p>In this command,  "-g" tag is used to indicate the set of rules that will be used during the scan. Here, "zap-rules" refers to the set of rules that are bundled with OWASP ZAP, an open-source web application security scanner. These rules are used to detect and report the security vulnerabilities present in the API endpoints of an application.</p>
+<p>You can see below is a sample rule after run command above</p>
+<pre><code># zap-api-scan rule configuration file
+# Change WARN to IGNORE to ignore rule or FAIL to fail if rule matches
+# Active scan rules set to IGNORE will not be run which will speed up the scan
+# Only the rule identifiers are used - the names are just for info
+# You can add your own messages to each rule by appending them after a tab on each line.
+10003   WARN    (Vulnerable JS Library (Powered by Retire.js) - Passive/release)
+10009   WARN    (In Page Banner Information Leak - Passive/beta)
+10010   WARN    (Cookie No HttpOnly Flag - Passive/release)
+10011   WARN    (Cookie Without Secure Flag - Passive/release)
+10015   WARN    (Re-examine Cache-control Directives - Passive/release)
+10017   WARN    (Cross-Domain JavaScript Source File Inclusion - Passive/release)
+10019   WARN    (Content-Type Header Missing - Passive/release)
+10020   WARN    (Anti-clickjacking Header - Passive/release)
+10021   WARN    (X-Content-Type-Options Header Missing - Passive/release)
+Example false positive:
+WARN-NEW: X-Content-Type-Options Header Missing [100000] x 4 
+        http://192 (200)
+        http://192.168.207.129:31242/compare/10 (200)
+        http://192.168.207.129:31242/ (200)
+        http://192.168.207.129:31242/v3/api-docs (200)
+</code></pre>
+<p>Now, run this command:</p>
+<pre><code>docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t $applicationURL:$PORT/v3/api-docs -f openapi -c zap-rules -r zap_report.html
+</code></pre>
+<p>The <code>-c</code> flag in the command you provided is used to specify a configuration file containing rules for the scan. The rules file is used to configure which rules should be run during the scan and how they should be handled.</p>
+<p>In our case, the rules file is named <code>zap-rules</code>. It contains a list of rules with their corresponding rule identifiers and their handling configuration. The handling configuration can be set to either <code>WARN</code>, <code>IGNORE</code>, or <code>FAIL</code>.</p>
+<p>For example, rule number <code>10003</code> has a handling configuration of <code>WARN</code> and its name is "Vulnerable JS Library (Powered by Retire.js)". This means that if this rule matches during the scan, it will generate a warning message.</p>
+<p>To write your own rules file, you can create a text file with a <code>.conf</code> extension and use the following format:</p>
+<pre><code>&lt;rule_id&gt; &lt;handling_configuration&gt; &lt;rule_name&gt;
+ 
+For example:
+10001        WARN        Example Rule 1
+10002        IGNORE         Example Rule 2
+</code></pre>
+<p>Note: keep the space between each value with the tab button, do not use space button.</p>
+<p>Now you can create file like below to create custom rule to ignore false positive.</p>
+<p>The first value is the rule ID, you can see the report above, we have the ID 100000, the second value and we configure it as IGNORE, the last value isthe url we see in the report fox.</p>
+<pre><code># zap-api-scan rule configuration file
+# Change WARN to IGNORE to ignore rule or FAIL to fail if rule matches
+# Active scan rules set to IGNORE will not be run which will speed up the scan
+# Only the rule identifiers are used - the names are just for info
+# You can add your own messages to each rule by appending them after a tab on each line.
+100000  IGNORE  http://192.168.207.129:31242
+</code></pre>
+<p>Reference: <a href="https://www.zaproxy.org/docs/docker/api-scan/">OWASP ZAP – ZAP - API Scan (zaproxy.org)</a></p>
+<p><a href="https://www.zaproxy.org/docs/docker/api-scan/">https://www.zaproxy.org/docs/docker/api-scan/</a></p>
+<p>Run again:</p>
+<pre><code>docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t $applicationURL:$PORT/v3/api-docs -f openapi -c zap-rules -r zap_report.html
+</code></pre>
+<p>ADDTION CREATE CUSTOM RULE:</p>
+<p>For example, if you have a configuration file named <code>my_zap_rules.conf</code>, you can use the <code>-c</code> tag to specify that configuration file:</p>
+<pre><code>docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py \
+-t $applicationURL:$PORT/v3/api-docs -f openapi -c my_zap_rules.conf \
+-r zap_report.html
+</code></pre>
+<p>A configuration file is a set of rules and configurations that you can use to tailor ZAP's scanning to your application. It can contain various settings such as the scope of the scan, authentication settings, and other customizations.</p>
+<p>Each rule in a configurationfile defines a specific security test that will be performed by ZAP. For example, a rule can be defined to check for SQL injection vulnerabilities, cross-site scripting (XSS) vulnerabilities, or other security issues.</p>
+<p>Here's an example of a rule that checks for SQL injection vulnerabilities:</p>
+<p>SQL injection check</p>
+<pre><code>alertSqlInjection=\
+    enabled\
+    alertThresholdHigh=3\
+    alertThresholdMedium=2\
+    attackStrength=medium\
+    ignorePublicOrigin=true\
+    ignoreTimeThresholdInSecs=3600\
+    maxErrors=-1\
+    matchRegex=\
+    onlyForward=false\
+    parameterName=\
+    poa=false\
+    useUnionBasedSqlInjection=true\
+    useErrorBasedSqlInjection=true\
+    useBooleanBasedSqlInjection=true\
+    usePiggyBackedSqlInjection=true\
+    useOutOfBandSqlInjection=true\
+    useSecondOrderSqlInjection=true
+</code></pre>
+<p>This rule checks for SQL injection vulnerabilities in the application. It specifies various settings such as the attack strength, whether to use union-based, error-based, or boolean-based SQL injection techniques, and whether to use out-of-band techniques.</p>
+<p>The SQL Injection check in the provided configuration file checks for SQL injection vulnerabilities in the application being tested by ZAP. This vulnerability allowsan attacker to inject malicious SQL code into a query, which can result in data loss, data manipulation or unauthorized access to sensitive data.</p>
+<p>The configuration file specifies various settings for the SQL Injection check, which can be matched against the requests and responses made by the application being tested. Here's an explanation of some of the important settings in the rule:</p>
+<p><code>enabled</code>: This setting specifies whether the rule is enabled or disabled. When set to , the rule will be used during the scan.<code>enabled</code></p>
+<p><code>attackStrength</code>: This setting defines the strength of the SQL injection attack. It can be set to either , or . The strength determines the complexity of the payload generated by ZAP. A higher strength increases the likelihood of detecting vulnerabilities but can also result in more false positives.<code>low``medium``high</code></p>
+<p><code>useUnionBasedSqlInjection</code>: When set to , ZAP will use union-based SQL injection, which is a technique that allows an attacker to retrieve data from the database.<code>true</code></p>
+<p><code>useErrorBasedSqlInjection</code>: When set to , ZAP will use error-based SQL injection, which is a technique that relies on error messages generated by the database to retrieve data.<code>true</code></p>
+<p><code>useBooleanBasedSqlInjection</code>: When set to , ZAP will use boolean-based SQL injection, which is a technique that relies on the true or false responses generated by the database to retrieve data.<code>true</code></p>
+<p><code>usePiggyBackedSqlInjection</code>: When set to , ZAP will use piggy-backed SQL injection, which is a technique that injects malicious code into fields that are not directly used in the query, but are included in the response.<code>true</code></p>
+<p>During the scan, ZAP will use the settings specified in the configuration file to generate payloads and test the application for SQL injection vulnerabilities. If ZAP detects a vulnerability, it will generate an alert, which can be viewed in the ZAP GUI or in the report generated after the scan.</p>
+<p>Example XSS check in aZAP configuration file:</p>
+<pre><code>alertXss=\
+    enabled\
+    alertThresholdHigh=3\
+    alertThresholdMedium=2\
+    attackStrength=medium\
+    ignorePublicOrigin=true\
+    ignoreTimeThresholdInSecs=3600\
+    maxErrors=-1\
+    matchRegex=\
+    onlyForward=false\
+    parameterName=\
+    poa=false\
+    scanHeadersAllRequests=false\
+    scanHeadersInAttack=false\
+    showEvidence=true\
+    stripScriptTags=false\
+    testAllTags=false\
+    variant=0
+</code></pre>
+<p>This rule checks for cross-site scripting (XSS) vulnerabilities in the application being tested by ZAP. An XSS vulnerability allows an attacker to inject malicious code into a web page that can steal data or modify the behavior of the page.</p>
+<p>The configuration file specifies various settings for the XSS check, which can be matched against the requests and responses made by the application being tested. Here's an explanation of some of the important settings in the rule:</p>
+<p><code>enabled</code>: This setting specifies whether the rule is enabled or disabled. When set to <code>enabled</code>, the rule will be used during the scan.</p>
+<p><code>attackStrength</code>: This setting defines the strength of the XSS attack. It can be set to either <code>low</code>, <code>medium</code> or <code>high</code>. The strength determines the complexity of the payload generated by ZAP. A higher strength increases the likelihood of detecting vulnerabilities but can also result in more false positives.</p>
+<p><code>stripScriptTags</code>: When set to <code>false</code>, ZAP will not remove script tags from the response before testing for XSS vulnerabilities. If the application is vulnerable to XSS attacks, ZAP will generate an alert with details of the attack.</p>
+<p><code>testAllTags</code>: When set to <code>false</code>, ZAP will only test input fields for XSS vulnerabilities. If set to <code>true</code>, ZAP will test all tags for vulnerabilities, including tags that are normally not used for user input.</p>
+<p>Learn more:</p>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">SQL </a></p>
+<p><a href="https://github.com/zaproxy/zap-extensions/blob/main/addOns/ascanrules/src/main/java/org/zaproxy/zap/extension/ascanrules/SqlInjectionScanRule.java">zap-extensions/SqlInjectionScanRule.java at m</a></p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

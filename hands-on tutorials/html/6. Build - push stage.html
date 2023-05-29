@@ -1,0 +1,555 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>6. Build - push stage</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Build - push stage</h1>
+
+<p>Create Dockerfile</p>
+<pre><code>FROM openjdk:8-jdk-alpine
+EXPOSE 8080
+ARG JAR_FILE=target/*.jar
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT [&quot;java&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]
+</code></pre>
+<p>The dockerfile you provided will create a Docker container which uses an OpenJDK 8 JVM and exposes port 8080. The <strong><code>ARG</code></strong>statement allows you to specify an argument that can be used to customize the contents of the Docker container. In this case, the argument <strong><code>JAR_FILE</code></strong> can be used to specify which jar file should be added to the container. The <strong><code>ADD</code></strong>statement will then add the specified jar file to the container, and the <strong><code>ENTRYPOINT</code></strong>statement will set the command to be run when the container is launched. This will launch the jar file in the container, allowing your application to be executed.</p>
+<p>Update Jenkins file:</p>
+<pre><code>pipeline {
+  agent any
+  stages {
+      stage('Build Artifact') {
+            steps {
+              sh &quot;mvn clean package -DskipTests=true&quot;
+              archive 'target/*.jar' //so that they can be downloaded later
+            }
+        }
+      stage('Unit Tests') {
+            steps {
+              sh &quot;mvn test&quot;
+            }
+            post {
+              always {
+                junit 'target/surefire-reports/*.xml'
+                jacoco execPattern: 'target/jacoco.exec'
+              }
+            }
+        }
+      stage('Docker Build and Push') {
+            steps {
+              withDockerRegistry([credentialsId: &quot;docker-hub&quot;, url: &quot;&quot;]) {
+                sh 'printenv'
+                sh 'docker build -t nthiep1998/numeric-app:&quot;&quot;$GIT_COMMIT&quot;&quot; .'
+                sh 'docker push nthiep1998/numeric-app:&quot;&quot;$GIT_COMMIT&quot;&quot;'
+              }
+            }     
+        }   
+  }
+}
+</code></pre>
+<p>In the Jenkins file, the <strong><code>stage('Build Artifact - Maven')</code></strong>stage is responsible for building the application code into a jar file, which is then archived. This step is typically achieved using the Maven build tool, hence the <strong><code>mvn clean package -DskipTests=****true</code></strong>command to invoke the Maven build. The <strong><code>archive 'target/*.jar'</code></strong>step is then used to archive the built jar file.</p>
+<p>The Jenkins stage code you provided is defining a stage in a Jenkins build pipeline. This stage is responsible for building and pushinga Docker image to a Docker Registry. The <strong><code>withDockerRegistry</code></strong>step allows the user to login to the specified Docker Registry using the given credentials. The <strong><code>sh</code></strong>steps then build the Docker image, tagging it with the current git commit id, and then pushing the image to the registry.</p>
+<p><strong>k8s Credentical</strong></p>
+<p>cat /root/.kube/config</p>
+<p>Go to Manage Jenkins - Credentials System - Global credentials</p>
+<p>Create kubeconfig and add file config above</p>
+<p><img alt="" src="../media/6.%20Build%20-%20push%20stage_1.png" /></p>
+<p><img alt="" src="../media/6.%20Build%20-%20push%20stage_2.png" /></p>
+<p><strong>k8s deployment</strong></p>
+<p>Create file deployment</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devsecops
+  name: devsecops
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devsecops
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: devsecops
+    spec:
+      containers:
+      - image: replace
+        name: devsecops-container
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: devsecops
+  name: devsecops-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: devsecops
+  type: NodePort
+</code></pre>
+<p>The code above is a YAML (YAML Ain’t Markup Language) file that defines two Kubernetes objects: a Deployment and a Service.</p>
+<p>A Deployment is an object that can create and update a set of identical pods, which are units of work that run specific containers. A Service is an object that defines a logical set of pods and a policy by which to access them.</p>
+<p>Here is a line-by-line explanation of the code:</p>
+<ul>
+<li>
+<p>apiVersion: apps/v1 specifies the API version for the Deployment object</p>
+</li>
+<li>
+<p>kind: Deployment specifies the type of object to create</p>
+</li>
+<li>
+<p>metadata: contains metadata about the object, such as its name and labels</p>
+</li>
+<li>
+<p>labels: assigns key-value pairs to identify the object</p>
+</li>
+<li>
+<p>app: devsecops assigns the label “app” with the value “devsecops” to the Deployment</p>
+</li>
+<li>
+<p>name: devsecops assigns the name “devsecops” to the Deployment</p>
+</li>
+<li>
+<p>spec: contains the specification of the desired state of the object</p>
+</li>
+<li>
+<p>replicas: 2 specifies that two pods should be created and maintained by this Deployment</p>
+</li>
+<li>
+<p>selector: defines how to select pods that belong to this Deployment</p>
+</li>
+<li>
+<p>matchLabels: specifies that only pods with matching labels should be selected</p>
+</li>
+<li>
+<p>app: devsecops specifies that only pods with the label “app” equal to “devsecops” should be selected</p>
+</li>
+<li>
+<p>strategy: {} specifies an empty strategy for updating pods (the default is rolling update)</p>
+</li>
+<li>
+<p>template: defines what each pod should look like</p>
+</li>
+<li>
+<p>metadata: contains metadata about each pod, such as its labels</p>
+</li>
+<li>
+<p>labels: assigns key-value pairs to identify each pod</p>
+</li>
+<li>
+<p>app: devsecops assigns the label “app” with the value “devsecops” to each pod (this matches with the selector above)</p>
+</li>
+<li>
+<p>spec: contains the specification of each pod’s containers and volumes</p>
+</li>
+<li>
+<p>containers: defines one or more containers that run in each pod</p>
+</li>
+<li>
+<ul>
+<li>image: replace specifies that this container should use an image named “replace”</li>
+</ul>
+</li>
+<li>
+<p>name: devsecops-container assigns a name to this container</p>
+</li>
+</ul>
+<p>The three dashes indicate a new document in YAML. The following lines define another Kubernetes object: a Service.</p>
+<ul>
+<li>
+<p>apiVersion: v1 specifies the API version for the Service object (different from apps/v1 for Deployments)</p>
+</li>
+<li>
+<p>kind: Service specifies the type of object to create</p>
+</li>
+<li>
+<p>metadata: contains metadata about this Service, such as its name and labels</p>
+</li>
+</ul>
+<p>The first code block defines a Kubernetes Deployment. <strong><code>apiVersion</code></strong>specifies what version of the Kubernetes API the configuration is for, in this case apps/v1. <strong><code>kind</code></strong>defines the type of extract, in this case a Deployment. <strong><code>m****etadata</code></strong>provides additional configuration such as labels and a name. <strong><code>spec</code></strong>defines parameters of the deployment such as the number of replicas, selector, and template. The template defines container details such as an image and a name.</p>
+<p>The second code block defines a Kubernetes Service. <strong><code>apiVersion</code></strong>specifies the version of the Kubernetes API the configuration is for, in this case v1. <strong><code>kind</code></strong>defines the type of resource, in this case a Service. <strong><code>metadata</code></strong>provides additional configuration such as labels and a name. <strong><code>spec</code></strong>defines parameters of the service such as the ports, protocol, targetPort, selector and type. The ports and targetPort define the port which the Service will be accessible on.</p>
+<p>The source code above creates a Deployment and a Service for an application named “devsecops”. The Deployment ensures that two pods are always running with a container imagenamed “replace”. The Service exposes these pods to other pods or external clients using port 8080.</p>
+<p>The Deployment and the Service are linked by the label “app: devsecops”, which means that only pods with this label will be selected by the Service. The Service uses a type of NodePort, which means that it assigns a port on each node in the cluster to forward traffic to the pods.</p>
+<p>This way, you can access your application from any node in the cluster using its IP address and the assigned port. For example,if one of your nodes has an IP address of 192.168.1.10 and the assigned port is 30000, you can access your application by visiting <a href="http://192.168.1.10:30000">http://192.168.1.10:30000</a>.</p>
+<p>Deploy Node-Service in Kubernetes Default Namespace:</p>
+<pre><code>kubectl -n default create deploy node-app --image siddharth67/node-service:v1 
+kubectl -n default expose deploy node-app --name node-service --port 5000
+</code></pre>
+<p>Using dedocker to reverse node-service image to dockerfile, we have dockerfile below:</p>
+<pre><code>FROM siddharth67/node-service:v1
+ADD file:43a95cc218d164ff589cb91519964373d53b607469f5ccce7256319163 in /
+ENV VERSION=v5.7.1 NPM_VERSION=3
+RUN /bin/sh -c apk add --update curl make gcc g++ python linux-headers paxctl libgcc libstdc++ binutils-gold \
+    &amp;&amp;       curl -sSL https://nodejs.org/dist/${VERSION}/node-${VERSION}.tar.gz | tar -xz \
+    &amp;&amp;       cd /node-${VERSION} \
+    &amp;&amp;       ./configure --prefix=/usr --without-snapshot --fully-static \
+    &amp;&amp;       make -j$(grep -c ^processor /proc/cpuinfo 2&gt;/dev/null || 1) \
+    &amp;&amp;       make install \
+    &amp;&amp;       paxctl -cm /usr/bin/node \
+    &amp;&amp;       cd / \
+    &amp;&amp;       npm install -g npm@${NPM_VERSION} \
+    &amp;&amp;       find /usr/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf;       apk del curl make gcc g++ python linux-headers paxctl binutils-gold \
+    &amp;&amp;       rm -rf /etc/ssl /node-${VERSION}       /usr/share/man /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp                             /usr/lib/node_modules/npm/man /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html
+RUN /bin/sh -c mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY dir:8980f5119de2a57a2d0613bbfb52aa57920330776afe6414fd673cb49c93f819 in /usr/src/app/
+RUN /bin/sh -c npm install
+EXPOSE 5000
+CMD [&quot;npm&quot; &quot;start&quot;]
+</code></pre>
+<p>Reference: <a href="https://raw.githubusercontent.com/mrhavens/Dedockify/master/dedockify.py">https://raw.githubusercontent.com/mrhavens/Dedockify/master/dedockify.py</a></p>
+<p>Edit Source code application:</p>
+<pre><code>## Within /src/main/java/com/devsecops/NumericController.java  
+## use node-service:5000/plusone as baseURL and 
+## comment the localhost:5000
+private static final String baseURL = &quot; http://node-service:5000/plusone&quot;;
+//private static final String baseURL = &quot; http://localhost:5000/plusone&quot;;
+</code></pre>
+<p>Update  Jenkins file:</p>
+<pre><code> stage('Kubernetes Deployment - DEV') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfig']) {
+          sh &quot;sed -i 's#replace#repo/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml&quot;
+          sh &quot;kubectl apply -f k8s_deployment_service.yaml&quot;
+        }
+      }
+    }
+</code></pre>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

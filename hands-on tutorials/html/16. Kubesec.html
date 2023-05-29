@@ -1,0 +1,498 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>16. Kubesec</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Kubesec</h1>
+
+<p>OPA and Kubesec are both open-source tools that can be used to secure Kubernetes clusters. However, they have different strengths and weaknesses, and they are typically used together to provide a more comprehensive security solution.</p>
+<p>OPA (Open Policy Agent) is a general-purpose policy engine that can be used to enforce a wide range of policies, including security policies. It is based on the Rego language, which is a powerful and expressive language for writing policies. OPA can be used to enforce policies on Kubernetes resources, as well as on other types of resources, such as files and databases.</p>
+<p>Kubesec is a security tool for Kubernetes that focuses on identifying and remediating security vulnerabilities. It does this by scanning Kubernetes clusters for known vulnerabilities and then providing recommendations for how to fix them. Kubesec can also be used to enforce security policies, but it is not as flexible as OPA in this regard.</p>
+<p>OPA and Kubesec can be used together to provide a more comprehensive security solution for Kubernetes clusters. OPA can be used to enforce policies, while Kubesec can be used to identify and remediate vulnerabilities. This combination of tools can help to protect Kubernetes clusters from a wide range of security threats.</p>
+<p>Here are some of the key differences between OPA and Kubesec:</p>
+<p>•  OPA is a general-purpose policy engine, while Kubesec is a security tool for Kubernetes.</p>
+<p>•  OPA is based on the Rego language, while Kubesec uses its own proprietary language.</p>
+<p>•  OPA can be used to enforce policies on a wide range of resources, while Kubesec is focused on Kubernetes resources.</p>
+<p>•  OPA is more flexible than Kubesec in terms of how it can be used to enforce policies.</p>
+<p>Here are some of the reasons why you might need to use both OPA and Kubesec:</p>
+<p>•  To get the benefits of both tools. OPA is a powerful policy engine that can be used to enforce a wide range of policies, while Kubesec is a security tool that can identify and remediate vulnerabilities.</p>
+<p>•  To cover different use cases. OPA is a general-purpose policy engine, while Kubesec is focused on Kubernetes resources. If you need to enforce policies on other types of resources, you will need to use OPA.</p>
+<p>•  To get the best of both worlds. OPA is more flexible than Kubesec in terms of how it can be used to enforce policies. However, Kubesec is easier to use and has a wider range of features. By using both tools, you can get the benefits of both worlds.</p>
+<p>Question:  If I use both of these tools to scan security for k8s, is there any overlap?</p>
+<p>Answer:</p>
+<p>Yes, there is a potential for overlap if you use both OPA and kubesec to scan for security issues in Kubernetes. This is because OPA already comes with some built-in policies for Kubernetes security, including policies related to secrets management, which may overlap with the functionality provided by kubesec.</p>
+<p>However, the extent and significance of the overlap would depend on which policies you enable in OPA and how you configure kubesec. For example, if you disable the built-in Kubernetes security policies in OPA and only use it for other types of policies, you may not encounter much overlap with kubesec. Similarly, if you only use kubesec for scanning secrets andnot for other security checks, any overlap with OPA would be restricted to secret-related issues.</p>
+<p>Overall, it's best to carefully consider which tools and policies you need for your Kubernetes security posture and configure them appropriately, to avoid duplication or unnecessary complexity.</p>
+<p>Create file k8sec-scan.sh</p>
+<pre><code>#!/bin/bash
+#kubesec-scan.sh
+# using kubesec v2 api
+scan_result=$(curl -sSX POST --data-binary @&quot;k8s_deployment_service.yaml&quot; https://v2.kubesec.io/scan)
+scan_message=$(curl -sSX POST --data-binary @&quot;k8s_deployment_service.yaml&quot; https://v2.kubesec.io/scan | jq .[0].message -r ) 
+scan_score=$(curl -sSX POST --data-binary @&quot;k8s_deployment_service.yaml&quot; https://v2.kubesec.io/scan | jq .[0].score ) 
+ 
+# using kubesec docker image for scanning
+# scan_result=$(docker run -i kubesec/kubesec:512c5e0 scan /dev/stdin &lt; k8s_deployment_service.yaml)
+# scan_message=$(docker run -i kubesec/kubesec:512c5e0 scan /dev/stdin &lt; k8s_deployment_service.yaml | jq .[].message -r)
+# scan_score=$(docker run -i kubesec/kubesec:512c5e0 scan /dev/stdin &lt; k8s_deployment_service.yaml | jq .[].score)
+
+    # Kubesec scan result processing
+    # echo &quot;Scan Score : $scan_score&quot;
+    if [[ &quot;${scan_score}&quot; -ge 4 ]]; then
+        echo &quot;Result:&quot;
+        echo &quot;$scan_result&quot;
+        echo &quot;Score is $scan_score&quot;
+        echo &quot;Kubesec Scan $scan_message&quot;
+    else
+        echo &quot;Result:&quot;
+        echo &quot;$scan_result&quot;
+        echo &quot;Score is $scan_score, which is less than or equal to 5.&quot;
+        echo &quot;Scanning Kubernetes Resource has Failed&quot;
+        exit 1;
+    fi;
+</code></pre>
+<p>This shell script, named <strong><code>kubesec-scan.sh</code></strong>, uses the <strong><code>kubesec</code></strong>tool to perform a security scan on a Kubernetes deployment and service configuration file (<strong><code>k8s_deployment_service.yaml</code></strong>).</p>
+<p>To perform the scan, the script makes an HTTP POST request to the Kubesec API endpoint (<strong><code>https://v2.kubesec.io/scan</code></strong>) with the given configuration file as the input data. The scan result is stored in the <strong><code>scan_result</code></strong>variable, and other details such as the scan message and score are extracted using <strong><code>jq</code></strong>command and are stored in <strong><code>scan_message</code></strong>and <strong><code>scan_score</code></strong>variables respectively</p>
+<p>The script then evaluates the scan score (<strong><code>scan_score</code></strong>) and if it's greater than or equal to 4, it outputs the scan result along with the score and message. Otherwise, it prints an error indicating that the scan has failed and exits with a non-zero code.</p>
+<p>The script also provides an alternate method for performing the scan using the <strong><code>kubesec</code></strong>Docker image. This is commented out and can be used by swapping the comments with the <strong><code>curl</code></strong>method above.</p>
+<p>What is jq ?</p>
+<p>jq is short for "JSON Query". It is a command-line tool for processing and manipulating JSON data. jq is written in the C programming language and is available for most operating systems. It is free and open-source software.</p>
+<p>jq can be used to extract specific data from a JSON file, filter out unwanted data, and convert JSON data into a different format. jq is often used in conjunction with other command-line tools to process JSON data. For example, jq can be used to extract data from a JSON file and then use that data to update a database.</p>
+<p><code>jq .[0].message -r</code> is extracting the 'message' key from the first object in the JSON array (the security scan result), and with the -r flag, it is returning the raw output without quotes. <code>jq .[0].score</code> is extracting the 'score' key from the same object.</p>
+<p>Why need use [0] in jq ?</p>
+<p>In the given script, <strong><code>jq .[0].message -r</code></strong>and <strong><code>jq .[0].score</code></strong>are using the <strong><code>[0]</code></strong>index to extract information from the first object in the JSON array returned by the API.</p>
+<p>The reason for using <strong><code>[0]</code></strong>is that the API response is an array of JSON objects, where each object represents a scan result for a Kubernetes resource. We are interested in the first object as it represents the scan result for the deployment and service YAML file that we have submitted for scanning.</p>
+<p>If we do not use <strong><code>[0]</code></strong>and instead use <strong><code>jq .message</code></strong>, then <strong><code>jq</code></strong>will attempt to find the 'message' key from all the objects in the JSON array. This will not work in this case, as the 'message' key exists only inside the first object of the array. Therefore, we need to first select the first object using <strong><code>[0]</code></strong>and then extract information from it using the desired key.</p>
+<p>Reference jq:</p>
+<p><a href="https://exercism.org/tracks/jq">https://exercism.org/tracks/jq</a></p>
+<p><a href="https://www.baeldung.com/linux/jq-command-json">https://www.baeldung.com/linux/jq-command-json</a></p>
+<p>Edit jenkinsfile</p>
+<pre><code>stage('Vulnerability Scan - Kubernetes') {
+      steps {
+        parallel(
+          &quot;OPA Scan&quot;: {
+            sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
+          },
+          &quot;Kubesec Scan&quot;: {
+            sh &quot;bash kubesec-scan.sh&quot;
+          }
+          )
+        }
+    }
+</code></pre>
+<p>And build</p>
+<p><img alt="" src="../media/16.%20Kubesec_1.png" /></p>
+<p>After build, The log will show your score, thecriteria you achieved and advice to improve security for your k8s.</p>
+<p>And base on result, we can add serviceAccountName andreadOnlyRootFilesystem into file k8s_deployment_service.yaml to ensure it passes the kubesec test.</p>
+<pre><code>spec:
+      serviceAccountName: default
+      containers:
+      - image: replace
+        name: devsecops-container
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 100
+          readOnlyRootFilesystem: true
+</code></pre>
+<p>Because our script can't detect and auto-deploy when we update k8s_deployment_service.yaml file. So we will update the k8s-deployment.sh script</p>
+<pre><code>#!/bin/bash
+#k8s-deployment.sh
+DIFF_OUTPUT=$(kubectl diff -f k8s_deployment_service.yaml)
+# if [ -n &quot;$DIFF_OUTPUT&quot; ]; then
+#   # DIFF_OUTPUT is not empty, run your code here
+# else
+#   # DIFF_OUTPUT is empty, do nothing
+# fi
+#! $(kubectl diff -f k8s_deployment_service.yaml  &gt;/dev/null 2&gt;&amp;1)
+ 
+sed -i &quot;s#replace#${imageName}#g&quot; k8s_deployment_service.yaml
+kubectl -n default get deployment ${deploymentName} &gt; /dev/null
+if [[ $? -ne 0 || ! $(kubectl diff -f k8s_deployment_service.yaml)=&quot;&quot; ]]; then
+    echo &quot;deployment ${deploymentName} doesn't exist&quot;
+    kubectl -n default apply -f k8s_deployment_service.yaml
+else
+    echo &quot;deployment ${deploymentName} exists&quot;
+    echo &quot;image name - ${imageName}&quot;
+    kubectl -n default set image deploy ${deploymentName} ${containerName}=${imageName} --record=true
+Fi
+</code></pre>
+<p>Alternatively, we can all add the below code at the end of the file to check the description of all the pod</p>
+<pre><code># Get all pod names in current namespace
+pods=$(kubectl get pods -o jsonpath='{.items[*].metadata.name}')
+# Loop through each pod and describe its events
+for pod in $pods; do
+  echo &quot;Getting events for pod: $pod&quot;
+  kubectl get events --field-selector involvedObject.name=$pod --all-namespaces | awk -v var=&quot;$pod&quot; '$0 ~ var'
+done
+</code></pre>
+<p>After update script and build again, If you see this error in your pod, you need update your k8s depoyment file.</p>
+<p><img alt="" src="../media/16.%20Kubesec_2.png" /></p>
+<p>Next, update volumes in your deployment file like below.</p>
+<pre><code>spec:
+      volumes:
+      - name: vol
+        emptyDir: {}
+      serviceAccountName: default
+      containers:
+      - image: replace
+        name: devsecops-container
+        volumeMounts:
+        - mountPath: /tmp
+          name: vol
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 100
+          readOnlyRootFilesystem: true
+</code></pre>
+<p>specifies an emptyDir volume named "vol". An emptyDir volume is a temporary volume that is created when a Pod is created and deleted when the Pod is deleted. The emptyDir volume is initially empty, and all containers in the Pod can read and write to the same files in the emptyDir volume.</p>
+<p>The emptyDir volume is created on the node that the Pod is assigned to. The emptyDir volume is not persistent, and the data in the emptyDir volume is lost when the Pod is deleted.</p>
+<p>The emptyDir volume is a good choice for temporary data storage, such as scratch space for a disk-based merge sort or checkpointing a long computation for recovery from crashes.</p>
+<p>The emptyDir volume can be mounted in a container using the following syntax:</p>
+<pre><code>volumes:
+  - name: vol
+    emptyDir: {}
+ 
+containers:
+  - name: my-container
+    image: busybox
+    volumeMounts:
+      - name: vol
+        mountPath: /vol
+</code></pre>
+<p>In this example, the "my-container" container will have access to the emptyDir volume at the path "/vol".</p>
+<p>In Kubernetes, curly braces <code>{}</code> with nothing inside them represent an empty object or an empty dictionary. In the context of an <code>emptyDir</code> volume in a Kubernetes deployment file, an empty dictionary <code>{}</code> indicates that there are no specialized configuration options for this particular <code>emptyDir</code>.</p>
+<p>In other words, using an empty dictionary for an <code>emptyDir</code> volume means that Kubernetes should create a new, empty directory for the volume to be mounted on the container, using default settings. This directory is then isolated to the pod's lifecycle.</p>
+<p>Reference: <a href="https://kubernetes.io/docs/concepts/storage/volumes/">https://kubernetes.io/docs/concepts/storage/volumes/</a></p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

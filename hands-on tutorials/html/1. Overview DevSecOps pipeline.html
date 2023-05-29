@@ -1,0 +1,447 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>1. Overview DevSecOps pipeline</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Overview DevSecOps pipeline</h1>
+
+<p><img alt="" src="../media/1.%20Overview%20DevSecOps%20pipeline_1.png" /></p>
+<p>In this project, we will implement stages DevSecOps as follows:</p>
+<h3>1. Build Artifact</h3>
+<p>The first step is to build the artifact, which is the compiled Java Springboot application. This can be done using a variety of tools, such as Maven or Gradle.</p>
+<h3>2. Unit Tests</h3>
+<p>Once the artifact has been built, you can run unit tests to ensure that individual units of code are functioning correctly. Unit tests typically focus on testing small units of code in isolation, such as individual methods or classes. Unit tests are typically written by developers and are executed as part of the build process.</p>
+<h3>3. Mutation Tests</h3>
+<p>This stage performs mutation testing on the Java SpringBoot application artifact using the pitest-maven plugin. Mutation testing involves injecting artificial faults or mutations into the code to assess the effectiveness of the unit tests in detecting those faults. Mutation tests are designed to detect faults in the application code that may have been missed by traditional unit tests.</p>
+<h3>4. SonarQube SAST</h3>
+<p>This stage performs Static Application Security Testing (SAST) using SonarQube. SonarQube scans the Java SpringBoot application artifact for security vulnerabilities, code smells, and other code quality issues. It provides feedback on coding best practices, security vulnerabilities, and helps to ensure the codebase is secure and maintainable.</p>
+<h3>5. Vulnerability Scan</h3>
+<p>A vulnerability scan is a security scan that identifies known vulnerabilities in the software components, configurations or code. Vulnerability scans can be performed manually or using automated tools. In this project, this stage includes parallel dependency scan, OPA conftest docker scan, and trivy scan docker image.</p>
+<ul>
+<li>
+<p>Dependency scan is a technique that checks for vulnerabilities in the libraries or packages that your application depends on and ensuring that the latest security patches are applied to them. Using a tool like OWASP Dependency Check.</p>
+</li>
+<li>
+<p>OPA Conftest Docker scan: Open Policy Agent (OPA) is a general-purpose policy engine that can be used to enforce policies across various systems, including Kubernetes. Conftest is a utility that helps you write tests against structured configuration data using OPA. In this task, we are using Conftest to scan your Docker configuration files (e.g., Dockerfile, docker-compose.yml) to ensure they adhere to best practices and your organization's security policies. This helps you maintain a secure and compliant container environment.</p>
+</li>
+<li>
+<p>Trivy scan docker image: Trivy is a comprehensive vulnerability scanner for container images. It scans your Docker images for known vulnerabilities in the operating system packages and application dependencies. Trivy also checks for misconfigurations in your Docker images that could lead to security risks. By scanning docker images with Trivy, we can identify and fix vulnerabilities before deploying your containers to Kubernetes.</p>
+</li>
+</ul>
+<p>OPA conftest Docker scan and Trivy Docker scan serve different purposes in the vulnerability scanning process. Here's a comparison of the two:</p>
+<p><strong>OPA conftest Docker scan</strong>:</p>
+<ul>
+<li>
+<p>OPA (Open Policy Agent) is a general-purpose policy engine that can be used to enforce policies across various domains, including Kubernetes, Docker, and more.</p>
+</li>
+<li>
+<p>Conftest is a utility that helps you write tests against structured configuration data usingOPA.</p>
+</li>
+<li>
+<p>OPA conftest Docker scan focuses on evaluating Docker configuration files (e.g., Dockerfile, docker-compose.yml) against custom or predefined policies. These policies can cover best practices, security standards, and organization-specific requirements.</p>
+</li>
+<li>
+<p>The primary goal is to ensure that your Docker configurations are compliant with the desired policies and do not introduce potential security risks or misconfigurations.</p>
+</li>
+</ul>
+<p><strong>Trivy Docker scan</strong>:</p>
+<ul>
+<li>
+<p>Trivy is a vulnerability scanner specifically designed for containers and application dependencies.</p>
+</li>
+<li>
+<p>Trivy Docker scan focuses on scanning the Docker image for known vulnerabilities in the operating system packages and application dependencies.</p>
+</li>
+<li>
+<p>The primary goal is to identify and report any known security vulnerabilities in the packages and libraries used within the Docker image. It compares the image against known vulnerability databases like CVE/CWE and provides a CVE ID when vulnerabilities are detected.</p>
+</li>
+</ul>
+<p><strong>Why use both tools?</strong></p>
+<p>Using both OPA conftest Dockerscan and Trivy Docker scan provides a more comprehensive assessment of your Docker images' security:</p>
+<ul>
+<li>
+<p>OPA Conftest can prevent security issues by enforcing security policies, such as ensuring no or the correct user is used in the Dockerfile, and Trivy scan docker can detect and report issues that could be exploited.</p>
+</li>
+<li>
+<p>OPA conftest ensures that your Docker configurations are compliant with best practices and security standards, reducing the risk of misconfigurations.</p>
+</li>
+<li>
+<p>Trivy identifies known vulnerabilities in the operating system packages and application dependencies, helping you to address potential security risks before deploying the image.</p>
+</li>
+</ul>
+<p>By combining the strengths of both tools, you can achieve a higher level of confidence in the security and compliance of your Docker images.</p>
+<h3>6. Docker Build and Push</h3>
+<p>This stage builds Docker images of the Java SpringBoot application artifact and pushes them to a container registry, such as Docker Hub or a private registry. Docker images are used for packaging and deployment of the application in containers, which provide consistency and reproducibility in deployment across different environments.</p>
+<h3>7. K8s Scan</h3>
+<p>This stage involves scanning the Kubernetes cluster for security risks and vulnerabilities. This stage may have multiple parallel phases, such as:</p>
+<ul>
+<li>
+<p>Kubesec focuses on analyzing Kubernetes resource configurations for security risks. It performs static analysis Kubernetes YAML, JSON, or Helm chartsand provides a risk score based on the configuration settings. Kubesec checks for best practices and potential security risks, such as running containers as a non-root user, enforcing resource limits, and using the latest image versions. By including Kubesec in your pipeline, you can identify and mitigate potential security risks in your Kubernetes configurations before they are deployed to production.</p>
+</li>
+<li>
+<p>OPA conftest k8s scan: In this parallel,  OPA will scans the Kubernetes configuration files and policies with Open Policy Agent (OPA) conftest tool, to ensure that they follow security best practices.</p>
+</li>
+</ul>
+<p>A conftest scan can identify issues such as security configuration violations, namespace isolation violations, and Kubernetes deployment issues.</p>
+<ul>
+<li>Trivy K8s Scan: In the context of Kubernetes, Trivy can be used to  checks for vulnerabilities in the operating system packages and application dependencies that are part of the image. By scanning the images used in Kubernetes environment  and configuration issues, such as overly permissive Pod Security Policies, Kubernetes API state issues, and exposed secrets.  we can identify and address potential security vulnerabilities before deploying to a production environment.</li>
+</ul>
+<p>In summary, each parallel scan in your Kubernetes scanning stage serves a different purpose:</p>
+<p>Kubesec focuses on analyzing Kubernetes resource configurations for security risks.</p>
+<p>OPA Conftest enforces custom policies and compliance requirements on your Kubernetes configurations.</p>
+<p>Trivy scans container images for known vulnerabilities in the OS packages and application dependencies.</p>
+<p>By including all three parallel scans in your pipeline, you can ensure a comprehensive security and compliance assessment of your Kubernetes environment, reducing the risk of security breaches and maintaining consistency across your infrastructure.</p>
+<h3>8. K8s Deployment - DEV</h3>
+<p>Once the Docker image has been created, you can deploy it to a Kubernetes cluster in development. This will allow you to test the application in a production-like environment.</p>
+<h3>9. Integration Tests - DEV</h3>
+<p>Once the application has been deployed to development, you can run integration tests to verify that it is working as expected. Integration tests typically involve testing the application's interaction with other systems.</p>
+<h3>10. OWASP ZAP - DAST</h3>
+<p>OWASP ZAP is a dynamic analysis tool that can be used to scan web applications for potential security vulnerabilities.</p>
+<p>It can be integrated with your development environment to automatically scan the application for vulnerabilities as part of the development process.</p>
+<h3>11. Promote to Production</h3>
+<p>This stage promotes the Java SpringBoot application artifact to production-ready status based on the results of previous stages. This may involve additional checks, approvals, and validations before deploying the application to the production environment.</p>
+<h3>12. K8s CIS Benchmark</h3>
+<p>This stage running a Kubernetes CIS Benchmark assessment using the kube-bench tool to evaluate the security posture of the Kubernetes cluster.</p>
+<p>The assessment involves verifying the Kubernetes configuration settings against the industry-standard CIS Benchmark guidelines to ensure that the cluster is configured securely. This stage typically involves multiple phases, such as:</p>
+<p>Configuration Audit: This phase involves reviewing the Kubernetes cluster configuration settings against the CIS Benchmark guidelines and identifying any deviations or potential security risks.</p>
+<p>Vulnerability Assessment: This phase involves scanning the Kubernetes cluster for any known vulnerabilities and ensuring that the latest security patches are applied to the Kubernetes components.</p>
+<p>Compliance Checks: This phase involves verifying that the Kubernetes cluster is compliant with any relevant regulatory requirements or security standards.</p>
+<h3>13. K8s Deployment - PROD</h3>
+<p>This stage deploys the tested and secured application to the production environment running on Kubernetes.</p>
+<h3>14. Integration Tests - Production</h3>
+<p>Once the application has been deployed to production, you can run integration tests to verify that it is working as expected. Integration tests typically involve testing the application's interaction with other systems.</p>
+<h3>Benefits of devsecops pipeline:</h3>
+<p>Each stage of the DevSecOps pipeline has its own benefits. For example, unit tests can help to identify potential bugs in the code, while vulnerability scans can help to identify known vulnerabilities in the code. By implementing all of the stages in the DevSecOps pipeline, you can help to ensure that your application is secure.</p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>

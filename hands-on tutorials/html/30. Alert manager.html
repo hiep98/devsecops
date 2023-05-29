@@ -1,0 +1,617 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>30. Alert manager</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
+        <!-- Add Pygments CSS for code highlighting -->
+        <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+        <style>
+            /* Center the HTML file on the screen */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                padding-top: 30px;
+            }
+            /* Make the display width of the HTML file smaller */
+            .container {
+                max-width: 42vw;
+                margin: 0 auto;
+                height: 100%
+            }
+            
+            img {
+                width: 80%;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/js/lightgallery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-zoom.js/dist/lg-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-fullscreen.js/dist/lg-fullscreen.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-share.js/dist/lg-share.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-autoplay.js/dist/lg-autoplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-rotate.js/dist/lg-rotate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lg-flip.js/dist/lg-flip.min.js"></script>
+        <script>
+            window.onload = function() {
+                const images = document.getElementsByTagName('img');
+                const lightGalleryItems = [];
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    if (img.naturalWidth > 1000) {
+                        if (window.innerWidth > 768) {
+                            img.style.width = '110%';
+                            img.style.transform = 'translateX(-4%)';
+                        } else {
+                            img.style.width = '100%';
+                            img.style.transform = 'none';
+                        }
+                    }
+                    lightGalleryItems.push({ src: img.src, thumb: img.src });
+                    img.setAttribute('data-lg-idx', i);
+                    img.addEventListener('click', function() {
+                        lightGallery(img, {
+                            dynamic: true,
+                            dynamicEl: lightGalleryItems,
+                            index: parseInt(img.getAttribute('data-lg-idx'))
+                        });
+                    });
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Alert manager</h1>
+
+<h1>INSTALL ALERTMANAGER</h1>
+<pre><code>wget https://github.com/prometheus/alertmanager/releases/download/v0.25.0/alertmanager-0.25.0.linux-amd64.tar.gz
+ 
+tar xvzf alertmanager-0.25.0.linux-amd64.tar.gz 
+cd alertmanager-0.25.0.linux-amd64/
+./alertmanager 
+ 
+cat alertmanager.yml 
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+  receiver: 'web.hook'
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'http://127.0.0.1:5001/'
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
+</code></pre>
+<p>Reference:</p>
+<p><a href="https://acloudguru.com/hands-on-labs/installing-prometheus-alertmanager">https://acloudguru.com/hands-on-labs/installing-prometheus-alertmanager</a></p>
+<p>Default Config</p>
+<pre><code>global:
+  resolve_timeout: 5m
+  http_config:
+    follow_redirects: true
+    enable_http2: true
+  smtp_hello: localhost
+  smtp_require_tls: true
+  pagerduty_url: https://events.pagerduty.com/v2/enqueue
+  opsgenie_api_url: https://api.opsgenie.com/
+  wechat_api_url: https://qyapi.weixin.qq.com/cgi-bin/
+  victorops_api_url: https://alert.victorops.com/integrations/generic/20131114/alert/
+  telegram_api_url: https://api.telegram.org
+  webex_api_url: https://webexapis.com/v1/messages
+route:
+  receiver: web.hook
+  group_by:
+  - alertname
+  continue: false
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+inhibit_rules:
+- source_match:
+    severity: critical
+  target_match:
+    severity: warning
+  equal:
+  - alertname
+  - dev
+  - instance
+receivers:
+- name: web.hook
+  webhook_configs:
+  - send_resolved: true
+    http_config:
+      follow_redirects: true
+      enable_http2: true
+    url: http
+    max_alerts: 0
+templates: []
+</code></pre>
+<p><img alt="" src="../media/30.%20Alert%20manager_1.png" /></p>
+<p>Update alertmanager.yml</p>
+<pre><code>global:
+  resolve_timeout: 1m
+  slack_api_url: 'https://hooks.slack.com/services/&lt;ID&gt;'
+ 
+route:
+  receiver: 'slack-notifications'
+ 
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - send_resolved: true
+    channel: '#prometheus'
+    icon_url: https://avatars3.githubusercontent.com/u/3380462
+    title: |-
+      [{{ .Status | toUpper }}{{ if eq .Status &quot;firing&quot; }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }} for {{ .CommonLabels.job }}
+      {{- if gt (len .CommonLabels) (len .GroupLabels) -}}
+        {{&quot; &quot;}}
+      {{- end }}
+    title_link: '{{ template &quot;slack.default.titlelink&quot; . }}'
+    text: &gt;-
+      {{ range .Alerts -}}
+       *Alert:* {{ .Annotations.summary }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+       *Description:* {{ .Annotations.description }}
+       *Details:*
+        {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+        {{ end }}
+       {{ end }}
+</code></pre>
+<p>This is a configuration file for Alertmanager, a component of the Prometheus monitoring system that manages alerts sent by Prometheus server. The configuration file defines how alerts are processed and routed to different receivers, such as email, Slack, PagerDuty, etc.</p>
+<p>Here's a breakdown of the different sections and settings in this particular alertmanager.ymlfile:</p>
+<p>The global section contains global settings for Alertmanager, including:</p>
+<p>•  resolve_timeout: The time to wait before resolving an alert if it has stopped firing (default is 5m).</p>
+<p>•  slack_api_url: The URL for the Slack API webhook that Alertmanager uses to send notifications to Slack. This is specific to the Slack integration and must be configured with your own Slack webhook URL.</p>
+<p>The route section defines the default receiver for alerts, which in this case is set to slack-notifications. This means that any alerts that are not specifically routed to another receiver will be sent to the slack-notificationsreceiver.</p>
+<p>The receivers section defines the available receivers for alerts, which in this case only includes one receiver named slack-notifications. The settings for this receiver include:</p>
+<p>•  name: The name of the receiver.</p>
+<p>•  slack_configs: The Slack-specific configuration for the receiver.</p>
+<p>Under the slack_configssetting, the following configuration options are defined:</p>
+<p>•  send_resolved: Whether or not to send notifications when an alert has been resolved.</p>
+<p>•  channel: The Slack channel to send the notifications to (e.g. "#prometheus").</p>
+<p>•  icon_url: The URL for the icon that appears next to the notification in Slack.</p>
+<p>•  title: The title of the notification, which is a template that includes the status of the alert, the name of the alert, and the job associated with the alert.</p>
+<p>•  title_link: A template for the URL to use for the title of the notification, which in this case is using a default template defined elsewhere in the configuration file.</p>
+<p>•  text: The body of the notification, which includes the summary and description of the alert, as well as any additional label values associated with the alert. The range function is used to loop over all alerts in the group and create a list of them in the notification body.</p>
+<p>Overall, this configuration file is defining how alerts should be sent to Slack and what information should be included in the notification message. It is only one example of how Alertmanager can be configured, and there are many other configuration options and integrations available.</p>
+<p>The title field in the slack_configssection of the alertmanager.ymlconfiguration file is a template for the title of the notification that is sent to Slack when an alert is fired. It contains the following elements:</p>
+<p>•  |-\n: This is a YAML block scalar style that indicates a multi-line string literal. The |character indicates that the string should be preserved exactly as it is, including line breaks, and the -character indicates that any trailing whitespace on each line should be ignored.</p>
+<p>•  {{ .Status | toUpper }}: This is a Go template expression that retrieves the Statusfield of the alert and converts it to uppercase using the toUpperfunction. The .character refers to the current context, which is the alert group that triggered the notification.</p>
+<p>•  {{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}: This is another Go template expression that checks if the Statusfield of the alert is "firing", and if it is, adds a colon and the number of firing alerts to the title. The Alerts.Firingfield returns a list of all alerts that are currently firing, and the lenfunction returns the length of that list.</p>
+<p>•  {{ .CommonLabels.alertname }} for {{ .CommonLabels.job }}: This retrieves the alertname and job fields from the CommonLabelssection of the alert group and formats them into a string that describes the alert.</p>
+<p>•  {{- if gt (len .CommonLabels) (len .GroupLabels) -}} {{" "}} {{- end }}: This is another Go template expression that checks if the number of labels in the CommonLabels section is greater than the number of labels in the GroupLabelssection, and if it is, adds a space to the end of the title. This is used to ensure that the title is aligned properly when different alerts have different label sets.</p>
+<p>•  title_link: '{{ template "slack.default.titlelink" . }}': This is a reference to another template in the configuration file that specifies the URL to link the title to.</p>
+<p>•  text: &gt;- ...: This is a multi-line string literal that defines the body of the notification, which contains more details about the alerts that have fired. It uses another Go template expression to loop over all alerts in the group and generate a list of their details.</p>
+<p>Reference:</p>
+<p>(1) Notification template examples | Prometheus. <a href="https://prometheus.io/docs/alerting/latest/notification_examples/">https://prometheus.io/docs/alerting/latest/notification_examples/</a>.</p>
+<p>(2) Creating Awesome Alertmanager Templates for Slack -Hodovi. <a href="https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/">https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/</a>.</p>
+<p>(3) Step-by-step guide to setting up Prometheus Alertmanager with Slack .... <a href="https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/">https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/</a>.</p>
+<p><a href="https://prometheus.io/docs/alerting/latest/configuration/">https://prometheus.io/docs/alerting/latest/configuration/</a></p>
+<p><a href="https://prometheus.io/docs/alerting/latest/notification_examples/">htt</a></p>
+<p>Next, create new webhook and copy like webhook url like tutorial before.</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_2.png" /></p>
+<p><img alt="" src="../media/30.%20Alert%20manager_3.png" /></p>
+<p>Add new webhook url into alertmanager.yml</p>
+<pre><code>global:
+  resolve_timeout: 1m
+  slack_api_url: 'https:/'
+</code></pre>
+<p>Use /-/reload to reload config</p>
+<pre><code>   curl -X POST &lt;IP&gt;:9093/-/reload
+</code></pre>
+<p>Go to promotheus dashboard and check runtime Information, we can see alert manager endpoint</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_4.png" /></p>
+<h1>CREATE ALERT RULE</h1>
+<p>First, we go to prometheus config to know simple config.</p>
+<pre><code>https://github.com/istio/istio/blob/master/samples/addo
+data:
+  allow-snippet-annotations: &quot;false&quot;
+  alerting_rules.yml: |
+    {}
+alerts: |
+    {}
+</code></pre>
+<p>This yaml file linked is a configuration file for Prometheus in istio. The data section of the file contains the following key-value pairs:</p>
+<p>•  allow-snippet-annotations: This setting controls whether Prometheus will allow users to add custom annotations to Prometheus rules. If set to "false", users will only be able to use the pre-defined annotations.</p>
+<p>•  alerting_rules.yml: This file contains the YAML configuration for Prometheus alerting rules.</p>
+<p>•  alerts: This file contains the YAML configuration for Prometheus alerts.</p>
+<p>The alerting_rules.yml and alerts files are both empty, which means that Prometheus will not be configured to send any alerts by default. If you want to configure Prometheus to send alerts, you will need to addyour own rules and alerts to these files.</p>
+<p>For more information on configuring Prometheus, please see the Prometheus documentation: <a href="https://prometheus.io/docs/prometheus/latest/configuration/">https://prometheus.io/docs/prometheus/latest/configuration/</a></p>
+<p>Now we update alerting target and rule into prometheus.</p>
+<pre><code>sudo kubectl -n istio-system get configmap
+NAME                                  DATA   AGE
+prometheus                            5      9d
+ 
+sudo kubectl -n istio-system edit configmap prometheus
+ 
+prometheus.yml: |
+    global: # This section defines global settings for Prometheus
+      evaluation_interval: 1m # Evaluate rules every 1 minute
+      scrape_interval: 15s # Scrape targets every 15 seconds
+      scrape_timeout: 10s # Timeout for scraping targets
+    alerting: # This section defines alerting settings for Prometheus
+      alertmanagers: # This section specifies the alertmanager instances to send alerts to
+      - static_configs: # This section specifies the static list of alertmanager targets
+      - targets: http://192.168.207.129:9093 # This is the address of the alertmanager instance
+ 
+ 
+apiVersion: v1 # This is the API version for Kubernetes resources
+data: # This section contains the data for the configmap resource
+  alerting_rules.yml: | # This is the name of the file that contains the alerting rules
+    {
+      &quot;groups&quot;: [ # This is a list of groups of rules
+        {
+          &quot;name&quot;: &quot;Rules&quot;, # This is the name of the group
+          &quot;rules&quot;: [ # This is a list of rules in the group
+            {
+              &quot;alert&quot;: &quot;InstanceDown&quot;, # This is the name of the alert
+              &quot;expr&quot;: &quot;up == 0&quot;, # This is the expression that triggers the alert
+              &quot;for&quot;: &quot;0m&quot;, # This is the duration that the expression must be true before firing the alert
+              &quot;annotations&quot;: { # This section contains additional information for the alert
+                &quot;title&quot;: &quot;Instance {{ $labels.instance }} down&quot;, # This is the title of the alert, using label templating
+                &quot;description&quot;: &quot;{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.&quot; # This is the description of the alert, using label templating
+              },
+              &quot;labels&quot;: { # This section contains additional labels for the alert
+                &quot;severity&quot;: &quot;critical&quot; # This is a label that indicates the severity of the alert
+              }
+            },
+            {
+              &quot;alert&quot;: &quot;KubernetesPodClientError&quot;, # This is another alert name
+              &quot;expr&quot;: &quot;istio_requests_total{reporter=\&quot;destination\&quot;, response_code=\&quot;403\&quot;} &gt; 10&quot;, # This is another expression that triggers the alert, using metric and label filtering
+              &quot;labels&quot;: { # This section contains additional labels for this alert
+                &quot;severity&quot;: &quot;warning&quot; # This is another label that indicates the severity of this alert
+              },
+              &quot;annotations&quot;: { # This section contains additional information for this alert
+                &quot;summary&quot;: &quot;Kubernetes pod Client Error (instance {{ $labels.instance }})&quot;, # This is another title of this alert, using label templating
+                &quot;description&quot;: &quot;Pod {{ $labels.instance }} of job {{ $labels.job }} reported client specific issues&quot; # This is another description of this alert, using label templating
+              }
+            }
+          ]
+        }
+      ]
+    }
+</code></pre>
+<p>This file is a configuration  contains the following settings:</p>
+<p>evaluation_interval: This setting controls how often Prometheus will evaluate its rules. The default value is 1 minute.</p>
+<p>scrape_interval: This setting controls how often Prometheus will scrape metrics from its targets. The default value is 15 seconds.</p>
+<p>scrape_timeout: This setting controls how long Prometheus will wait for a response from a target before giving up. The default value is 10 seconds.</p>
+<p>alertmanagers: This section configures Prometheus to send alerts to an Alertmanager. The Alertmanager is a separate service that is responsible for handling alerts and notifying users.</p>
+<p>It contains the following rules:</p>
+<p>InstanceDown: This rule alerts if an instance has been down for more than 1 minute.</p>
+<p>KubernetesPodClientError: This rule alerts if a Kubernetes pod has reported more than 10 client errors.</p>
+<p>Each rule has the following settings:</p>
+<p>alert: This is the name of the alert.</p>
+<p>expr: This is the expression that Prometheus will use to evaluate the rule.</p>
+<p>for: This is the duration for which Prometheus will keep an alert in the firing state.</p>
+<p>annotations: This is a map of annotations that will be added to alerts that fire.</p>
+<p>labels: This is a map of labels that will be added to alerts that fire.</p>
+<p>we can add larger rule based on rule file below and using converter yaml to json:</p>
+<p><a href="https://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/istio/embedded-exporter.yml">h</a></p>
+<p>After update config, we restart pod prometheus:</p>
+<pre><code>sudo kubectl -n istio-system describe pod -l=app=prometheus 
+sudo kubectl -n istio-system delete pod -l=app=prometheus
+sudo kubectl -n istio-system get pod -l=app=prometheus
+sudo kubectl -n istio-system logs prometheus-7cc75b7c8c-nmbmw --container prometheus-server
+</code></pre>
+<p>Now, we go to prometheus to check rule again</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_5.png" /></p>
+<p><img alt="" src="../media/30.%20Alert%20manager_6.png" /></p>
+<p>Disable peer authentication to run test rule.</p>
+<pre><code>sudo kubectl edit pa -n istio-system
+spec:
+  mtls:
+    mode: DISABLE
+</code></pre>
+<p>Create nginx service:</p>
+<pre><code>kubectl -n prod run nginx --image nginx
+kubectl -n prod expose pod nginx --port 80
+kubectl -n prod get svc
+</code></pre>
+<p>Use curl to test connection:</p>
+<pre><code>curl &lt;IP nginx svc&gt;:80
+or 
+kubectl -n prod exec -it nginx -- curl 10.32.0.28:80
+</code></pre>
+<p>Next, we go to nginx and delete index.html.</p>
+<pre><code>kubectl -n prod exec -it nginx -- bash
+rm /usr/share/nginx/html/index.html 
+</code></pre>
+<p>We check the connection again by using the following bash script and get a 403 error.</p>
+<p>while true; do curl -s 10.101.73.244:80;  sleep 1; done</p>
+<p>Now let's go back to the dashboard to check if the rule is working</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_7.png" /></p>
+<p>we can click on expr to execute the query</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_8.png" /></p>
+<p>and alert is also sent to slack</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_9.png" /></p>
+<p>similar to alertmanager, we can select silence.</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_10.png" /></p>
+<p>We can enter the creator and comment information to assign the person in charge of handling this case</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_11.png" /></p>
+<p>similarly we continue to test the rule instance down by deleting pod nginx:</p>
+<pre><code>kubectl -n prod delete pod nginx 
+</code></pre>
+<p>Go to dashboard to run query</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_12.png" /></p>
+<p>And we receive slack alert</p>
+<p><img alt="" src="../media/30.%20Alert%20manager_13.png" /></p>
+                </div>
+            </div>
+        </div>    
+    </body>
+    </html>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+.copy-button {
+  position: absolute;
+  right: 5px ;
+  top: 5px;
+  border: transparent;
+  background-color: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+
+}
+
+.copy-button:hover {
+  background-color: #30363d; # Change this to a different color to create a hover effect
+}
+.material-icons{
+  line-height:1.3;
+  color: #7d8590;
+}
+
+pre {
+  position: relative;
+  # padding: 20px;
+  border: 1px solid #e7ee7;
+  overflow-x: auto; # Remove this line to disable horizontal scrolling
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  # Add these lines to set a fixed width for the code block and wrap long lines
+  #width: 80%;
+  white-space: pre-wrap; 
+}
+
+pre code {
+  display: block;
+  border-radius: 8px;
+  background-color: #2d2d2d; # Change this to a different color to match the copy button background
+
+}
+
+
+
+
+@media only screen and (min-width: 280px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and mobiles */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  img {
+    width: 85%; /* Make image smaller on tablets and desktops */
+  }
+}
+
+# @media (min-width: 576px) {
+#   img {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   img {
+#     max-width: 720px;
+#   }
+# }
+
+
+
+@media (min-width: 280px) {
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+
+
+@media (min-width: 912px) {
+  .container {
+    max-width: 70%;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+# @media (min-width: 1200px) {
+#   .container {
+#     max-width: 70%;
+#     margin: 0 auto;
+#     height: 100%;
+#   }
+# }
+
+# @media (min-width: 576px) {
+#   .container {
+#     max-width: 540px;
+#   }
+# }
+
+# @media (min-width: 768px) {
+#   .container {
+#     max-width: 620px;
+#     margin: 0;
+#   }
+# }
+
+# @media (min-width: 992px) {
+#   .container {
+#     max-width: 760px;
+#   }
+# }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 735px;
+    margin: 0;
+    height: 100%;
+  }
+}
+
+# p { 
+#   text-indent: 10px;
+# }
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+# .container {
+#   max-width: 100%; /* Set the container width to 100% */
+#   padding-left: 15px; /* Add some padding to the left */
+#   padding-right: 15px; /* Add some padding to the right */
+# }
+
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(function(codeBlock) {
+      var copyButton = document.createElement('button');
+      copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+      copyButton.classList.add('copy-button');
+      codeBlock.parentNode.insertBefore(copyButton, codeBlock);
+
+      copyButton.addEventListener('click', function() {
+        var code = codeBlock.textContent;
+        var textarea = document.createElement('textarea');
+        textarea.textContent = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        copyButton.innerHTML = '<i class="material-icons">check</i>';
+        setTimeout(function() {
+          copyButton.innerHTML = '<i class="material-icons">content_copy</i>';
+        }, 2000);
+      });
+    });
+
+    // Initialize highlight.js for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  });
+</script>
