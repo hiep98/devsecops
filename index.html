@@ -1,12 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hands-on Tutorials</title>
+<title>Devsecops Hands-on Tutorials</title>
+<style>
+html {
+  font-size: 16px;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+.container {
+  max-width: 900px;
+  padding-top: 60px;
+  margin: 0 auto;
+}
+header {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 20px;
+text-align: center;
+}
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  margin-bottom: 10px;
+}
+li:hover {
+  box-shadow: 1px 3px 10px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+a {
+  display: block;
+  padding: 10px;
+  color: #333333;
+  text-decoration: none;
+}
+a:hover {
+  background-color: #f2f2f2;
+}
+@media (max-width: 768px) {
+  .container {
+    max-width: 600px;
+  }
+}
+@media (max-width: 576px) {
+  .container {
+    max-width: 400px;  
+    padding-top: 40px; 
+  }
+}
+</style>
 </head>
 <body>
+<header>
   <h1>Hands-on Tutorials</h1>
+</header>
+<div class='container'>
   <ul>
-    <li><a href="hands-on%20tutorials/html/29.%20Kubescan/Kubescan.htm">Kubescan</a></li>
+<li><a href="hands-on tutorials/html/1. Overview DevSecOps pipeline.html">1. Overview DevSecOps pipeline</a></li>
+<li><a href="hands-on tutorials/html/2. First pipeline - check version.html">2. First pipeline - check version</a></li>
+<li><a href="hands-on tutorials/html/3. Receive GitHub webhooks on Jenkins without public IP.html">3. Receive GitHub webhooks on Jenkins without public IP</a></li>
+<li><a href="hands-on tutorials/html/4. Github intergrate + Maven build.html">4. Github intergrate + Maven build</a></li>
+<li><a href="hands-on tutorials/html/5. Unit Test and JaCoCo.html">5. Unit Test and JaCoCo</a></li>
+<li><a href="hands-on tutorials/html/6. Build - push stage.html">6. Build - push stage</a></li>
+<li><a href="hands-on tutorials/html/7. Kubernetes Architecture.html">7. Kubernetes Architecture</a></li>
+<li><a href="hands-on tutorials/html/8. Hooks, Pre-commit, pre-push .html">8. Hooks, Pre-commit, pre-push </a></li>
+<li><a href="hands-on tutorials/html/9. Mutation tests.html">9. Mutation tests</a></li>
+<li><a href="hands-on tutorials/html/10. SAST.html">10. SAST</a></li>
+<li><a href="hands-on tutorials/html/11. SCA.html">11. SCA</a></li>
+<li><a href="hands-on tutorials/html/12. OPA - docker.html">12. OPA - docker</a></li>
+<li><a href="hands-on tutorials/html/13. Trivy - scan docker image.html">13. Trivy - scan docker image</a></li>
+<li><a href="hands-on tutorials/html/14. OPA - k8s.html">14. OPA - k8s</a></li>
+<li><a href="hands-on tutorials/html/15. Trivy - scan k8s image.html">15. Trivy - scan k8s image</a></li>
+<li><a href="hands-on tutorials/html/16. Kubesec.html">16. Kubesec</a></li>
+<li><a href="hands-on tutorials/html/17. Integration test.html">17. Integration test</a></li>
+<li><a href="hands-on tutorials/html/18. DAST.html">18. DAST</a></li>
+<li><a href="hands-on tutorials/html/19. Fix X-Content-Type-Options Header Missing.html">19. Fix X-Content-Type-Options Header Missing</a></li>
+<li><a href="hands-on tutorials/html/20. Chatgpt Q&A ZAP rule.html">20. Chatgpt Q&A ZAP rule</a></li>
+<li><a href="hands-on tutorials/html/21. Slack jenkins alert.html">21. Slack jenkins alert</a></li>
+<li><a href="hands-on tutorials/html/22. groovy custom send notification slack in vars folder.html">22. groovy custom send notification slack in vars folder</a></li>
+<li><a href="hands-on tutorials/html/23. Custom jenkins alert.html">23. Custom jenkins alert</a></li>
+<li><a href="hands-on tutorials/html/24. CIS benchmark with kube-bench.html">24. CIS benchmark with kube-bench</a></li>
+<li><a href="hands-on tutorials/html/25. Istio service mesh - Production deployment.html">25. Istio service mesh - Production deployment</a></li>
+<li><a href="hands-on tutorials/html/26. K8s monitoring.html">26. K8s monitoring</a></li>
+<li><a href="hands-on tutorials/html/27. Falco Slack Notifications.html">27. Falco Slack Notifications</a></li>
+<li><a href="hands-on tutorials/html/28. Kubescan.html">28. Kubescan</a></li>
+<li><a href="hands-on tutorials/html/29. Integration test production.html">29. Integration test production</a></li>
+<li><a href="hands-on tutorials/html/30. Alert manager.html">30. Alert manager</a></li>
+<li><a href="hands-on tutorials/html/31. Vault.html">31. Vault</a></li>
+<li><a href="hands-on tutorials/html/32. Remove old build.html">32. Remove old build</a></li>
+<li><a href="hands-on tutorials/html/33. Fix trivy.html">33. Fix trivy</a></li>
+<li><a href="hands-on tutorials/html/34. Fix k8s issue.html">34. Fix k8s issue</a></li>
+<li><a href="hands-on tutorials/html/35. Up interface.html">35. Up interface</a></li>
+<li><a href="hands-on tutorials/html/36. Set static ip.html">36. Set static ip</a></li>
+<li><a href="hands-on tutorials/html/37. Fix error swap vmware.html">37. Fix error swap vmware</a></li>
+<li><a href="hands-on tutorials/html/38. Create file shell autorun.html">38. Create file shell autorun</a></li>
+<li><a href="hands-on tutorials/html/39. Backup sonarqube, jenkins.html">39. Backup sonarqube, jenkins</a></li>
   </ul>
+</div>
 </body>
 </html>
