@@ -272,9 +272,9 @@ receivers:
 <p>Reference:</p>
 <p>(1) Notification template examples | Prometheus. <a href="https://prometheus.io/docs/alerting/latest/notification_examples/">https://prometheus.io/docs/alerting/latest/notification_examples/</a>.</p>
 <p>(2) Creating Awesome Alertmanager Templates for Slack -Hodovi. <a href="https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/">https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/</a>.</p>
-<p>(3) Step-by-step guide to setting up Prometheus Alertmanager with Slack .... <a href="https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/">https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/</a>.</p>
-<p><a href="https://prometheus.io/docs/alerting/latest/configuration/">https://prometheus.io/docs/alerting/latest/configuration/</a></p>
-<p><a href="https://prometheus.io/docs/alerting/latest/notification_examples/">htt</a></p>
+<p>(3) Step-by-step guide to setting up Prometheus Alertmanager with Slack .... <a href="https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/">https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gm ail/</a>.</p>
+<p><a href="https://prometheus.io/docs/alerting/latest/configuration/">https://prometheus.io/docs/alerting/latest/configuration/#slack_config</a></p>
+<p><a href="https://prometheus.io/docs/alerting/latest/notification_examples/">htt ps://prometheus.io/docs/alerting/latest/notification_examples/</a></p>
 <p>Next, create new webhook and copy like webhook url like tutorial before.</p>
 <p><img alt="" src="../media/30.%20Alert%20manager_2.png" /></p>
 <p><img alt="" src="../media/30.%20Alert%20manager_3.png" /></p>
@@ -303,7 +303,7 @@ alerts: |
 <p>•  alerting_rules.yml: This file contains the YAML configuration for Prometheus alerting rules.</p>
 <p>•  alerts: This file contains the YAML configuration for Prometheus alerts.</p>
 <p>The alerting_rules.yml and alerts files are both empty, which means that Prometheus will not be configured to send any alerts by default. If you want to configure Prometheus to send alerts, you will need to addyour own rules and alerts to these files.</p>
-<p>For more information on configuring Prometheus, please see the Prometheus documentation: <a href="https://prometheus.io/docs/prometheus/latest/configuration/">https://prometheus.io/docs/prometheus/latest/configuration/</a></p>
+<p>For more information on configuring Prometheus, please see the Prometheus documentation: <a href="https://prometheus.io/docs/prometheus/latest/configuration/">https://prometheus.io/docs/prometheus/latest/con figuration/</a></p>
 <p>Now we update alerting target and rule into prometheus.</p>
 <pre><code>sudo kubectl -n istio-system get configmap
 NAME                                  DATA   AGE
@@ -373,7 +373,7 @@ data: # This section contains the data for the configmap resource
 <p>annotations: This is a map of annotations that will be added to alerts that fire.</p>
 <p>labels: This is a map of labels that will be added to alerts that fire.</p>
 <p>we can add larger rule based on rule file below and using converter yaml to json:</p>
-<p><a href="https://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/istio/embedded-exporter.yml">h</a></p>
+<p><a href="https://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/istio/embedded-exporter.yml">h ttps://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/istio/embedded-exporter.yml</a></p>
 <p>After update config, we restart pod prometheus:</p>
 <pre><code>sudo kubectl -n istio-system describe pod -l=app=prometheus 
 sudo kubectl -n istio-system delete pod -l=app=prometheus

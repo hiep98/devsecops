@@ -438,10 +438,10 @@ spec:
 </li>
 </ul>
 <p>Reference:</p>
-<p>(1) Agent Sidecar Injector Annotations | Vault | HashiCorp Developer. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations</a>.</p>
+<p>(1) Agent Sidecar Injector Annotations | Vault | HashiCorp Developer. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations">https://developer.hashicorp.com/vault/docs/platform/k8s/inje ctor/annotations</a>.</p>
 <p>(2) Running Vault with Kubernetes - HashiCorp. <a href="https://www.hashicorp.com/products/vault/kubernetes">https://www.hashicorp.com/products/vault/kubernetes</a>.</p>
 <p>(3) » Vault Agent Injector Examples - Vault by HashiCorp. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples</a></p>
-<p><a href="https://testdriven.io/blog/managing-secrets-with-vault-and-consul">https://testdriven.io/blog/managing-secrets-with-vault-and-consul</a></p>
+<p><a href="https://testdriven.io/blog/managing-secrets-with-vault-and-consul">https://testdriven.io/ blog/managing-secrets-with-vault-and-consul</a></p>
 <p><a href="https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/">https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/</a></p>
 <pre><code>kubectl patch deploy php -p &quot;$(cat patch-annotations-template.yaml)&quot;
 kubectl exec -it pod/php-697475985f-n58bq -n vault -c php -- cat /vault/secrets/username
