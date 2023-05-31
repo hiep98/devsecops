@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>8. Hooks, Pre-commit, pre-push </title>
+        <title>8. Hooks, Pre-commit, pre-push</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/lightgallery.js/dist/css/lightgallery.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/lg-thumbnail.js/dist/lg-thumbnail.min.css" rel="stylesheet">
@@ -146,17 +146,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                     <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Hooks, Pre-commit, pre-push</h1>
 
 <p>Every time a particular event occurs within a repository, they let you customize its internal behavior and triggered customizable actions at key points in the development lifecycle.</p>
-<p>So if you have any sensitive information like access keys, access tokens as a set of keys, these are</p>
-<p>often lead to accidental good comments so precommitment can be installed on a workstation to avoid that.So this hoax usually work on a project based approach for filtering the sensitive data.</p>
-<p>And if the developers want, they can still bypass the.</p>
-<p>So you have various tools in the market which helps us with precommitment push.</p>
-<p>So one of the tools is Talisman, which is an open source tool created by Thought works.</p>
-<p>So Talisman is an open source tool which can be used to hook your repository to ensure that potential</p>
-<p>secret or sensitive information does not leave the developers workstations.</p>
-<p>It validates the outgoing change for things that look suspicious, like a potential password, tokens,</p>
-<p>private keys, etc..</p>
-<p>It can also be used as a repository history scanner to detect secrets that have already been checked</p>
-<p>in so that you can take an informed decision to safeguard the secrets.</p>
+<p>So if you have any sensitive information like access keys, access tokens as a set of keys, these are often lead to accidental good comments so precommitment can be installed on a workstation to avoid that. So this hoax usually work on a project based approach for filtering the sensitive data.</p>
+<p>So you have various tools in the market which helps us with pre commitment push.</p>
+<p>Talisman is an open source tool which can be used to hook your repository to ensure that potential secret or sensitive information does not leave the developers workstations.</p>
+<p>It validates the outgoing change for things that look suspicious, like a potential password, tokens, private keys, etc..</p>
+<p>It can also be used as a repository history scanner to detect secrets that have already been checked in so that you can take an informed decision to safeguard the secrets.</p>
 <p>Download the talisman installer script</p>
 <pre><code>curl https://thoughtworks.github.io/talisman/install.sh&gt; ~/install-talisman.sh
 chmod +x ~/install-talisman.sh
@@ -212,7 +206,7 @@ version: &quot;&quot;
 Talisman done in 111.668199ms
 root@master-node:/home/dai/devsecops# git push
 Username for ' https://github.com': hiep98
-Password for ' https://hie: 
+Password for ' https://hiep98@github.com': 
 Talisman Scan: 0 &lt;........................................................................&gt; ?%  
 Talisman done in 29.34035ms
 Everything up-to-date

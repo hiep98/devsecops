@@ -145,7 +145,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                 <div class="col">
                     <h1 style="text-align:center; text-transform:uppercase; font-family: 'Playfair Display', serif; font-weight:700;"">Vault</h1>
 
-<p><strong>Install vault</strong>****</p>
+<p><strong>Install vault</strong></p>
 <pre><code>kubectl create ns vault
 kubectl config set-context --current --namespace vault
 kubectl get all
@@ -183,7 +183,7 @@ reconstruct the master key, Vault will remain permanently sealed!
 It is possible to generate new unseal keys, provided you have a quorum of
 existing unseal keys shares. See &quot;vault operator rekey&quot; for more information.
 </code></pre>
-<p>The vault operator init command is used toinitialize a new Vault server instance. It is part of the vault operator command group, which is used to manage and operate a Vault server.</p>
+<p>The vault operator init command is used to initialize a new Vault server instance. It is part of the vault operator command group, which is used to manage and operate a Vault server.</p>
 <p>When you run the vault operator init command, Vault generates and outputs a set of five unseal keys and a root token. These are critical pieces of information that are needed to manage and access the Vault server.</p>
 <p>Here is a brief overview of what happens when you run vault operator init:</p>
 <ol>
@@ -200,7 +200,7 @@ existing unseal keys shares. See &quot;vault operator rekey&quot; for more infor
 <p>Vault outputs the five unseal keys and root token to the console.</p>
 </li>
 </ol>
-<p>It's important to keep the unseal keys and root token safe and secure, asthey provide access to sensitive data stored in the Vault server. Typically, the unseal keys are distributed among multiple trusted parties to prevent a single point of failure. The root token should be stored securely and used only when necessary.</p>
+<p>It's important to keep the unseal keys and root token safe and secure, as they provide access to sensitive data stored in the Vault server. Typically, the unseal keys are distributed among multiple trusted parties to prevent a single point of failure. The root token should be stored securely and used only when necessary.</p>
 <pre><code>vault operator unseal wG/MfmU+ZvjI8yMHO49K75VrwbN9OrtmMsTPWiTAC1yr
 Unseal Key (will be hidden): 
 Key                Value
@@ -233,7 +233,6 @@ policies             [&quot;root&quot;]
 </code></pre>
 <p>This command is used to authenticate with the Vault server using a specified method, such as using a username and password or a client token. Once authenticated, the user is granted an access token, which is used to access Vault resources.</p>
 <p><strong>Vault Secrets Engine</strong></p>
-<hr />
 <pre><code>vault secrets enable -path=crds kv-v2
 </code></pre>
 <p>This command is used to enable the KV (key-value) version 2 secrets engine on a Vault server. The -path option specifies the path at which to mount the secrets engine.</p>
@@ -339,7 +338,7 @@ metadata:
 <p>When you run the Vault command with bound_service_account_names=app, it tells Vault that any authentication requests coming from the Kubernetes ServiceAccount named "app" should be authorized by this Vault role (phpapp).</p>
 <p>Additionally, the bound_service_account_namespaces parameter specifies the Kubernetes namespace where the ServiceAccount is located (vault in this case).</p>
 <p>Finally, the policies parameter specifies the Vault policies that should be granted to any tokens issued by this role. In this case, the app policy is being granted.</p>
-<p>The ttl parameter specifies the time-to-live for any tokens issued by this role. In this case, the token will expire and be revoked after 1hour.</p>
+<p>The ttl parameter specifies the time-to-live for any tokens issued by this role. In this case, the token will expire and be revoked after 1 hour.</p>
 <pre><code>kubectl get svc
 NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
 php                        NodePort    10.106.55.59    &lt;none&gt;        80:30323/TCP        57s
@@ -425,7 +424,7 @@ spec:
 <p><code>vault.hashicorp.com/agent-inject-secret-password: "crds/data/mysql"</code>: This tells the Vault Agent to retrieve the secret <code>password</code> from the same path as <code>username</code>¹.</p>
 </li>
 <li>
-<p><code>vault.hashicorp.com/agent-inject-template-password: | ...</code>: This tells the Vault Agenthow to render the secret <code>password</code> using a Go template¹.</p>
+<p><code>vault.hashicorp.com/agent-inject-template-password: | ...</code>: This tells the Vault Agent how to render the secret <code>password</code> using a Go template¹.</p>
 </li>
 <li>
 <p><code>vault.hashicorp.com/agent-inject-secret-apikey: "crds/data/mysql"</code>: This tells the Vault Agent to retrieve the secret <code>apikey</code> from the same path as <code>username</code> and <code>password</code>¹.</p>
@@ -438,10 +437,10 @@ spec:
 </li>
 </ul>
 <p>Reference:</p>
-<p>(1) Agent Sidecar Injector Annotations | Vault | HashiCorp Developer. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations">https://developer.hashicorp.com/vault/docs/platform/k8s/inje ctor/annotations</a>.</p>
+<p>(1) Agent Sidecar Injector Annotations | Vault | HashiCorp Developer. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations</a>.</p>
 <p>(2) Running Vault with Kubernetes - HashiCorp. <a href="https://www.hashicorp.com/products/vault/kubernetes">https://www.hashicorp.com/products/vault/kubernetes</a>.</p>
 <p>(3) » Vault Agent Injector Examples - Vault by HashiCorp. <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples">https://developer.hashicorp.com/vault/docs/platform/k8s/injector/examples</a></p>
-<p><a href="https://testdriven.io/blog/managing-secrets-with-vault-and-consul">https://testdriven.io/ blog/managing-secrets-with-vault-and-consul</a></p>
+<p><a href="https://testdriven.io/blog/managing-secrets-with-vault-and-consul">https://testdriven.io/blog/managing-secrets-with-vault-and-consul</a></p>
 <p><a href="https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/">https://craftech.io/blog/manage-your-kubernetes-secrets-with-hashicorp-vault/</a></p>
 <pre><code>kubectl patch deploy php -p &quot;$(cat patch-annotations-template.yaml)&quot;
 kubectl exec -it pod/php-697475985f-n58bq -n vault -c php -- cat /vault/secrets/username
@@ -472,9 +471,9 @@ Root
 <p>Now, we'll try to see how Vault works internally.</p>
 <p>The recommended installation method is through the latest Vault helm site, which supports the Vault-k8s injection functionality. It launches two pods, Vault-0 and the Vault-agent-injector. An admin or Vault user can exit into the Vault-0 pod to initialize the Vault, add secrets, define policies, configure authentication and roles.</p>
 <p>The vault-agent-injector pod is a Kubernetes mutation webhook controller. The controller intercepts pod events and applies mutation to the pod if annotation exist within the request. When we deploy our application to Kubernetes, it generally goes through the kube-apiserver.</p>
-<p>It goes through the authentication, authorization, mutation, admission controller if any, does a round of schema validation after mutation, and it alsodoes a validation admission controller before getting persisted in the etcd data store. Then a scheduler will deploy the pod, mount the required service accounts on one of the available notes. If we execute into this pod and search for /vault/secretsdirectory, it would return not found because the secrets are not yet mounted from Vault.</p>
+<p>It goes through the authentication, authorization, mutation, admission controller if any, does a round of schema validation after mutation, and it also does a validation admission controller before getting persisted in the etcd data store. Then a scheduler will deploy the pod, mount the required service accounts on one of the available notes. If we execute into this pod and search for /vault/secretsdirectory, it would return not found because the secrets are not yet mounted from Vault.</p>
 <p><strong>How does this container get the secrets from the Vault server?</strong></p>
-<p>We can use the kubectl patch command to apply the annotations to an existing pod object. This will be intercepted by the Vault-agent-injector webhook service which will invoke the mutation admission controller and then inject the correct init and the sidecar containers. The init container will pre-populate the shared memory volume with the requested secretsprior to the other container starting. The sidecar container, which is the Vault agent container, will continue to authenticate and render secrets to the same location as the pod runs.</p>
+<p>We can use the kubectl patch command to apply the annotations to an existing pod object. This will be intercepted by the Vault-agent-injector webhook service which will invoke the mutation admission controller and then inject the correct init and the sidecar containers. The init container will pre-populate the shared memory volume with the requested secrets prior to the other container starting. The sidecar container, which is the Vault agent container, will continue to authenticate and render secrets to the same location as the pod runs.</p>
 <p>How do these containers fetch secrets from the Vault server?</p>
 <p>Checking the logs of the Vault init connector, initially, it tries to authenticate with the Vault server. The primary method of authentication with Vault when using the Vault-agent-injector is the service account attached to the pod. It is going to send the JSON Web Token to Vault for authentication. Vault now has to validate the pod service account JSON Web Token.</p>
 <p>For Kubernetes authentication, the service account must be bond to a Vault role and a policy granting access to the secrets desire. For accessing the Kubernetes TokenReview API to validate the provided part service account token is still valid or not, the Vault service account used in this auth method will need to have access to the TokenReview API. The service account should be granted system auth delegator permission.</p>
@@ -482,7 +481,7 @@ Root
 <p>Within the headers, you pass in the Vault-agent-injector's service account token. Within the payload, you send in the pod service account token to check if it is still valid or not. All this is sent to the TokenReview API which will try to validate it.</p>
 <p>If the pod app service account token is valid, it's going to respond back with a payload of status authenticated as true. Within the payload, it also sends back the service account name and to which namespace it belongs to. The service account name and namespace will be matched with the policy to authorize access to the secrets. Once authorized, Vault is going to create auth token and return it to the init connectors.</p>
 <p>The token is stored in the /home/vault/.vault-token directory. Once the authentication is successful, it is stored in this directory. Next, the init container will request the Vault for the secrets and passing the auth token which it received in the previous call. Vault will match the auth token with policy for specific secrets, and secrets are returned to the init connectors. The init container will store the secret in empty directory volume which is shared by all the three containers within the pod.</p>
-<p>Now, when we execute into the pod and search for /vault/secrets directory, it would displayall the rendered secrets. This is a pretty straightforward workflow pattern for injecting a secret into a running application that has no native vault logic built in. The application only needs to concern themselves with finding a secret at a specific file path. That's it for now. Thank you.</p>
+<p>Now, when we execute into the pod and search for /vault/secrets directory, it would display all the rendered secrets. This is a pretty straightforward workflow pattern for injecting a secret into a running application that has no native vault logic built in. The application only needs to concern themselves with finding a secret at a specific file path. That's it for now. Thank you.</p>
                 </div>
             </div>
         </div>    
