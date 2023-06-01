@@ -15,10 +15,9 @@ https://github.com/hiep98/devsecops/tree/main/devsecops-origin-resource
 `curl node-service-ip:5000/plusone/99`
 
 ## Hands-on Tutorial
-### Html
 https://hiep98.github.io/devsecops/
 
-### Markdown:
+###  Markdown Hands-on Tutorial:
 https://github.com/hiep98/devsecops/tree/main/hands-on%20tutorials/markdown
 
 ### All scripts used in the tests are located here: 
