@@ -21,3 +21,5 @@ https://hiep98.github.io/devsecops/
 
 ### Markdown:
 https://github.com/hiep98/devsecops/tree/main/hands-on%20tutorials/markdown
+
+ NOTES: Devsecops lab starts from tutorial 1 to 31. Sections 32 to 39 are troubleshooting articles that can be encountered in practice.
