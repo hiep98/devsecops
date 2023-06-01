@@ -1,6 +1,6 @@
 
-## Fork and Clone this Repo
-https://github.com/sidd-harth/kubernetes-devops-security
+## Application source code used for hands-on lab
+https://github.com/hiep98/devsecops/tree/main/devsecops-origin-resource
 
 ## NodeJS Microservice - Docker Image
 `docker run -p 8787:5000 siddharth67/node-service:v1`
