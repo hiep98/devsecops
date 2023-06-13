@@ -1,5 +1,5 @@
 
-## Application source code used for hands-on lab
+## Source code used for hands-on lab
 https://github.com/hiep98/devsecops/tree/main/devsecops-origin-resource
 
 ## NodeJS Microservice - Docker Image
